@@ -581,7 +581,12 @@
         }
         .study-actions { display: flex; justify-content: center; gap: var(--space-md); margin-top: var(--space-2xl); flex-wrap: wrap; }
 
-        .feedback-box { margin-top: 16px; padding: 16px; border-radius: 12px; }
+        .feedback-box { 
+            margin-top: 16px; 
+            padding: 16px; 
+            border-radius: 12px;
+            clear: both;
+        }
         .feedback-box.success { background: #dcfce7; border: 1px solid #86efac; color: #166534; }
         .feedback-box.error { background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b; }
         .alternatives .btn { text-align: left; justify-content: flex-start; }
@@ -727,7 +732,6 @@
                 <p class="screen-header__subtitle" id="moduleSubtitle">Siga as etapas para aprender o conteúdo</p>
             </div>
             <div class="topics-list" id="topicsList"></div>
-            <!-- Botão para iniciar avaliação final, se disponível -->
             <div id="finalExamButton" class="text-center" style="margin-top: var(--space-2xl);"></div>
         </section>
 
@@ -775,27 +779,24 @@
     let MODULOS = [];
     const STATE_KEY = 'bb_inteligente_state';
 
-    // Estado padrão
     const defaultState = {
         xp: 0,
         streak: 0,
         level: 1,
         conquistas: [],
-        progresso: {},       // chave: moduloId -> { concluido, acertos, tentativas, xpGanho, topicos: [], questoesFeitas: [], ultimoAcesso }
+        progresso: {},
         ultimaAtividade: null,
         currentScreen: 'dashboard',
         disciplineFilter: null,
         currentModuleId: null,
-        currentStep: null,   // 'introducao', 'teoria_0', 'exemplo_0', 'exercicio', 'questao', 'avaliacao'
+        currentStep: null,
         previousScreen: null,
         previousModuleId: null,
-        // Para controle do fluxo de estudo
-        studyIndex: 0,       // índice da etapa atual dentro do array de etapas
-        examQuestions: [],   // questões da avaliação
+        studyIndex: 0,
+        examQuestions: [],
         examIndex: 0,
         examCorrect: 0,
         examAnswered: false,
-        // Para adaptação
         lastWrongTopic: null,
         adaptAttempts: 0,
     };
@@ -807,7 +808,6 @@
             const saved = localStorage.getItem(STATE_KEY);
             if (saved) {
                 const parsed = JSON.parse(saved);
-                // Mescla com default para garantir campos novos
                 return { ...defaultState, ...parsed };
             }
         } catch (e) {}
@@ -853,7 +853,6 @@
         const p = state.progresso[moduloId];
         if (!p) return 'locked';
         if (p.topicos && p.topicos[etapaIndex]) return 'completed';
-        // Se o índice for 0 ou o anterior estiver concluído, é current
         if (etapaIndex === 0) return 'current';
         if (p.topicos && p.topicos[etapaIndex - 1]) return 'current';
         return 'locked';
@@ -1052,7 +1051,7 @@
         const list = document.getElementById('topicsList');
         list.innerHTML = '';
 
-        // Construir lista de etapas a partir do módulo
+        // Construir lista de etapas
         const etapas = [];
         if (modulo.introducao) etapas.push({ tipo: 'introducao', titulo: 'Introdução', descricao: 'Conheça o tema' });
         if (modulo.teoria && modulo.teoria.length) {
@@ -1065,21 +1064,16 @@
                 etapas.push({ tipo: `exemplo_${i}`, titulo: e.titulo || `Exemplo ${i+1}`, descricao: 'Veja a resolução passo a passo' });
             });
         }
-        // Etapas de aprendizagem (exercícios e questões)
         if (modulo.etapasAprendizagem && modulo.etapasAprendizagem.length) {
             modulo.etapasAprendizagem.forEach((etapa, i) => {
                 const label = etapa.tipo === 'exercicio' ? 'Exercício Guiado' : 'Questão CESGRANRIO';
                 etapas.push({ tipo: `etapa_${i}`, titulo: etapa.titulo || `${label} ${i+1}`, descricao: etapa.tipo === 'exercicio' ? 'Pratique com auxílio' : 'Responda à questão' });
             });
         }
-        // Avaliação final (sempre aparece como última)
         if (modulo.avaliacaoFinal && modulo.avaliacaoFinal.questoes && modulo.avaliacaoFinal.questoes.length > 0) {
             etapas.push({ tipo: 'avaliacao', titulo: 'Avaliação Final', descricao: 'Prova com 20 questões (≥80% para aprovação)' });
-        } else {
-            // Se não houver avaliação definida, pode gerar automaticamente a partir de 'questoes'
-            if (modulo.questoes && modulo.questoes.length >= 20) {
-                etapas.push({ tipo: 'avaliacao', titulo: 'Avaliação Final', descricao: 'Prova com 20 questões (≥80% para aprovação)' });
-            }
+        } else if (modulo.questoes && modulo.questoes.length >= 20) {
+            etapas.push({ tipo: 'avaliacao', titulo: 'Avaliação Final', descricao: 'Prova com 20 questões (≥80% para aprovação)' });
         }
 
         // Renderizar cada etapa
@@ -1103,19 +1097,22 @@
                     ${isCompleted ? '<span class="badge badge--success">Concluído</span>' : (isLocked ? '<span class="badge badge--warning">Bloqueado</span>' : '<span class="badge badge--primary">Próximo</span>')}
                 </div>
             `;
-            if (!isLocked && !isCompleted) {
-                item.addEventListener('click', () => App.iniciarEtapa(moduloId, idx));
+            // Permite clicar em qualquer etapa não bloqueada (incluindo concluídas) para revisão
+            if (!isLocked) {
+                item.addEventListener('click', () => {
+                    // Se completed, abre em modo leitura (readonly)
+                    App.iniciarEtapa(moduloId, idx, isCompleted);
+                });
             }
             list.appendChild(item);
         });
 
-        // Botão para iniciar avaliação (se disponível e todas as etapas anteriores concluídas)
+        // Botão de avaliação
         const examBtnContainer = document.getElementById('finalExamButton');
         examBtnContainer.innerHTML = '';
         const hasExam = modulo.avaliacaoFinal?.questoes?.length > 0 || (modulo.questoes && modulo.questoes.length >= 20);
         if (hasExam) {
-            // Verifica se todas as etapas (exceto avaliação) estão concluídas
-            const totalEtapas = etapas.length - 1; // exclui a avaliação
+            const totalEtapas = etapas.length - 1;
             const p = state.progresso[moduloId];
             const allDone = p && p.topicos && p.topicos.slice(0, totalEtapas).every(v => v === true);
             if (allDone) {
@@ -1131,9 +1128,9 @@
     }
 
     // ======================================================================
-    // 6. ESTUDO – RENDERIZAÇÃO DE ETAPA
+    // 6. ESTUDO – RENDERIZAÇÃO DE ETAPA (com suporte a readonly)
     // ======================================================================
-    function renderStudy(moduloId, stepIndex) {
+    function renderStudy(moduloId, stepIndex, readonly = false) {
         const modulo = getModulo(moduloId);
         if (!modulo) return;
 
@@ -1155,10 +1152,8 @@
                 etapas.push({ tipo: `etapa_${i}`, data: etapa });
             });
         }
-        // Avaliação é tratada separadamente, não aqui
 
         if (stepIndex >= etapas.length) {
-            // Se todas as etapas normais concluídas, volta para a tela do módulo
             App.navigate('module', moduloId);
             return;
         }
@@ -1197,13 +1192,25 @@
             if (data.imagem) {
                 html += `<div class="diagram-container">${data.imagem}</div>`;
             }
-            html += `<div class="study-actions"><button class="btn btn--primary" onclick="App.avancarEtapa('${moduloId}')">Próximo →</button></div>`;
+            html += `<div class="study-actions">`;
+            if (!readonly) {
+                html += `<button class="btn btn--primary" onclick="App.avancarEtapa('${moduloId}')">Próximo →</button>`;
+            } else {
+                html += `<button class="btn btn--secondary" onclick="App.goBack()">Voltar ao Módulo</button>`;
+            }
+            html += `</div>`;
         } else if (tipo.startsWith('teoria')) {
             html += `<div>${data.conteudo || ''}</div>`;
             if (data.imagem) {
                 html += `<div class="diagram-container">${data.imagem}</div>`;
             }
-            html += `<div class="study-actions"><button class="btn btn--primary" onclick="App.avancarEtapa('${moduloId}')">Próximo →</button></div>`;
+            html += `<div class="study-actions">`;
+            if (!readonly) {
+                html += `<button class="btn btn--primary" onclick="App.avancarEtapa('${moduloId}')">Próximo →</button>`;
+            } else {
+                html += `<button class="btn btn--secondary" onclick="App.goBack()">Voltar ao Módulo</button>`;
+            }
+            html += `</div>`;
         } else if (tipo.startsWith('exemplo')) {
             html += `<div><strong>Enunciado:</strong> ${data.enunciado || ''}</div>`;
             if (data.imagem) {
@@ -1213,7 +1220,13 @@
             if (data.observacao) {
                 html += `<div style="margin-top:8px; color: var(--text-secondary); font-style: italic;">${data.observacao}</div>`;
             }
-            html += `<div class="study-actions"><button class="btn btn--primary" onclick="App.avancarEtapa('${moduloId}')">Próximo →</button></div>`;
+            html += `<div class="study-actions">`;
+            if (!readonly) {
+                html += `<button class="btn btn--primary" onclick="App.avancarEtapa('${moduloId}')">Próximo →</button>`;
+            } else {
+                html += `<button class="btn btn--secondary" onclick="App.goBack()">Voltar ao Módulo</button>`;
+            }
+            html += `</div>`;
         } else if (tipo.startsWith('etapa')) {
             // Exercício ou Questão
             const isExercise = data.tipo === 'exercicio';
@@ -1224,31 +1237,47 @@
             if (data.alternativas && data.alternativas.length > 0) {
                 html += `<div class="alternatives" id="altContainer">`;
                 data.alternativas.forEach((alt, idx) => {
-                    html += `<button class="btn btn--secondary" data-idx="${idx}" onclick="App.responderAlternativa('${moduloId}', ${stepIndex}, ${idx})" style="width:100%;margin:4px 0;justify-content:flex-start;">
+                    const disabled = readonly ? 'disabled' : '';
+                    const isCorrect = (idx === data.correta);
+                    // Se readonly, mostrar a correta marcada
+                    const extraClass = readonly && isCorrect ? ' btn--success' : '';
+                    html += `<button class="btn btn--secondary${extraClass}" data-idx="${idx}" onclick="App.responderAlternativa('${moduloId}', ${stepIndex}, ${idx})" style="width:100%;margin:4px 0;justify-content:flex-start;" ${disabled}>
                         ${String.fromCharCode(65 + idx)}. ${alt}
                     </button>`;
                 });
                 html += `</div>`;
-                html += `<div id="feedbackEtapa" class="feedback-box hidden"></div>`;
+                // Se readonly, mostrar a resposta correta e a explicação
+                if (readonly) {
+                    const respostaCorreta = data.alternativas[data.correta];
+                    html += `<div class="feedback-box success" style="margin-top:16px;">
+                        <strong>✅ Resposta correta:</strong> ${respostaCorreta}<br>
+                        <span style="display:block; margin-top:8px;">${data.explicacaoAcerto || 'Explicação não disponível.'}</span>
+                    </div>`;
+                    html += `<div class="study-actions"><button class="btn btn--secondary" onclick="App.goBack()">Voltar ao Módulo</button></div>`;
+                } else {
+                    html += `<div id="feedbackEtapa" class="feedback-box hidden"></div>`;
+                }
             } else {
                 html += `<p style="color: var(--text-muted);">Alternativas não definidas.</p>`;
-                html += `<div class="study-actions"><button class="btn btn--primary" onclick="App.avancarEtapa('${moduloId}')">Próximo →</button></div>`;
+                if (!readonly) {
+                    html += `<div class="study-actions"><button class="btn btn--primary" onclick="App.avancarEtapa('${moduloId}')">Próximo →</button></div>`;
+                } else {
+                    html += `<div class="study-actions"><button class="btn btn--secondary" onclick="App.goBack()">Voltar ao Módulo</button></div>`;
+                }
             }
         }
 
         html += `</div>`;
         content.innerHTML = html;
 
-        // Se for introdução/teoria/exemplo, marcar como concluído automaticamente (se ainda não estiver)
-        if (tipo === 'introducao' || tipo.startsWith('teoria') || tipo.startsWith('exemplo')) {
+        // Se não for readonly e for introdução/teoria/exemplo, marcar como concluído automaticamente
+        if (!readonly && (tipo === 'introducao' || tipo.startsWith('teoria') || tipo.startsWith('exemplo'))) {
             const p = state.progresso[moduloId];
             if (!p.topicos[stepIndex]) {
                 p.topicos[stepIndex] = true;
-                // Ganha XP pela etapa concluída
                 const xpGain = 10;
                 p.xpGanho += xpGain;
                 state.xp += xpGain;
-                // Atualiza nível
                 updateLevel();
                 saveState();
                 renderHeader();
@@ -1259,22 +1288,19 @@
     }
 
     // ======================================================================
-    // 7. AVALIAÇÃO FINAL
+    // 7. AVALIAÇÃO FINAL (mantida)
     // ======================================================================
     function renderExam(moduloId) {
         const modulo = getModulo(moduloId);
         if (!modulo) return;
 
-        // Coletar questões da avaliação ou gerar a partir de 'questoes'
         let questions = [];
         if (modulo.avaliacaoFinal && modulo.avaliacaoFinal.questoes && modulo.avaliacaoFinal.questoes.length > 0) {
             questions = modulo.avaliacaoFinal.questoes;
         } else if (modulo.questoes && modulo.questoes.length >= 20) {
-            // Seleciona 20 aleatoriamente
             const shuffled = [...modulo.questoes].sort(() => Math.random() - 0.5);
             questions = shuffled.slice(0, 20);
         } else {
-            // Fallback: usar as questões das etapas
             const etapasQuestoes = modulo.etapasAprendizagem.filter(e => e.tipo === 'questao' && e.alternativas && e.correta !== undefined);
             if (etapasQuestoes.length >= 20) {
                 questions = etapasQuestoes.map(e => ({
@@ -1291,7 +1317,6 @@
             }
         }
 
-        // Embaralhar e pegar no máximo 20
         const shuffled = [...questions].sort(() => Math.random() - 0.5);
         const examQuestions = shuffled.slice(0, Math.min(20, shuffled.length));
 
@@ -1307,7 +1332,6 @@
     function renderExamQuestion(moduloId) {
         const questions = state.examQuestions;
         if (state.examIndex >= questions.length) {
-            // Fim da prova
             const total = questions.length;
             const correct = state.examCorrect;
             const percent = Math.round((correct / total) * 100);
@@ -1367,7 +1391,7 @@
     }
 
     // ======================================================================
-    // 9. APP - NAVEGAÇÃO E AÇÕES
+    // 9. APP - NAVEGAÇÃO E AÇÕES (com readonly)
     // ======================================================================
     const App = {
         navigate(screen, data) {
@@ -1395,7 +1419,7 @@
                 state.currentScreen = 'study';
                 state.currentModuleId = data.moduleId;
                 state.studyIndex = data.stepIndex || 0;
-                renderStudy(data.moduleId, data.stepIndex || 0);
+                renderStudy(data.moduleId, data.stepIndex || 0, data.readonly || false);
                 renderHeader();
             } else if (screen === 'exam') {
                 document.getElementById('screen-exam').classList.add('active');
@@ -1415,9 +1439,7 @@
         goBack() {
             if (state.currentScreen === 'module') {
                 App.navigate('discipline', state.disciplineFilter || 'Matemática');
-            } else if (state.currentScreen === 'study') {
-                App.navigate('module', state.currentModuleId);
-            } else if (state.currentScreen === 'exam') {
+            } else if (state.currentScreen === 'study' || state.currentScreen === 'exam') {
                 App.navigate('module', state.currentModuleId);
             } else {
                 App.navigate('dashboard');
@@ -1429,10 +1451,9 @@
                 showToast('Complete o módulo anterior primeiro.', 'warning', 'Bloqueado');
                 return;
             }
-            // Inicializar progresso se não existir
             if (!state.progresso[id]) {
                 const modulo = getModulo(id);
-                const totalEtapas = modulo ? (modulo.introducao ? 1 : 0) + (modulo.teoria?.length || 0) + (modulo.exemplos?.length || 0) + (modulo.etapasAprendizagem?.length || 0) : 0;
+                const totalEtapas = (modulo?.introducao ? 1 : 0) + (modulo?.teoria?.length || 0) + (modulo?.exemplos?.length || 0) + (modulo?.etapasAprendizagem?.length || 0);
                 state.progresso[id] = {
                     concluido: false,
                     acertos: 0,
@@ -1446,31 +1467,24 @@
             App.navigate('module', id);
         },
 
-        iniciarEtapa(moduloId, stepIndex) {
+        iniciarEtapa(moduloId, stepIndex, readonly = false) {
             const status = getEtapaStatus(moduloId, stepIndex);
             if (status === 'locked') {
                 showToast('Esta etapa está bloqueada.', 'warning', 'Atenção');
                 return;
             }
-            // Se já concluída, não faz nada
-            if (status === 'completed') {
-                showToast('Esta etapa já foi concluída.', 'info', 'OK');
-                return;
-            }
-            App.navigate('study', { moduleId: moduloId, stepIndex });
+            // Se for readonly, forçamos a abertura independente do status
+            App.navigate('study', { moduleId: moduloId, stepIndex, readonly });
         },
 
         avancarEtapa(moduloId) {
             const modulo = getModulo(moduloId);
             if (!modulo) return;
-            // Calcular total de etapas normais (sem avaliação)
             const totalEtapas = (modulo.introducao ? 1 : 0) + (modulo.teoria?.length || 0) + (modulo.exemplos?.length || 0) + (modulo.etapasAprendizagem?.length || 0);
             const nextIndex = state.studyIndex + 1;
             if (nextIndex < totalEtapas) {
-                // Ir para a próxima etapa
                 App.iniciarEtapa(moduloId, nextIndex);
             } else {
-                // Todas as etapas concluídas – volta para o módulo
                 showToast('Todas as etapas concluídas!', 'success', 'Parabéns!');
                 App.navigate('module', moduloId);
             }
@@ -1479,7 +1493,6 @@
         responderAlternativa(moduloId, stepIndex, idx) {
             const modulo = getModulo(moduloId);
             if (!modulo) return;
-            // Encontrar a etapa correspondente no array de etapas
             const etapas = [];
             if (modulo.introducao) etapas.push({ tipo: 'introducao', data: modulo.introducao });
             if (modulo.teoria) modulo.teoria.forEach((t, i) => etapas.push({ tipo: `teoria_${i}`, data: t }));
@@ -1516,15 +1529,18 @@
                 renderHeader();
                 renderDashboard();
                 showToast('+15 XP', 'success', 'Resposta correta!');
-                // Botão para continuar
+                // Botão Continuar com clear
+                const nextWrapper = document.createElement('div');
+                nextWrapper.style.clear = 'both';
+                nextWrapper.style.marginTop = '12px';
                 const nextBtn = document.createElement('button');
                 nextBtn.className = 'btn btn--primary';
                 nextBtn.textContent = 'Continuar →';
-                nextBtn.style.marginTop = '12px';
                 nextBtn.onclick = () => {
                     App.avancarEtapa(moduloId);
                 };
-                feedback.appendChild(nextBtn);
+                nextWrapper.appendChild(nextBtn);
+                feedback.appendChild(nextWrapper);
             } else {
                 feedback.className = 'feedback-box error';
                 feedback.innerHTML = `<strong>❌ Errado.</strong> ${data.explicacaoErro || 'Tente novamente!'}`;
@@ -1532,30 +1548,29 @@
                 saveState();
                 showToast('Tente novamente!', 'warning', 'Não foi dessa vez');
 
-                // Sistema adaptativo: oferecer outra questão do mesmo módulo (se houver)
+                // Sistema adaptativo: oferecer outra questão
                 const questoesModulo = modulo.questoes || [];
                 const questoesRestantes = questoesModulo.filter(q => q.pergunta !== data.pergunta);
                 if (questoesRestantes.length > 0) {
                     const novaQuestao = questoesRestantes[Math.floor(Math.random() * questoesRestantes.length)];
-                    // Substitui a etapa atual pela nova questão
                     const newData = {
                         ...novaQuestao,
                         tipo: 'questao',
                         titulo: 'Questão Adaptativa',
                         conteudo: 'Tente resolver esta nova questão sobre o mesmo tópico.',
                     };
-                    // Atualiza a etapa no array
                     etapas[stepIndex].data = newData;
-                    // Re-renderiza a etapa
-                    renderStudy(moduloId, stepIndex);
+                    // Re-renderiza a etapa sem readonly
+                    renderStudy(moduloId, stepIndex, false);
                 } else {
                     // Botão para tentar novamente
+                    const retryWrapper = document.createElement('div');
+                    retryWrapper.style.clear = 'both';
+                    retryWrapper.style.marginTop = '12px';
                     const retryBtn = document.createElement('button');
                     retryBtn.className = 'btn btn--secondary';
                     retryBtn.textContent = 'Tentar Novamente';
-                    retryBtn.style.marginTop = '12px';
                     retryBtn.onclick = () => {
-                        // Limpa o feedback e reabilita os botões
                         const altContainer = document.getElementById('altContainer');
                         if (altContainer) {
                             altContainer.querySelectorAll('.btn').forEach(btn => {
@@ -1566,7 +1581,8 @@
                         feedback.className = 'feedback-box hidden';
                         feedback.innerHTML = '';
                     };
-                    feedback.appendChild(retryBtn);
+                    retryWrapper.appendChild(retryBtn);
+                    feedback.appendChild(retryWrapper);
                 }
             }
         },
@@ -1596,22 +1612,23 @@
             state.examAnswered = true;
             saveState();
 
-            // Botão próximo
+            const nextWrapper = document.createElement('div');
+            nextWrapper.style.clear = 'both';
+            nextWrapper.style.marginTop = '12px';
             const nextBtn = document.createElement('button');
             nextBtn.className = 'btn btn--primary';
             nextBtn.textContent = state.examIndex < questions.length - 1 ? 'Próxima Questão →' : 'Ver Resultado';
-            nextBtn.style.marginTop = '12px';
             nextBtn.onclick = () => {
                 state.examIndex++;
                 state.examAnswered = false;
                 saveState();
                 renderExamQuestion(moduloId);
             };
-            feedback.appendChild(nextBtn);
+            nextWrapper.appendChild(nextBtn);
+            feedback.appendChild(nextWrapper);
         },
 
         iniciarAvaliacao(moduloId) {
-            // Verifica se já tem avaliação definida
             const modulo = getModulo(moduloId);
             if (!modulo) return;
             if (modulo.avaliacaoFinal && modulo.avaliacaoFinal.questoes && modulo.avaliacaoFinal.questoes.length > 0) {
@@ -1642,9 +1659,7 @@
                 }
                 App.navigate('discipline', getModulo(moduloId)?.disciplina || 'Matemática');
             } else {
-                // Reprovado: sugerir revisão e reiniciar avaliação
                 showToast('Revise os tópicos com dificuldade e tente novamente.', 'warning', 'Estude mais');
-                // Reiniciar avaliação com novas questões (se possível)
                 App.iniciarAvaliacao(moduloId);
             }
         },
@@ -1663,11 +1678,10 @@
     };
 
     // ======================================================================
-    // 10. PERFIL
+    // 10. PERFIL (mantido)
     // ======================================================================
     function renderProfile() {
         const container = document.getElementById('profileContent');
-        // Estatísticas por disciplina
         let disciplinasHtml = '';
         const disciplinas = getDisciplinas();
         disciplinas.forEach(disc => {
@@ -1739,7 +1753,6 @@
         for (const id of moduloIds) {
             try {
                 const { modulo } = await import(`./modulos/${id}.js`);
-                // Validar estrutura mínima
                 if (validateModulo(modulo)) {
                     carregados.push(modulo);
                     console.log(`✅ Módulo "${modulo.nome}" carregado.`);
@@ -1751,7 +1764,6 @@
             }
         }
 
-        // Ordenar
         carregados.sort((a, b) => {
             if (a.disciplina === b.disciplina) return a.ordem - b.ordem;
             return a.disciplina.localeCompare(b.disciplina);
@@ -1759,7 +1771,6 @@
 
         MODULOS = carregados;
 
-        // Inicializar progresso para cada módulo
         MODULOS.forEach(m => {
             if (!state.progresso[m.id]) {
                 const totalEtapas = (m.introducao ? 1 : 0) + (m.teoria?.length || 0) + (m.exemplos?.length || 0) + (m.etapasAprendizagem?.length || 0);
@@ -1775,12 +1786,10 @@
         });
         saveState();
 
-        // Iniciar interface
         init();
     }
 
     function validateModulo(mod) {
-        // Verifica campos obrigatórios
         const required = ['id', 'nome', 'disciplina', 'ordem'];
         for (const field of required) {
             if (!mod[field]) {
@@ -1788,7 +1797,6 @@
                 return false;
             }
         }
-        // Pode adicionar mais validações
         return true;
     }
 
@@ -1796,17 +1804,14 @@
     // 12. INICIALIZAÇÃO
     // ======================================================================
     function init() {
-        // Evento do logo
         document.querySelector('.logo').addEventListener('click', () => App.navigate('dashboard'));
 
-        // Atualizar streak (simplificado)
         const hoje = new Date().toDateString();
         if (state.ultimaAtividade) {
             const ultima = new Date(state.ultimaAtividade).toDateString();
             if (ultima === hoje) {
                 // já contou hoje
             } else {
-                // verifica se foi ontem
                 const ontem = new Date();
                 ontem.setDate(ontem.getDate() - 1);
                 if (ultima === ontem.toDateString()) {
@@ -1821,13 +1826,11 @@
         state.ultimaAtividade = new Date().toISOString();
         saveState();
 
-        // Renderizar dashboard
         renderDashboard();
         renderHeader();
-        document.getElementById('userName').textContent = 'Estudante'; // Pode personalizar
+        document.getElementById('userName').textContent = 'Estudante';
     }
 
-    // Iniciar carregamento
     document.addEventListener('DOMContentLoaded', carregarTodosModulos);
 </script>
 </body>
