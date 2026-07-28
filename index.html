@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BB Inteligente – Plataforma de Estudos</title>
+    <style>
+        /* ============================================
+           DESIGN SYSTEM – BB Inteligente (versão modular)
+           ============================================ */
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary: #10b981;
+            --secondary-dark: #059669;
+            --accent: #f59e0b;
+            --accent-light: #fbbf24;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --surface-hover: #f1f5f9;
+            --border: #e2e8f0;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --success: #22c55e;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --font-sans: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --radius-full: 9999px;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --transition-fast: 150ms ease;
+            --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ===== ANIMAÇÕES ===== */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+        .animate-fade-in { animation: fadeIn var(--transition-slow) forwards; }
+        .animate-slide-right { animation: slideInRight var(--transition-slow) forwards; }
+        .stagger-1 { animation-delay: 0.05s; opacity: 0; }
+        .stagger-2 { animation-delay: 0.1s; opacity: 0; }
+        .stagger-3 { animation-delay: 0.15s; opacity: 0; }
+        .stagger-4 { animation-delay: 0.2s; opacity: 0; }
+        .stagger-5 { animation-delay: 0.25s; opacity: 0; }
+
+        .hidden { display: none !important; }
+        .flex { display: flex; }
+        .grid { display: grid; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .justify-between { justify-content: space-between; }
+        .gap-sm { gap: var(--space-sm); }
+        .gap-md { gap: var(--space-md); }
+        .gap-lg { gap: var(--space-lg); }
+        .text-center { text-align: center; }
+        .w-full { width: 100%; }
+
+        /* ===== COMPONENTES ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+            padding: var(--space-md) var(--space-xl);
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn--primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.39);
+        }
+        .btn--primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 20px 0 rgba(99, 102, 241, 0.5); }
+        .btn--secondary {
+            background: var(--surface);
+            color: var(--text-primary);
+            border: 2px solid var(--border);
+        }
+        .btn--secondary:hover:not(:disabled) { background: var(--surface-hover); border-color: var(--primary-light); }
+        .btn--success {
+            background: linear-gradient(135deg, var(--success), var(--secondary-dark));
+            color: white;
+        }
+        .btn--ghost {
+            background: transparent;
+            color: var(--text-secondary);
+            padding: var(--space-sm) var(--space-md);
+        }
+        .btn--ghost:hover { background: var(--surface-hover); }
+        .btn--small { padding: var(--space-sm) var(--space-lg); font-size: 0.875rem; }
+
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+            transition: all var(--transition-base);
+        }
+        .card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+        .card--interactive { cursor: pointer; }
+        .card--interactive:hover { border-color: var(--primary-light); }
+        .card--locked { opacity: 0.6; cursor: not-allowed; filter: grayscale(0.5); }
+        .card--locked:hover { transform: none; box-shadow: var(--shadow-md); }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-xs) var(--space-md);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .badge--primary { background: rgba(99, 102, 241, 0.1); color: var(--primary); }
+        .badge--success { background: rgba(34, 197, 94, 0.1); color: var(--success); }
+        .badge--warning { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+        .badge--error { background: rgba(239, 68, 68, 0.1); color: var(--error); }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--border);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+        .progress-bar__fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: var(--radius-full);
+            transition: width var(--transition-slow);
+            position: relative;
+        }
+        .progress-bar__fill::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        .progress-ring { transform: rotate(-90deg); }
+        .progress-ring__circle { transition: stroke-dashoffset var(--transition-slow); }
+
+        /* ===== LAYOUT ===== */
+        .app { min-height: 100vh; display: flex; flex-direction: column; }
+        .header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: var(--space-md) var(--space-xl);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        .header__inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: var(--space-md);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .logo__icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1rem;
+            box-shadow: var(--shadow-md);
+        }
+        .header__stats {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+            flex-wrap: wrap;
+        }
+        .stat-pill {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-sm) var(--space-md);
+            background: var(--bg);
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border);
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        .stat-pill__icon { font-size: 1rem; }
+        .stat-pill--xp { color: var(--primary); }
+        .stat-pill--streak { color: var(--accent); }
+        .stat-pill--level { color: var(--secondary); }
+
+        .main {
+            flex: 1;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: var(--space-xl);
+        }
+        .footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: var(--space-lg) var(--space-xl);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* ===== TELAS ===== */
+        .screen { display: none; animation: fadeIn var(--transition-slow); }
+        .screen.active { display: block; }
+
+        .screen-header { margin-bottom: var(--space-2xl); }
+        .screen-header__title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: var(--space-sm);
+            background: linear-gradient(135deg, var(--text-primary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .screen-header__subtitle { color: var(--text-secondary); font-size: 1.125rem; }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-lg);
+            color: var(--text-secondary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: color var(--transition-fast);
+        }
+        .back-btn:hover { color: var(--primary); }
+
+        /* ===== DASHBOARD ===== */
+        .dashboard__hero {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: var(--radius-xl);
+            padding: var(--space-2xl);
+            color: white;
+            margin-bottom: var(--space-2xl);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+        }
+        .dashboard__hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+        .dashboard__hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+        }
+        .dashboard__hero-content { position: relative; z-index: 1; }
+        .dashboard__hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: var(--space-md); }
+        .dashboard__hero p { font-size: 1.125rem; opacity: 0.9; max-width: 600px; }
+
+        .dashboard__stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: var(--space-lg);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-base);
+        }
+        .stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+        .stat-card__icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: var(--space-md);
+        }
+        .stat-card__icon--xp { background: rgba(99, 102, 241, 0.1); }
+        .stat-card__icon--level { background: rgba(16, 185, 129, 0.1); }
+        .stat-card__icon--streak { background: rgba(245, 158, 11, 0.1); }
+        .stat-card__icon--accuracy { background: rgba(59, 130, 246, 0.1); }
+        .stat-card__value { font-size: 1.75rem; font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-xs); }
+        .stat-card__label { font-size: 0.875rem; color: var(--text-secondary); font-weight: 500; }
+
+        .disciplines-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--space-xl);
+        }
+
+        .discipline-card__header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: var(--space-lg);
+        }
+        .discipline-card__icon {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+        }
+        .discipline-card__icon--math { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; }
+        .discipline-card__icon--fin { background: linear-gradient(135deg, #10b981, #059669); color: white; }
+        .discipline-card__title { font-size: 1.25rem; font-weight: 700; margin-bottom: var(--space-xs); }
+        .discipline-card__desc { color: var(--text-secondary); font-size: 0.9375rem; margin-bottom: var(--space-lg); }
+        .discipline-card__progress { margin-bottom: var(--space-md); }
+        .discipline-card__progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-sm);
+            font-size: 0.875rem;
+        }
+        .discipline-card__progress-label { color: var(--text-secondary); font-weight: 500; }
+        .discipline-card__progress-value { font-weight: 700; color: var(--primary); }
+        .discipline-card__modules {
+            display: flex;
+            gap: var(--space-sm);
+            flex-wrap: wrap;
+            margin-top: var(--space-md);
+        }
+        .module-chip {
+            padding: var(--space-xs) var(--space-md);
+            background: var(--bg);
+            border-radius: var(--radius-full);
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+        .module-chip--completed { background: rgba(34, 197, 94, 0.1); color: var(--success); border-color: rgba(34, 197, 94, 0.2); }
+        .module-chip--current { background: rgba(99, 102, 241, 0.1); color: var(--primary); border-color: rgba(99, 102, 241, 0.2); }
+        .module-chip--locked { opacity: 0.5; }
+
+        /* ===== MÓDULOS ===== */
+        .modules-list { display: flex; flex-direction: column; gap: var(--space-lg); }
+        .module-card {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: var(--space-xl);
+            align-items: center;
+            padding: var(--space-xl);
+        }
+        .module-card__number {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius-lg);
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--primary);
+            border: 2px solid var(--border);
+        }
+        .module-card__number--completed { background: var(--success); color: white; border-color: var(--success); }
+        .module-card__number--locked { background: var(--bg); color: var(--text-muted); border-color: var(--border); }
+        .module-card__info h3 { font-size: 1.125rem; font-weight: 700; margin-bottom: var(--space-xs); }
+        .module-card__info p { color: var(--text-secondary); font-size: 0.9375rem; }
+        .module-card__meta { display: flex; align-items: center; gap: var(--space-lg); }
+        .module-card__progress-ring { position: relative; width: 56px; height: 56px; }
+        .module-card__progress-text {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        /* ===== TÓPICOS ===== */
+        .topics-list { display: flex; flex-direction: column; gap: var(--space-md); }
+        .topic-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+            padding: var(--space-lg) var(--space-xl);
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+        .topic-item:hover:not(.topic-item--locked) { border-color: var(--primary-light); box-shadow: var(--shadow-md); transform: translateX(4px); }
+        .topic-item__status {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        .topic-item__status--pending { background: var(--bg); border: 2px solid var(--border); color: var(--text-muted); }
+        .topic-item__status--completed { background: var(--success); color: white; }
+        .topic-item__status--current { background: var(--primary); color: white; animation: pulse 2s infinite; }
+        .topic-item__status--locked { background: var(--bg); color: var(--text-muted); }
+        .topic-item__content { flex: 1; }
+        .topic-item__title { font-weight: 700; margin-bottom: var(--space-xs); }
+        .topic-item__desc { font-size: 0.875rem; color: var(--text-secondary); }
+        .topic-item__stats { display: flex; align-items: center; gap: var(--space-md); font-size: 0.875rem; color: var(--text-muted); }
+        .topic-item--locked { opacity: 0.6; cursor: not-allowed; }
+
+        /* ===== ESTUDO ===== */
+        .study-container { max-width: 800px; margin: 0 auto; }
+        .study-stepper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-2xl);
+            padding: var(--space-lg);
+            background: var(--surface);
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            overflow-x: auto;
+        }
+        .stepper__step { display: flex; align-items: center; gap: var(--space-sm); }
+        .stepper__dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: var(--bg);
+            border: 2px solid var(--border);
+            color: var(--text-muted);
+            transition: all var(--transition-base);
+            flex-shrink: 0;
+        }
+        .stepper__dot--active { background: var(--primary); border-color: var(--primary); color: white; box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2); }
+        .stepper__dot--completed { background: var(--success); border-color: var(--success); color: white; }
+        .stepper__line { width: 24px; height: 2px; background: var(--border); transition: background var(--transition-base); flex-shrink: 0; }
+        .stepper__line--completed { background: var(--success); }
+
+        .study-content {
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            padding: var(--space-2xl);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            min-height: 400px;
+        }
+        .study-content__header { text-align: center; margin-bottom: var(--space-2xl); }
+        .study-content__header h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: var(--space-sm); color: var(--text-primary); }
+        .study-content__header p { color: var(--text-secondary); }
+
+        .study-actions {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-md);
+            margin-top: var(--space-2xl);
+            flex-wrap: wrap;
+        }
+
+        /* ===== ESTILOS PARA CONTEÚDO ===== */
+        .study-example {
+            background: var(--bg);
+            padding: var(--space-lg);
+            border-radius: var(--radius-md);
+            margin: var(--space-md) 0;
+            border-left: 4px solid var(--primary-light);
+        }
+        .study-formula {
+            font-family: 'SF Mono', monospace;
+            font-size: 1.25rem;
+            background: var(--surface);
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            text-align: center;
+            border: 1px solid var(--border);
+            margin: var(--space-md) 0;
+        }
+        .study-question {
+            background: var(--bg);
+            padding: var(--space-lg);
+            border-radius: var(--radius-md);
+            margin: var(--space-md) 0;
+        }
+        .study-question .alternatives {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            margin-top: var(--space-md);
+        }
+        .study-question .alt-item {
+            padding: var(--space-sm) var(--space-md);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        .study-question .alt-item:hover { border-color: var(--primary-light); background: var(--surface-hover); }
+        .study-question .alt-item.correct { border-color: var(--success); background: rgba(34, 197, 94, 0.1); }
+        .study-question .alt-item.wrong { border-color: var(--error); background: rgba(239, 68, 68, 0.1); }
+        .study-question .alt-item.disabled { pointer-events: none; opacity: 0.7; }
+        .study-feedback {
+            margin-top: var(--space-md);
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            background: var(--surface);
+            border: 1px solid var(--border);
+        }
+        .study-feedback.success { border-left: 4px solid var(--success); }
+        .study-feedback.error { border-left: 4px solid var(--error); }
+        .study-feedback h4 { font-weight: 700; margin-bottom: var(--space-sm); }
+        .study-feedback p { font-size: 0.9375rem; color: var(--text-secondary); }
+
+        .study-input {
+            display: flex;
+            gap: var(--space-md);
+            margin: var(--space-md) 0;
+            flex-wrap: wrap;
+        }
+        .study-input input {
+            flex: 1;
+            padding: var(--space-md);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-family: inherit;
+            min-width: 200px;
+        }
+        .study-input input:focus { outline: none; border-color: var(--primary); }
+
+        /* ===== TOAST ===== */
+        .toast-container {
+            position: fixed;
+            top: 80px;
+            right: var(--space-xl);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+            pointer-events: none;
+        }
+        .toast {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg) var(--space-xl);
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            min-width: 300px;
+            animation: slideInRight 0.4s ease, fadeIn 0.4s ease;
+            pointer-events: all;
+        }
+        .toast--success { border-left: 4px solid var(--success); }
+        .toast--warning { border-left: 4px solid var(--warning); }
+        .toast--info { border-left: 4px solid var(--info); }
+        .toast__icon { font-size: 1.5rem; }
+        .toast__content h4 { font-weight: 700; margin-bottom: var(--space-xs); }
+        .toast__content p { font-size: 0.875rem; color: var(--text-secondary); }
+
+        /* ===== RESPONSIVO ===== */
+        @media (max-width: 768px) {
+            .main { padding: var(--space-md); }
+            .header__inner { padding: 0 var(--space-md); }
+            .header__stats { gap: var(--space-sm); }
+            .stat-pill span:not(.stat-pill__icon) { display: none; }
+            .dashboard__hero h1 { font-size: 1.75rem; }
+            .dashboard__hero { padding: var(--space-xl); }
+            .disciplines-grid { grid-template-columns: 1fr; }
+            .module-card { grid-template-columns: 1fr; text-align: center; gap: var(--space-md); }
+            .module-card__number { margin: 0 auto; }
+            .study-stepper { padding: var(--space-md); }
+            .stepper__line { width: 12px; }
+            .toast-container { right: var(--space-md); left: var(--space-md); }
+            .toast { min-width: auto; width: 100%; }
+        }
+        @media (max-width: 480px) {
+            .screen-header__title { font-size: 1.5rem; }
+            .study-content { padding: var(--space-lg); }
+            .btn { padding: var(--space-md) var(--space-lg); width: 100%; }
+            .study-actions { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app" id="app">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header__inner">
+                <a class="logo" onclick="App.navigate('dashboard')">
+                    <div class="logo__icon">BB</div>
+                    <span>BB Inteligente</span>
+                </a>
+                <div class="header__stats" id="headerStats"></div>
+            </div>
+        </header>
+
+        <!-- MAIN -->
+        <main class="main">
+            <!-- DASHBOARD -->
+            <section class="screen active" id="screen-dashboard">
+                <div class="dashboard__hero animate-fade-in">
+                    <div class="dashboard__hero-content">
+                        <h1>Olá, <span id="userName">Estudante</span>! 👋</h1>
+                        <p>Continue sua preparação para o concurso do Banco do Brasil. Você está no caminho certo para a aprovação!</p>
+                    </div>
+                </div>
+                <div class="dashboard__stats-grid" id="dashboardStats"></div>
+                <div class="screen-header animate-fade-in stagger-2">
+                    <h2 class="screen-header__title">Disciplinas</h2>
+                    <p class="screen-header__subtitle">Escolha uma área de estudo para continuar</p>
+                </div>
+                <div class="disciplines-grid" id="disciplinesGrid"></div>
+            </section>
+
+            <!-- DISCIPLINA -->
+            <section class="screen" id="screen-discipline">
+                <div class="back-btn" onclick="App.navigate('dashboard')">← Voltar ao Dashboard</div>
+                <div class="screen-header">
+                    <h1 class="screen-header__title" id="disciplineTitle">Matemática</h1>
+                    <p class="screen-header__subtitle" id="disciplineSubtitle">Selecione um módulo para estudar</p>
+                </div>
+                <div class="modules-list" id="modulesList"></div>
+            </section>
+
+            <!-- MÓDULO -->
+            <section class="screen" id="screen-module">
+                <div class="back-btn" onclick="App.goBack()">← Voltar aos Módulos</div>
+                <div class="screen-header">
+                    <h1 class="screen-header__title" id="moduleTitle">Progressões</h1>
+                    <p class="screen-header__subtitle" id="moduleSubtitle">Complete os tópicos em ordem</p>
+                </div>
+                <div class="topics-list" id="topicsList"></div>
+            </section>
+
+            <!-- ESTUDO -->
+            <section class="screen" id="screen-study">
+                <div class="back-btn" onclick="App.confirmExitStudy()">← Sair da Aula</div>
+                <div class="study-container">
+                    <div class="study-stepper" id="studyStepper"></div>
+                    <div class="study-content" id="studyContent"></div>
+                </div>
+            </section>
+
+            <!-- PERFIL -->
+            <section class="screen" id="screen-profile">
+                <div class="back-btn" onclick="App.navigate('dashboard')">← Voltar ao Dashboard</div>
+                <div class="screen-header">
+                    <h1 class="screen-header__title">Seu Perfil</h1>
+                    <p class="screen-header__subtitle">Acompanhe sua evolução e conquistas</p>
+                </div>
+                <div id="profileContent"></div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>BB Inteligente – Plataforma de Estudos para o Concurso Banco do Brasil (CESGRANRIO)</p>
+        </footer>
+
+        <div class="toast-container" id="toastContainer"></div>
+    </div>
+
+    <script>
+        /* ============================================================
+           BB INTELIGENTE – ARQUITETURA MODULAR COM DYNAMIC IMPORT
+           ============================================================ */
+
+        // ===== CONFIG =====
+        const CONFIG = {
+            XP_PER_CORRECT: 20,
+            XP_PER_STEP_COMPLETE: 10,
+            XP_PER_MODULE_COMPLETE: 100,
+            LEVEL_THRESHOLD: 500,
+            STEPS: [
+                { id: 'situacao', label: 'Situação', icon: '💡' },
+                { id: 'explicacao', label: 'Conceito', icon: '📚' },
+                { id: 'formula', label: 'Fórmula', icon: '🔢' },
+                { id: 'exemplo', label: 'Exemplo', icon: '✏️' },
+                { id: 'guiado', label: 'Prática', icon: '🎯' },
+                { id: 'questao', label: 'Desafio', icon: '🧩' },
+                { id: 'progresso', label: 'Revisão', icon: '✅' }
+            ],
+            // Mapeamento de topicId -> caminho do módulo (usado no import dinâmico)
+            MODULE_PATHS: {
+                'pa': './modulos/modulo-pa.js',
+                'pg': './modulos/modulo-pg.js',
+                'pa-pg-aplicacao': './modulos/modulo-pa-pg-aplicacao.js'
+                // outros serão adicionados
+            }
+        };
+
+        // ============================================================
+        // STATE MANAGER (com persistência)
+        // ============================================================
+        const StateManager = {
+            STORAGE_KEY: 'bb_inteligente_state_v4',
+
+            defaultState() {
+                return {
+                    user: { id: 'default', name: 'Estudante', createdAt: new Date().toISOString() },
+                    currentView: 'dashboard',
+                    viewHistory: [],
+                    currentDiscipline: null,
+                    currentModule: null,
+                    currentTopic: null,
+                    currentStep: 0,
+                    lastStudyDate: null,
+                    disciplines: this.initDisciplines(),
+                    globalStats: {
+                        totalXp: 0,
+                        level: 1,
+                        streak: 0,
+                        longestStreak: 0,
+                        totalCorrect: 0,
+                        totalWrong: 0,
+                        totalTime: 0,
+                        achievements: [],
+                        studyDays: []
+                    }
+                };
+            },
+
+            initDisciplines() {
+                const disciplines = {};
+                for (const [key, discipline] of Object.entries(CONTENT_DATA)) {
+                    const modules = {};
+                    discipline.modules.forEach((mod, modIndex) => {
+                        const topics = mod.topics.map((topic, topIndex) => ({
+                            id: topic.id,
+                            status: modIndex === 0 && topIndex === 0 ? 'available' : 'locked',
+                            attempts: 0,
+                            correct: 0,
+                            wrong: 0,
+                            timeSpent: 0,
+                            lastAttempt: null,
+                            masteryScore: 0
+                        }));
+                        modules[mod.id] = {
+                            completed: false,
+                            unlocked: modIndex === 0,
+                            topics: topics,
+                            currentTopicIndex: 0
+                        };
+                    });
+                    disciplines[key] = { progress: 0, xp: 0, modules: modules };
+                }
+                return disciplines;
+            },
+
+            load() {
+                try {
+                    const saved = localStorage.getItem(this.STORAGE_KEY);
+                    if (saved) {
+                        const parsed = JSON.parse(saved);
+                        return this.mergeDeep(this.defaultState(), parsed);
+                    }
+                } catch (e) { console.warn('Erro ao carregar estado:', e); }
+                return this.defaultState();
+            },
+
+            save(state) {
+                try {
+                    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(state));
+                } catch (e) { console.warn('Erro ao salvar estado:', e); }
+            },
+
+            mergeDeep(target, source) {
+                const output = Object.assign({}, target);
+                if (this.isObject(target) && this.isObject(source)) {
+                    Object.keys(source).forEach(key => {
+                        if (this.isObject(source[key])) {
+                            if (!(key in target)) Object.assign(output, { [key]: source[key] });
+                            else output[key] = this.mergeDeep(target[key], source[key]);
+                        } else {
+                            Object.assign(output, { [key]: source[key] });
+                        }
+                    });
+                }
+                return output;
+            },
+
+            isObject(item) { return item && typeof item === 'object' && !Array.isArray(item); },
+
+            reset() {
+                localStorage.removeItem(this.STORAGE_KEY);
+                return this.defaultState();
+            }
+        };
+
+        // ============================================================
+        // GAMIFICAÇÃO
+        // ============================================================
+        const Gamification = {
+            calculateLevel(xp) { return Math.floor(xp / CONFIG.LEVEL_THRESHOLD) + 1; },
+
+            checkStreak(state) {
+                const today = new Date().toDateString();
+                const lastDate = state.lastStudyDate ? new Date(state.lastStudyDate).toDateString() : null;
+                if (!lastDate) return state.globalStats.streak;
+                const diffMs = new Date(today) - new Date(lastDate);
+                const diffDays = diffMs / (1000 * 60 * 60 * 24);
+                if (diffDays >= 2) state.globalStats.streak = 0;
+                return state.globalStats.streak;
+            },
+
+            updateStreak(state) {
+                const today = new Date().toDateString();
+                const lastDate = state.lastStudyDate ? new Date(state.lastStudyDate).toDateString() : null;
+                if (lastDate === today) return;
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                if (lastDate === yesterday.toDateString()) state.globalStats.streak++;
+                else state.globalStats.streak = 1;
+                if (state.globalStats.streak > state.globalStats.longestStreak)
+                    state.globalStats.longestStreak = state.globalStats.streak;
+                state.lastStudyDate = new Date().toISOString();
+                if (!state.globalStats.studyDays.includes(today))
+                    state.globalStats.studyDays.push(today);
+            },
+
+            addXp(state, amount) {
+                state.globalStats.totalXp += amount;
+                const newLevel = this.calculateLevel(state.globalStats.totalXp);
+                if (newLevel > state.globalStats.level) {
+                    state.globalStats.level = newLevel;
+                    App.showToast('🎉 Nível Up!', `Você alcançou o nível ${newLevel}!`, 'success');
+                }
+                if (state.currentDiscipline) {
+                    state.disciplines[state.currentDiscipline].xp += amount;
+                }
+            },
+
+            checkAchievements(state) {
+                const achievements = [
+                    { id: 'first_steps', title: 'Primeiros Passos', desc: 'Complete seu primeiro tópico', icon: '🌱',
+                      check: (s) => this.getCompletedTopics(s).length >= 1 },
+                    { id: 'dedicated', title: 'Dedicado', desc: 'Estude por 3 dias seguidos', icon: '🔥',
+                      check: (s) => s.globalStats.streak >= 3 },
+                    { id: 'warrior', title: 'Guerreiro', desc: 'Estude por 7 dias seguidos', icon: '⚔️',
+                      check: (s) => s.globalStats.streak >= 7 },
+                    { id: 'master', title: 'Mestre', desc: 'Alcance o nível 5', icon: '👑',
+                      check: (s) => s.globalStats.level >= 5 }
+                ];
+                achievements.forEach(ach => {
+                    const alreadyUnlocked = state.globalStats.achievements.find(a => a.id === ach.id);
+                    if (!alreadyUnlocked && ach.check(state)) {
+                        state.globalStats.achievements.push({ id: ach.id, unlockedAt: new Date().toISOString() });
+                        App.showToast('🏆 Conquista Desbloqueada!', ach.title, 'success');
+                    }
+                });
+            },
+
+            getCompletedTopics(state) {
+                const completed = [];
+                for (const disc of Object.values(state.disciplines)) {
+                    for (const mod of Object.values(disc.modules)) {
+                        mod.topics.forEach(t => {
+                            if (t.status === 'dominado') completed.push(t);
+                        });
+                    }
+                }
+                return completed;
+            },
+
+            calculateAccuracy(state) {
+                const total = state.globalStats.totalCorrect + state.globalStats.totalWrong;
+                if (total === 0) return 0;
+                return Math.round((state.globalStats.totalCorrect / total) * 100);
+            }
+        };
+
+        // ============================================================
+        // DADOS ESTÁTICOS – METADADOS DOS MÓDULOS
+        // ============================================================
+        const CONTENT_DATA = {
+            matematica: {
+                id: 'matematica',
+                title: 'Matemática',
+                description: 'Raciocínio lógico, progressões, funções e mais. Base estratégica para a prova CESGRANRIO.',
+                icon: '📐',
+                color: 'math',
+                modules: [
+                    { id: 'pa-pg', title: 'Progressões Aritméticas e Geométricas', description: 'PA, PG e aplicações em SAC e Price.',
+                      topics: [
+                          { id: 'pa', title: 'Progressão Aritmética (PA)', description: 'Termo geral, soma e propriedades' },
+                          { id: 'pg', title: 'Progressão Geométrica (PG)', description: 'Termo geral, soma e limites' },
+                          { id: 'pa-pg-aplicacao', title: 'Aplicação: SAC e Price', description: 'Como PA e PG aparecem nos sistemas de amortização' }
+                      ] },
+                    { id: 'razoes-proporcoes', title: 'Razões, Proporções e Porcentagens', description: 'Grandezas diretamente e inversamente proporcionais, regra de três e porcentagem.',
+                      topics: [
+                          { id: 'razoes', title: 'Razão e Proporção', description: 'Conceitos fundamentais' },
+                          { id: 'regra-tres', title: 'Regra de Três', description: 'Simples e composta' },
+                          { id: 'porcentagem', title: 'Porcentagem', description: 'Aumentos, descontos e sucessivos' }
+                      ] },
+                    { id: 'logica', title: 'Lógica Proposicional', description: 'Proposições, conectivos, tabelas-verdade e equivalências.',
+                      topics: [
+                          { id: 'proposicoes', title: 'Proposições Simples e Compostas', description: 'Conceitos iniciais' },
+                          { id: 'conectivos', title: 'Conectivos Lógicos', description: 'E, OU, SE...ENTÃO, SE E SOMENTE SE' },
+                          { id: 'tabelas-verdade', title: 'Tabelas-Verdade', description: 'Construção e análise' }
+                      ] },
+                    { id: 'funcoes', title: 'Funções', description: '1º grau, 2º grau, exponencial e logarítmica.',
+                      topics: [
+                          { id: 'funcao-1grau', title: 'Função do 1º Grau', description: 'Afim e linear' },
+                          { id: 'funcao-2grau', title: 'Função do 2º Grau', description: 'Quadrática e propriedades' },
+                          { id: 'funcao-exp', title: 'Função Exponencial', description: 'Crescimento e decaimento' },
+                          { id: 'funcao-log', title: 'Função Logarítmica', description: 'Inversa da exponencial' }
+                      ] },
+                    { id: 'sequencias', title: 'Sequências Lógicas', description: 'Numéricas, de letras, datas, posicionais e figuras.',
+                      topics: [
+                          { id: 'seq-numericas', title: 'Sequências Numéricas', description: 'Padrões aritméticos' },
+                          { id: 'seq-letras', title: 'Sequências de Letras', description: 'Alfabéticas e posicionais' },
+                          { id: 'seq-figuras', title: 'Sequências de Figuras', description: 'Padrões visuais' }
+                      ] },
+                    { id: 'sistemas-lineares', title: 'Sistemas Lineares', description: 'Resolução e interpretação de sistemas de equações.',
+                      topics: [
+                          { id: 'sistemas-2x2', title: 'Sistemas 2x2', description: 'Substituição e adição' },
+                          { id: 'sistemas-3x3', title: 'Sistemas 3x3', description: 'Regra de Cramer e escalonamento' }
+                      ] },
+                    { id: 'conjuntos', title: 'Noções de Conjuntos', description: 'Operações, diagramas de Venn e problemas de contagem.',
+                      topics: [
+                          { id: 'conjuntos-ops', title: 'Operações com Conjuntos', description: 'União, interseção e diferença' },
+                          { id: 'venn', title: 'Diagramas de Venn', description: 'Representação e problemas' }
+                      ] },
+                    { id: 'numeros', title: 'Números Inteiros, Racionais e Reais', description: 'Operações, potenciação, radiciação, MMC e MDC.',
+                      topics: [
+                          { id: 'operacoes', title: 'Operações Fundamentais', description: 'Adição, subtração, multiplicação e divisão' },
+                          { id: 'pot-rad', title: 'Potenciação e Radiciação', description: 'Propriedades e simplificação' },
+                          { id: 'mmc-mdc', title: 'MMC e MDC', description: 'Máximo divisor comum e mínimo múltiplo comum' }
+                      ] },
+                    { id: 'medidas', title: 'Sistema Legal de Medidas', description: 'Geometria plana e conversão de unidades.',
+                      topics: [
+                          { id: 'geometria-plana', title: 'Geometria Plana', description: 'Áreas e perímetros' },
+                          { id: 'conversao', title: 'Conversão de Unidades', description: 'Comprimento, massa, tempo e volume' }
+                      ] },
+                    { id: 'matrizes', title: 'Matrizes e Determinantes', description: 'Operações, inversas e sistemas.',
+                      topics: [
+                          { id: 'matrizes-ops', title: 'Operações com Matrizes', description: 'Adição, multiplicação e transposta' },
+                          { id: 'determinantes', title: 'Determinantes', description: 'Cálculo e propriedades' }
+                      ] }
+                ]
+            },
+            matematicaFinanceira: {
+                id: 'matematicaFinanceira',
+                title: 'Matemática Financeira',
+                description: 'Juros simples, compostos, amortização e análise de investimentos. Essencial para a prova.',
+                icon: '💰',
+                color: 'fin',
+                modules: [
+                    { id: 'conceitos-gerais', title: 'Conceitos Gerais', description: 'Valor do dinheiro no tempo, capital, juros, taxas e fluxos de caixa.',
+                      topics: [
+                          { id: 'valor-tempo', title: 'Valor do Dinheiro no Tempo', description: 'Princípio fundamental' },
+                          { id: 'capital-juros', title: 'Capital e Juros', description: 'Conceitos e diferenças' },
+                          { id: 'taxas', title: 'Taxas de Juros', description: 'Nominal, efetiva, proporcional e equivalente' },
+                          { id: 'fluxo-caixa', title: 'Fluxo de Caixa', description: 'Diagramas e equivalência financeira' }
+                      ] },
+                    { id: 'juros-simples', title: 'Juros Simples', description: 'Cálculo de montante, juros, taxa, principal e prazo.',
+                      topics: [
+                          { id: 'js-formula', title: 'Fórmula dos Juros Simples', description: 'J = C × i × t' },
+                          { id: 'js-montante', title: 'Montante em Juros Simples', description: 'M = C + J' },
+                          { id: 'js-taxas', title: 'Taxas no Regime Simples', description: 'Proporcionalidade' }
+                      ] },
+                    { id: 'juros-compostos', title: 'Juros Compostos', description: 'Capitalização composta, montante e equivalência de taxas.',
+                      topics: [
+                          { id: 'jc-formula', title: 'Fórmula dos Juros Compostos', description: 'M = C(1+i)^t' },
+                          { id: 'jc-taxas', title: 'Taxas Equivalentes', description: 'Conversão entre períodos' },
+                          { id: 'jc-desconto', title: 'Desconto Composto', description: 'Racional e comercial' }
+                      ] },
+                    { id: 'amortizacao', title: 'Sistemas de Amortização', description: 'Price, SAC e comparações.',
+                      topics: [
+                          { id: 'sac', title: 'SAC – Sistema de Amortização Constante', description: 'Prestações decrescentes' },
+                          { id: 'price', title: 'Price – Tabela Price', description: 'Prestações constantes' },
+                          { id: 'comparacao', title: 'Comparação SAC vs Price', description: 'Vantagens e desvantagens' }
+                      ] }
+                ]
+            }
+        };
+
+        // ============================================================
+        // APLICAÇÃO PRINCIPAL
+        // ============================================================
+        const App = {
+            state: null,
+            moduleCache: {}, // cache de módulos carregados (objeto exportado)
+            currentModuleAPI: null, // referência às funções auxiliares do módulo
+
+            init() {
+                this.state = StateManager.load();
+                this.updateStreakIfNeeded();
+                this.renderHeader();
+                this.renderDashboard();
+                this.navigate('dashboard', false);
+                setInterval(() => StateManager.save(this.state), 5000);
+                console.log('BB Inteligente – Carregamento com Dynamic Import');
+            },
+
+            updateStreakIfNeeded() {
+                Gamification.checkStreak(this.state);
+            },
+
+            persist() {
+                StateManager.save(this.state);
+            },
+
+            // ===== NAVEGAÇÃO =====
+            navigate(view, saveHistory = true) {
+                if (saveHistory && this.state.currentView) {
+                    this.state.viewHistory.push(this.state.currentView);
+                }
+                this.state.currentView = view;
+                document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+                const target = document.getElementById(`screen-${view}`);
+                if (target) target.classList.add('active');
+                window.scrollTo(0, 0);
+                this.persist();
+            },
+
+            goBack() {
+                const prev = this.state.viewHistory.pop();
+                if (prev) {
+                    this.state.currentView = prev;
+                    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+                    const target = document.getElementById(`screen-${prev}`);
+                    if (target) target.classList.add('active');
+                    this.persist();
+                } else {
+                    this.navigate('dashboard');
+                }
+            },
+
+            confirmExitStudy() {
+                if (confirm('Deseja realmente sair da aula? Seu progresso será salvo.')) {
+                    this.goBack();
+                }
+            },
+
+            // ===== RENDERIZAÇÃO =====
+            renderHeader() {
+                const stats = this.state.globalStats;
+                const streak = Gamification.checkStreak(this.state);
+                document.getElementById('headerStats').innerHTML = `
+                    <div class="stat-pill stat-pill--xp"><span class="stat-pill__icon">⚡</span><span>${stats.totalXp} XP</span></div>
+                    <div class="stat-pill stat-pill--level"><span class="stat-pill__icon">⭐</span><span>Nível ${stats.level}</span></div>
+                    <div class="stat-pill stat-pill--streak"><span class="stat-pill__icon">🔥</span><span>${streak} dias</span></div>
+                `;
+            },
+
+            renderDashboard() {
+                const stats = this.state.globalStats;
+                const accuracy = Gamification.calculateAccuracy(this.state);
+                const completedTopics = Gamification.getCompletedTopics(this.state).length;
+
+                document.getElementById('dashboardStats').innerHTML = `
+                    <div class="stat-card animate-fade-in stagger-1">
+                        <div class="stat-card__icon stat-card__icon--xp">⚡</div>
+                        <div class="stat-card__value">${stats.totalXp}</div>
+                        <div class="stat-card__label">XP Total</div>
+                    </div>
+                    <div class="stat-card animate-fade-in stagger-2">
+                        <div class="stat-card__icon stat-card__icon--level">⭐</div>
+                        <div class="stat-card__value">${stats.level}</div>
+                        <div class="stat-card__label">Nível Atual</div>
+                    </div>
+                    <div class="stat-card animate-fade-in stagger-3">
+                        <div class="stat-card__icon stat-card__icon--streak">🔥</div>
+                        <div class="stat-card__value">${stats.streak}</div>
+                        <div class="stat-card__label">Dias Seguidos</div>
+                    </div>
+                    <div class="stat-card animate-fade-in stagger-4">
+                        <div class="stat-card__icon stat-card__icon--accuracy">🎯</div>
+                        <div class="stat-card__value">${accuracy}%</div>
+                        <div class="stat-card__label">Precisão</div>
+                    </div>
+                `;
+
+                const grid = document.getElementById('disciplinesGrid');
+                grid.innerHTML = Object.values(CONTENT_DATA).map((disc, i) => {
+                    const stateDisc = this.state.disciplines[disc.id];
+                    const progress = this.calculateDisciplineProgress(disc.id);
+                    const completedModules = Object.values(stateDisc.modules).filter(m => m.completed).length;
+                    const totalModules = disc.modules.length;
+                    return `
+                        <div class="card card--interactive discipline-card animate-fade-in stagger-${i+1}" onclick="App.openDiscipline('${disc.id}')">
+                            <div class="discipline-card__header">
+                                <div class="discipline-card__icon discipline-card__icon--${disc.color}">${disc.icon}</div>
+                                <span class="badge badge--primary">${completedModules}/${totalModules} módulos</span>
+                            </div>
+                            <h3 class="discipline-card__title">${disc.title}</h3>
+                            <p class="discipline-card__desc">${disc.description}</p>
+                            <div class="discipline-card__progress">
+                                <div class="discipline-card__progress-header">
+                                    <span class="discipline-card__progress-label">Progresso</span>
+                                    <span class="discipline-card__progress-value">${progress}%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-bar__fill" style="width: ${progress}%"></div>
+                                </div>
+                            </div>
+                            <div class="discipline-card__modules">
+                                ${disc.modules.slice(0, 3).map(m => {
+                                    const modState = stateDisc.modules[m.id];
+                                    let cls = 'module-chip';
+                                    if (modState.completed) cls += ' module-chip--completed';
+                                    else if (modState.unlocked) cls += ' module-chip--current';
+                                    else cls += ' module-chip--locked';
+                                    return `<span class="${cls}">${m.title.split(' ')[0]}</span>`;
+                                }).join('')}
+                                ${disc.modules.length > 3 ? `<span class="module-chip">+${disc.modules.length - 3}</span>` : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            },
+
+            renderDiscipline() {
+                const discId = this.state.currentDiscipline;
+                const disc = CONTENT_DATA[discId];
+                const stateDisc = this.state.disciplines[discId];
+                document.getElementById('disciplineTitle').textContent = disc.title;
+                document.getElementById('disciplineSubtitle').textContent = disc.description + ' Selecione um módulo.';
+
+                const list = document.getElementById('modulesList');
+                list.innerHTML = disc.modules.map((mod, index) => {
+                    const modState = stateDisc.modules[mod.id];
+                    const isLocked = !modState.unlocked;
+                    const isCompleted = modState.completed;
+                    const progress = this.calculateModuleProgress(discId, mod.id);
+                    const circumference = 2 * Math.PI * 22;
+                    const offset = circumference - (progress / 100) * circumference;
+                    return `
+                        <div class="card ${isLocked ? 'card--locked' : 'card--interactive'} module-card animate-fade-in" style="animation-delay: ${index * 0.1}s" ${!isLocked ? `onclick="App.openModule('${mod.id}')"` : ''}>
+                            <div class="module-card__number ${isCompleted ? 'module-card__number--completed' : ''} ${isLocked ? 'module-card__number--locked' : ''}">
+                                ${isCompleted ? '✓' : isLocked ? '🔒' : index + 1}
+                            </div>
+                            <div class="module-card__info">
+                                <h3>${mod.title}</h3>
+                                <p>${mod.description}</p>
+                            </div>
+                            <div class="module-card__meta">
+                                <div class="module-card__progress-ring">
+                                    <svg width="56" height="56" viewBox="0 0 56 56">
+                                        <circle cx="28" cy="28" r="22" fill="none" stroke="var(--border)" stroke-width="4"/>
+                                        <circle class="progress-ring__circle" cx="28" cy="28" r="22" fill="none" stroke="${isCompleted ? 'var(--success)' : 'var(--primary)'}" stroke-width="4"
+                                                stroke-dasharray="${circumference}" stroke-dashoffset="${offset}" stroke-linecap="round"/>
+                                    </svg>
+                                    <div class="module-card__progress-text">${progress}%</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            },
+
+            renderModule() {
+                const discId = this.state.currentDiscipline;
+                const modId = this.state.currentModule;
+                const disc = CONTENT_DATA[discId];
+                const mod = disc.modules.find(m => m.id === modId);
+                const stateMod = this.state.disciplines[discId].modules[modId];
+
+                document.getElementById('moduleTitle').textContent = mod.title;
+                document.getElementById('moduleSubtitle').textContent = `Complete os ${mod.topics.length} tópicos.`;
+
+                const list = document.getElementById('topicsList');
+                list.innerHTML = mod.topics.map((topic, index) => {
+                    const topicState = stateMod.topics[index];
+                    let statusClass = '', statusIcon = '';
+                    switch (topicState.status) {
+                        case 'dominado': statusClass = 'topic-item__status--completed'; statusIcon = '✓'; break;
+                        case 'available': statusClass = 'topic-item__status--current'; statusIcon = '▶'; break;
+                        case 'locked': statusClass = 'topic-item__status--locked'; statusIcon = '🔒'; break;
+                        default: statusClass = 'topic-item__status--pending'; statusIcon = '○';
+                    }
+                    const isClickable = topicState.status !== 'locked';
+                    return `
+                        <div class="topic-item ${!isClickable ? 'topic-item--locked' : ''} animate-slide-right" style="animation-delay: ${index * 0.08}s" ${isClickable ? `onclick="App.openTopic('${topic.id}')"` : ''}>
+                            <div class="topic-item__status ${statusClass}">${statusIcon}</div>
+                            <div class="topic-item__content">
+                                <div class="topic-item__title">${topic.title}</div>
+                                <div class="topic-item__desc">${topic.description}</div>
+                            </div>
+                            <div class="topic-item__stats">
+                                ${topicState.attempts > 0 ? `<span>🎯 ${topicState.correct}/${topicState.attempts}</span>` : ''}
+                                ${topicState.timeSpent > 0 ? `<span>⏱️ ${Math.ceil(topicState.timeSpent / 60)}min</span>` : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            },
+
+            // ===== CARREGAMENTO DINÂMICO USANDO IMPORT() =====
+            async openTopic(topicId) {
+                this.state.currentTopic = topicId;
+                this.state.currentStep = 0;
+                this.persist();
+
+                // Verifica se o módulo já está em cache
+                let moduleObj = this.moduleCache[topicId];
+
+                if (!moduleObj) {
+                    try {
+                        // Obtém o caminho do módulo
+                        const path = CONFIG.MODULE_PATHS[topicId];
+                        if (!path) {
+                            throw new Error(`Caminho não definido para o tópico "${topicId}"`);
+                        }
+
+                        // Importação dinâmica
+                        const imported = await import(path);
+                        // Espera-se que o módulo exporte como default um objeto com as etapas e funções
+                        moduleObj = imported.default;
+
+                        if (!moduleObj) {
+                            throw new Error(`O módulo "${topicId}" não exportou um objeto padrão.`);
+                        }
+
+                        // Guarda no cache
+                        this.moduleCache[topicId] = moduleObj;
+                        this.currentModuleAPI = moduleObj; // guarda referência para funções
+
+                        console.log(`Módulo "${topicId}" carregado com sucesso.`);
+
+                    } catch (error) {
+                        console.error(`Erro ao carregar módulo "${topicId}":`, error);
+                        // Fallback: módulo genérico
+                        moduleObj = this.getFallbackModule(topicId);
+                        this.moduleCache[topicId] = moduleObj;
+                        this.currentModuleAPI = moduleObj;
+                        this.showToast('⚠️', `Não foi possível carregar o módulo. Usando versão genérica.`, 'warning');
+                    }
+                } else {
+                    this.currentModuleAPI = moduleObj;
+                }
+
+                // Renderiza o estudo usando o módulo carregado
+                this.renderStudy(moduleObj);
+                this.navigate('study');
+            },
+
+            // ===== FALLBACK PARA MÓDULO NÃO ENCONTRADO =====
+            getFallbackModule(topicId) {
+                return {
+                    situacao: { title: '💡 Situação', html: `<p>Conteúdo em desenvolvimento para "${topicId}".</p>` },
+                    explicacao: { title: '📚 Conceito', html: '<p>Em breve.</p>' },
+                    formula: { title: '🔢 Fórmula', html: '<p>Em breve.</p>' },
+                    exemplo: { title: '✏️ Exemplo', html: '<p>Em breve.</p>' },
+                    guiado: { title: '🎯 Prática', html: '<p>Em breve.</p>' },
+                    questao: { title: '🧩 Desafio', html: '<p>Em breve.</p>' },
+                    progresso: { title: '✅ Revisão', html: '<p>Concluído.</p>' },
+                    // funções vazias (serão substituídas por padrão)
+                    verificarGuiado: null,
+                    iniciarQuestao: null,
+                    proximaQuestao: null
+                };
+            },
+
+            // ===== RENDERIZAÇÃO DO ESTUDO =====
+            renderStudy(moduleObj) {
+                const steps = CONFIG.STEPS;
+                const currentStepIndex = this.state.currentStep;
+                const stepKeys = ['situacao', 'explicacao', 'formula', 'exemplo', 'guiado', 'questao', 'progresso'];
+                const currentKey = stepKeys[currentStepIndex] || 'situacao';
+                const stepData = moduleObj[currentKey] || { title: 'Carregando...', html: '<p>Conteúdo indisponível.</p>' };
+
+                // Stepper
+                const stepper = document.getElementById('studyStepper');
+                stepper.innerHTML = steps.map((step, i) => {
+                    let dotClass = '';
+                    let lineClass = '';
+                    if (i < currentStepIndex) { dotClass = 'stepper__dot--completed'; lineClass = 'stepper__line--completed'; }
+                    else if (i === currentStepIndex) { dotClass = 'stepper__dot--active'; }
+                    const isLast = i === steps.length - 1;
+                    return `
+                        <div class="stepper__step">
+                            <div class="stepper__dot ${dotClass}" title="${step.label}">${i < currentStepIndex ? '✓' : step.icon}</div>
+                            ${!isLast ? `<div class="stepper__line ${lineClass}"></div>` : ''}
+                        </div>
+                    `;
+                }).join('');
+
+                // Content
+                const container = document.getElementById('studyContent');
+                container.innerHTML = `
+                    <div class="study-content__header">
+                        <h2>${stepData.title || 'Estudo'}</h2>
+                        <p>${currentStepIndex + 1} de ${steps.length}</p>
+                    </div>
+                    <div>${stepData.html || '<p>Conteúdo não disponível.</p>'}</div>
+                    <div class="study-actions">
+                        ${currentStepIndex > 0 ? `<button class="btn btn--secondary" onclick="App.prevStep()">← Anterior</button>` : ''}
+                        ${currentStepIndex < steps.length - 1 ? `<button class="btn btn--primary" onclick="App.nextStep()">Próximo →</button>` : ''}
+                        ${currentStepIndex === steps.length - 1 ? `<button class="btn btn--success" onclick="App.completeTopic()">Concluir Tópico ✓</button>` : ''}
+                    </div>
+                `;
+
+                // Se a etapa for 'guiado' e o módulo tiver função específica, substitui
+                if (currentKey === 'guiado') {
+                    if (moduleObj.verificarGuiado && typeof moduleObj.verificarGuiado === 'function') {
+                        // Sobrescreve a função global para usar a do módulo
+                        App.verificarGuiado = moduleObj.verificarGuiado.bind(moduleObj);
+                    } else {
+                        App.verificarGuiado = App.verificarGuiadoPadrao;
+                    }
+                }
+
+                // Se a etapa for 'questao' e o módulo tiver função de iniciar questão
+                if (currentKey === 'questao') {
+                    if (moduleObj.iniciarQuestao && typeof moduleObj.iniciarQuestao === 'function') {
+                        // Chama a função para iniciar a questão (com um pequeno delay para o DOM renderizar)
+                        setTimeout(() => {
+                            moduleObj.iniciarQuestao();
+                        }, 50);
+                        // Guarda a função de próxima questão
+                        if (moduleObj.proximaQuestao && typeof moduleObj.proximaQuestao === 'function') {
+                            App.proximaQuestao = moduleObj.proximaQuestao.bind(moduleObj);
+                        }
+                    } else {
+                        // Fallback: usa a implementação padrão (se houver elementos com id questaoPA)
+                        this.setupQuestaoListenerPadrao();
+                    }
+                }
+            },
+
+            // ===== NAVEGAÇÃO ENTRE ETAPAS =====
+            nextStep() {
+                if (this.state.currentStep < CONFIG.STEPS.length - 1) {
+                    this.state.currentStep++;
+                    this.persist();
+                    const topicId = this.state.currentTopic;
+                    const moduleObj = this.moduleCache[topicId] || this.getFallbackModule(topicId);
+                    this.renderStudy(moduleObj);
+                }
+            },
+
+            prevStep() {
+                if (this.state.currentStep > 0) {
+                    this.state.currentStep--;
+                    this.persist();
+                    const topicId = this.state.currentTopic;
+                    const moduleObj = this.moduleCache[topicId] || this.getFallbackModule(topicId);
+                    this.renderStudy(moduleObj);
+                }
+            },
+
+            // ===== EXERCÍCIO GUIADO PADRÃO (fallback) =====
+            verificarGuiadoPadrao() {
+                const input = document.getElementById('guiadoInput');
+                if (!input) return;
+                const val = parseFloat(input.value);
+                const feedback = document.getElementById('guiadoFeedback');
+                if (isNaN(val)) {
+                    feedback.innerHTML = `<div class="study-feedback error"><h4>❌ Digite um número válido.</h4></div>`;
+                    return;
+                }
+                const correct = 40;
+                if (val === correct) {
+                    feedback.innerHTML = `<div class="study-feedback success"><h4>✅ Correto! a₈ = ${correct}.</h4></div>`;
+                    this.state.globalStats.totalCorrect++;
+                    Gamification.addXp(this.state, CONFIG.XP_PER_CORRECT);
+                    this.persist();
+                    this.renderHeader();
+                    const btn = document.querySelector('#guiadoPA .btn');
+                    if (btn) btn.disabled = true;
+                } else {
+                    feedback.innerHTML = `<div class="study-feedback error"><h4>❌ Não foi dessa vez. O valor correto é ${correct}.</h4><p>Lembre-se: a₈ = 12 + 7·4 = 40.</p></div>`;
+                    this.state.globalStats.totalWrong++;
+                    this.persist();
+                }
+            },
+
+            // ===== QUESTÃO PADRÃO (fallback) =====
+            setupQuestaoListenerPadrao() {
+                const container = document.getElementById('questaoPA');
+                if (!container) return;
+                const items = container.querySelectorAll('.alt-item');
+                let answered = false;
+                const correctAnswer = 'B';
+
+                items.forEach(el => {
+                    el.addEventListener('click', function() {
+                        if (answered) return;
+                        answered = true;
+                        const selected = this.dataset.value;
+                        const feedback = document.getElementById('questaoFeedback');
+                        items.forEach(i => i.classList.add('disabled'));
+
+                        if (selected === correctAnswer) {
+                            this.classList.add('correct');
+                            feedback.innerHTML = `<div class="study-feedback success"><h4>✅ Correto! Resposta B) 60.</h4><p>Razão = (42-18)/(7-3) = 6, a1 = 18-2·6 = 6, a10 = 6+9·6 = 60.</p></div>`;
+                            App.state.globalStats.totalCorrect++;
+                            Gamification.addXp(App.state, CONFIG.XP_PER_CORRECT);
+                            App.persist();
+                            App.renderHeader();
+                        } else {
+                            this.classList.add('wrong');
+                            items.forEach(i => { if (i.dataset.value === correctAnswer) i.classList.add('correct'); });
+                            feedback.innerHTML = `<div class="study-feedback error"><h4>❌ Errado. A correta é B) 60.</h4><p>Explicação: a3=18, a7=42 => r=6, a1=6, a10=60.</p></div>`;
+                            App.state.globalStats.totalWrong++;
+                            App.persist();
+                        }
+                    });
+                });
+            },
+
+            // ===== COMPLETAR TÓPICO =====
+            completeTopic() {
+                const discId = this.state.currentDiscipline;
+                const modId = this.state.currentModule;
+                const topicId = this.state.currentTopic;
+
+                const stateMod = this.state.disciplines[discId].modules[modId];
+                const topicIndex = stateMod.topics.findIndex(t => t.id === topicId);
+                if (topicIndex === -1) return;
+
+                const topicState = stateMod.topics[topicIndex];
+                if (topicState.status === 'dominado') {
+                    this.showToast('ℹ️', 'Este tópico já foi concluído.', 'info');
+                    return;
+                }
+
+                topicState.status = 'dominado';
+                topicState.attempts++;
+                topicState.correct++;
+                stateMod.currentTopicIndex = topicIndex + 1;
+
+                // Verifica se módulo completo
+                const allDominado = stateMod.topics.every(t => t.status === 'dominado');
+                if (allDominado) {
+                    stateMod.completed = true;
+                    Gamification.addXp(this.state, CONFIG.XP_PER_MODULE_COMPLETE);
+                    this.showToast('🎉', 'Módulo concluído! Você ganhou XP extra!', 'success');
+                }
+
+                Gamification.updateStreak(this.state);
+                Gamification.checkAchievements(this.state);
+                this.updateDisciplineProgress(discId);
+
+                this.persist();
+                this.renderHeader();
+                this.renderDashboard();
+                this.showToast('✅', 'Tópico concluído com sucesso!', 'success');
+                this.goBack();
+            },
+
+            // ===== UTILITÁRIOS DE PROGRESSO =====
+            calculateDisciplineProgress(discId) {
+                const disc = this.state.disciplines[discId];
+                if (!disc) return 0;
+                const modules = Object.values(disc.modules);
+                if (modules.length === 0) return 0;
+                const completed = modules.filter(m => m.completed).length;
+                return Math.round((completed / modules.length) * 100);
+            },
+
+            calculateModuleProgress(discId, modId) {
+                const mod = this.state.disciplines[discId]?.modules[modId];
+                if (!mod) return 0;
+                const topics = mod.topics;
+                if (topics.length === 0) return 0;
+                const dominados = topics.filter(t => t.status === 'dominado').length;
+                return Math.round((dominados / topics.length) * 100);
+            },
+
+            updateDisciplineProgress(discId) {
+                const disc = this.state.disciplines[discId];
+                if (!disc) return;
+                const modules = Object.values(disc.modules);
+                const completed = modules.filter(m => m.completed).length;
+                disc.progress = Math.round((completed / modules.length) * 100);
+            },
+
+            // ===== TOAST =====
+            showToast(title, message, type = 'info') {
+                const container = document.getElementById('toastContainer');
+                const toast = document.createElement('div');
+                toast.className = `toast toast--${type}`;
+                toast.innerHTML = `
+                    <div class="toast__icon">${type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️'}</div>
+                    <div class="toast__content">
+                        <h4>${title}</h4>
+                        <p>${message}</p>
+                    </div>
+                `;
+                container.appendChild(toast);
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(30px)';
+                    setTimeout(() => toast.remove(), 300);
+                }, 4000);
+            },
+
+            // ===== ABRIR TELAS =====
+            openDiscipline(disciplineId) {
+                this.state.currentDiscipline = disciplineId;
+                this.renderDiscipline();
+                this.navigate('discipline');
+            },
+
+            openModule(moduleId) {
+                this.state.currentModule = moduleId;
+                this.renderModule();
+                this.navigate('module');
+            }
+        };
+
+        // ============================================================
+        // INICIALIZAÇÃO
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', () => App.init());
+    </script>
+</body>
+</html>
