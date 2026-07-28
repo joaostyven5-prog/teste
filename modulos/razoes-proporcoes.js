@@ -10,24 +10,35 @@ export const modulo = {
     descricao: `
       <p>Se você já ajustou uma receita culinária, calculou a velocidade média de uma viagem, interpretou um mapa ou analisou um gráfico financeiro, você já utilizou razões e proporções — mesmo sem perceber. Esses conceitos são a espinha dorsal da matemática aplicada ao cotidiano e, por isso, são recorrentes em concursos públicos, especialmente no Banco do Brasil (CESGRANRIO).</p>
       <p>Uma <strong>razão</strong> nada mais é do que uma comparação entre duas grandezas, expressa como uma divisão. Já uma <strong>proporção</strong> é a igualdade entre duas razões, e ela nos permite resolver problemas que envolvem relações de dependência entre variáveis. A <strong>regra de três</strong>, seja simples ou composta, é a ferramenta prática que emerge desse raciocínio proporcional.</p>
-      <p>Neste módulo, você vai dominar desde a interpretação de razões até a resolução de problemas complexos com porcentagens, descontos sucessivos e divisão proporcional. Cada tópico é apresentado com teoria clara, exemplos detalhados e exercícios no estilo CESGRANRIO, para que você desenvolva não apenas a habilidade de calcular, mas também a intuição matemática necessária para acertar as questões da prova.</p>
+      <p>Neste módulo, você vai dominar desde a interpretação de razões até a resolução de problemas complexos com porcentagens, juros simples, misturas e divisão proporcional. Cada tópico é apresentado com teoria clara, exemplos detalhados e exercícios no estilo CESGRANRIO, para que você desenvolva não apenas a habilidade de calcular, mas também a intuição matemática necessária para acertar as questões da prova.</p>
       <p>Prepare-se para encarar problemas que envolvem escalas em mapas, taxas de juros, índices de inflação, velocidade média, consumo de combustível, e muito mais. Ao final, você estará apto a resolver qualquer questão de razão, proporção e regra de três com confiança e agilidade.</p>
       <p>Vamos começar? Acompanhe cada seção, faça os exercícios propostos e, acima de tudo, entenda a lógica por trás de cada operação. A matemática de concursos não é um bicho de sete cabeças; é uma ferramenta poderosa que está ao seu alcance.</p>
     `,
     imagem: `
       <svg viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg">
         <rect x="0" y="0" width="600" height="250" fill="#f8fafc" rx="10"/>
-        <text x="30" y="40" fill="#1e293b" font-size="20" font-weight="bold">Proporção na cozinha</text>
-        <rect x="50" y="70" width="120" height="80" fill="#f59e0b" rx="5"/>
-        <text x="70" y="120" fill="#fff" font-size="16">2 xícaras</text>
-        <text x="70" y="140" fill="#fff" font-size="14">farinha</text>
-        <rect x="220" y="70" width="120" height="80" fill="#10b981" rx="5"/>
-        <text x="240" y="120" fill="#fff" font-size="16">1 xícara</text>
-        <text x="240" y="140" fill="#fff" font-size="14">açúcar</text>
-        <text x="50" y="200" fill="#475569" font-size="14">Razão farinha:açúcar = 2:1</text>
-        <text x="50" y="220" fill="#475569" font-size="14">Dobrando a receita: 4:2 (proporção equivalente)</text>
-        <line x1="190" y1="110" x2="210" y2="110" stroke="#94a3b8" stroke-width="3" marker-end="url(#arrow)"/>
-        <line x1="350" y1="110" x2="380" y2="110" stroke="#94a3b8" stroke-width="3" marker-end="url(#arrow)"/>
+        <text x="30" y="40" fill="#1e293b" font-size="20" font-weight="bold">Proporções no cotidiano</text>
+        <!-- Receita -->
+        <rect x="30" y="60" width="120" height="80" fill="#f59e0b" rx="5"/>
+        <text x="50" y="90" fill="#fff" font-size="14" font-weight="bold">Receita</text>
+        <text x="50" y="110" fill="#fff" font-size="12">2 xícaras de farinha</text>
+        <text x="50" y="130" fill="#fff" font-size="12">1 xícara de açúcar</text>
+        <!-- Mapa -->
+        <rect x="190" y="60" width="120" height="80" fill="#10b981" rx="5"/>
+        <text x="210" y="90" fill="#fff" font-size="14" font-weight="bold">Mapa</text>
+        <text x="210" y="110" fill="#fff" font-size="12">Escala 1:100000</text>
+        <text x="210" y="130" fill="#fff" font-size="12">5 cm → 5 km</text>
+        <!-- Finanças -->
+        <rect x="350" y="60" width="120" height="80" fill="#6366f1" rx="5"/>
+        <text x="370" y="90" fill="#fff" font-size="14" font-weight="bold">Finanças</text>
+        <text x="370" y="110" fill="#fff" font-size="12">Juros 10% a.m.</text>
+        <text x="370" y="130" fill="#fff" font-size="12">Montante = C·(1+in)</text>
+        <!-- Seta ligando -->
+        <line x1="150" y1="100" x2="185" y2="100" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+        <line x1="310" y1="100" x2="345" y2="100" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+        <text x="30" y="175" fill="#475569" font-size="14">Razão farinha:açúcar = 2:1 (dobrando: 4:2)</text>
+        <text x="30" y="195" fill="#475569" font-size="14">Distância real = medida no mapa × denominador da escala</text>
+        <text x="30" y="215" fill="#475569" font-size="14">Juros simples: J = C·i·t; Montante M = C + J</text>
         <defs>
           <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
             <polygon points="0 0, 10 3.5, 0 7" fill="#94a3b8"/>
@@ -44,6 +55,8 @@ export const modulo = {
     "Resolver problemas de divisão proporcional (direta, inversa e composta) com segurança.",
     "Dominar a regra de três simples e composta, montando corretamente as relações entre as grandezas.",
     "Calcular porcentagens, aumentos e descontos percentuais, incluindo operações sucessivas.",
+    "Aplicar juros simples e compreender sua relação com proporções e porcentagens.",
+    "Resolver problemas de misturas e concentrações utilizando razões e proporções.",
     "Aplicar todos esses conceitos em questões do estilo CESGRANRIO, com alto nível de interpretação."
   ],
 
@@ -57,22 +70,27 @@ export const modulo = {
         <p><strong>Razões equivalentes:</strong> Multiplicando ou dividindo ambos os termos da razão por um mesmo número (diferente de zero), obtemos uma razão equivalente. Ex: 2:3 = 4:6 = 6:9.</p>
         <p><strong>Simplificação:</strong> Para simplificar uma razão, dividimos ambos os termos pelo máximo divisor comum (MDC). Ex: 12:18 → dividindo por 6 → 2:3.</p>
         <p><strong>Comparação entre razões:</strong> Para comparar duas razões, basta comparar seus valores decimais ou frações equivalentes.</p>
+        <p><strong>Razão inversa:</strong> A inversa de a:b é b:a.</p>
         <p><strong>Escalas:</strong> Muito usadas em mapas e plantas, a escala é uma razão entre a medida no desenho e a medida real. Ex: escala 1:100 significa que 1 cm no desenho corresponde a 100 cm na realidade.</p>
+        <p><strong>Razões entre grandezas de unidades diferentes:</strong> Exemplos: velocidade média (km/h), densidade demográfica (hab/km²), consumo (km/L). Nessas razões, as unidades devem ser mantidas.</p>
       `,
       imagem: `
-        <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
-          <rect x="0" y="0" width="400" height="200" fill="#f1f5f9" rx="8"/>
+        <svg viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="500" height="220" fill="#f1f5f9" rx="8"/>
           <text x="20" y="30" fill="#0f172a" font-size="16" font-weight="bold">Razão 3:2 (parte/todo)</text>
           <rect x="20" y="50" width="50" height="80" fill="#6366f1"/>
           <rect x="70" y="50" width="50" height="80" fill="#6366f1"/>
           <rect x="120" y="50" width="50" height="80" fill="#6366f1"/>
           <rect x="170" y="50" width="50" height="80" fill="#f59e0b"/>
           <rect x="220" y="50" width="50" height="80" fill="#f59e0b"/>
-          <text x="20" y="160" fill="#475569" font-size="14">3 partes azuis : 2 partes laranjas</text>
-          <text x="20" y="180" fill="#475569" font-size="14">Razão = 3/2 = 1,5 = 150%</text>
+          <text x="20" y="155" fill="#475569" font-size="14">3 partes azuis : 2 partes laranjas</text>
+          <text x="20" y="175" fill="#475569" font-size="14">Razão = 3/2 = 1,5 = 150%</text>
+          <text x="20" y="195" fill="#475569" font-size="14">Inversa: 2:3 ≈ 0,67 = 66,7%</text>
           <line x1="300" y1="50" x2="380" y2="50" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4"/>
           <text x="300" y="80" fill="#0f172a" font-size="14">Equivalente</text>
           <text x="300" y="100" fill="#0f172a" font-size="14">6:4, 9:6, ...</text>
+          <text x="300" y="130" fill="#0f172a" font-size="14">Ex: Velocidade</text>
+          <text x="300" y="150" fill="#0f172a" font-size="14">120 km / 2 h = 60 km/h</text>
         </svg>
       `
     },
@@ -82,6 +100,12 @@ export const modulo = {
         <p>Uma <strong>proporção</strong> é a igualdade entre duas razões. Escrevemos a:b = c:d, que se lê "a está para b assim como c está para d". Os termos a e d são chamados <strong>extremos</strong>, e b e c são os <strong>meios</strong>.</p>
         <p><strong>Propriedade fundamental:</strong> Em toda proporção, o produto dos meios é igual ao produto dos extremos: a × d = b × c. Essa propriedade é a base para resolver problemas com termo desconhecido.</p>
         <p>Exemplo: Se 2:3 = 4:x, então 2x = 12 → x = 6.</p>
+        <p><strong>Propriedades adicionais:</strong></p>
+        <ul>
+          <li>Alternância: a:b = c:d ⇒ a:c = b:d</li>
+          <li>Inversão: a:b = c:d ⇒ b:a = d:c</li>
+          <li>Soma dos termos: a:b = c:d ⇒ (a+b):b = (c+d):d</li>
+        </ul>
         <p><strong>Proporções contínuas:</strong> Quando os meios são iguais, temos a:b = b:c, e b é a média geométrica entre a e c: b² = a·c.</p>
       `,
       imagem: `
@@ -89,19 +113,19 @@ export const modulo = {
           <rect x="0" y="0" width="500" height="200" fill="#f1f5f9" rx="8"/>
           <text x="20" y="30" fill="#0f172a" font-size="16" font-weight="bold">Propriedade Fundamental da Proporção</text>
           <rect x="30" y="60" width="100" height="40" fill="#6366f1" rx="4"/>
-          <text x="70" y="85" fill="#fff" font-size="16">2</text>
+          <text x="70" y="85" fill="#fff" font-size="16">a (extremo)</text>
           <rect x="150" y="60" width="100" height="40" fill="#10b981" rx="4"/>
-          <text x="190" y="85" fill="#fff" font-size="16">3</text>
+          <text x="180" y="85" fill="#fff" font-size="16">b (meio)</text>
           <text x="130" y="85" fill="#0f172a" font-size="20">:</text>
           <text x="260" y="85" fill="#0f172a" font-size="20">=</text>
           <rect x="290" y="60" width="100" height="40" fill="#f59e0b" rx="4"/>
-          <text x="330" y="85" fill="#fff" font-size="16">4</text>
+          <text x="320" y="85" fill="#fff" font-size="16">c (meio)</text>
           <rect x="410" y="60" width="100" height="40" fill="#ef4444" rx="4"/>
-          <text x="450" y="85" fill="#fff" font-size="16">6</text>
+          <text x="440" y="85" fill="#fff" font-size="16">d (extremo)</text>
           <text x="380" y="85" fill="#0f172a" font-size="20">:</text>
-          <text x="30" y="140" fill="#475569" font-size="14">Extremos: 2 e 6 → 2×6 = 12</text>
-          <text x="30" y="160" fill="#475569" font-size="14">Meios: 3 e 4 → 3×4 = 12</text>
-          <text x="30" y="180" fill="#475569" font-size="14">Logo, 2×6 = 3×4 (produto dos extremos = produto dos meios)</text>
+          <text x="30" y="140" fill="#475569" font-size="14">Extremos: a e d → a×d</text>
+          <text x="30" y="160" fill="#475569" font-size="14">Meios: b e c → b×c</text>
+          <text x="30" y="180" fill="#475569" font-size="14">a×d = b×c (produto dos extremos = produto dos meios)</text>
         </svg>
       `
     },
@@ -111,6 +135,7 @@ export const modulo = {
         <p>Duas grandezas são <strong>diretamente proporcionais</strong> quando, ao multiplicar (ou dividir) uma delas por um número, a outra fica multiplicada (ou dividida) pelo <strong>mesmo</strong> número. Ou seja, a razão entre elas é constante. Exemplo: distância percorrida e tempo (com velocidade constante) – se dobra o tempo, dobra a distância.</p>
         <p>Duas grandezas são <strong>inversamente proporcionais</strong> quando, ao multiplicar uma por um número, a outra é dividida pelo mesmo número, e vice-versa. O produto entre elas é constante. Exemplo: velocidade e tempo para percorrer uma distância fixa – se dobra a velocidade, o tempo cai pela metade.</p>
         <p>Para identificar a relação, pergunte-se: se uma grandeza aumenta, o que acontece com a outra? Se aumenta, é direta; se diminui, é inversa.</p>
+        <p><strong>Critério do produto/razão constante:</strong> Calcule a razão (y/x) para cada par; se for constante, é direta. Calcule o produto (x·y); se for constante, é inversa.</p>
       `,
       imagem: `
         <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
@@ -119,13 +144,13 @@ export const modulo = {
           <rect x="30" y="50" width="180" height="60" fill="#dbeafe" rx="4"/>
           <text x="40" y="70" fill="#1e293b" font-size="14" font-weight="bold">Direta</text>
           <text x="40" y="90" fill="#475569" font-size="12">↑ A → ↑ B (mesmo fator)</text>
-          <text x="40" y="105" fill="#475569" font-size="12">↓ A → ↓ B (mesmo fator)</text>
+          <text x="40" y="105" fill="#475569" font-size="12">Razão A/B constante</text>
           <rect x="250" y="50" width="180" height="60" fill="#fee2e2" rx="4"/>
           <text x="260" y="70" fill="#1e293b" font-size="14" font-weight="bold">Inversa</text>
           <text x="260" y="90" fill="#475569" font-size="12">↑ A → ↓ B (inverso)</text>
-          <text x="260" y="105" fill="#475569" font-size="12">↓ A → ↑ B (inverso)</text>
-          <text x="30" y="150" fill="#0f172a" font-size="14">Ex: Velocidade × Tempo (distância fixa) → Inversa</text>
-          <text x="30" y="170" fill="#0f172a" font-size="14">Ex: Valor × Quantidade (preço unitário fixo) → Direta</text>
+          <text x="260" y="105" fill="#475569" font-size="12">Produto A×B constante</text>
+          <text x="30" y="150" fill="#0f172a" font-size="14">Ex: Velocidade × Tempo (dist. fixa) → Inversa</text>
+          <text x="30" y="170" fill="#0f172a" font-size="14">Ex: Valor × Quantidade (preço unit. fixo) → Direta</text>
         </svg>
       `
     },
@@ -133,8 +158,9 @@ export const modulo = {
       titulo: "4. Números Proporcionais e Sequências",
       conteudo: `
         <p>Dizemos que dois números são proporcionais a dois outros quando suas razões são iguais. Por exemplo, (2,3) e (4,6) são proporcionais porque 2/4 = 3/6 = 1/2.</p>
-        <p>Uma <strong>sequência de números proporcionais</strong> é aquela em que a razão entre cada termo e seu antecessor é constante (progressão aritmética? Não, proporcionalidade direta). Por exemplo, 2,4,6,8 são diretamente proporcionais com razão 2:1? Na verdade, a razão entre eles é 2:4:6:8 = 1:2:3:4 (proporcionalidade direta com k=2).</p>
+        <p>Uma <strong>sequência de números diretamente proporcionais</strong> é aquela em que cada número é obtido multiplicando o correspondente por uma constante k. Ex: 2, 4, 6, 8 são proporcionais a 1, 2, 3, 4 com k=2.</p>
         <p>Para calcular termos desconhecidos em uma proporção, usamos a propriedade fundamental.</p>
+        <p><strong>Aplicação:</strong> Se três números são proporcionais a 2, 3 e 5 e a soma é 200, então eles são 2k, 3k, 5k com 10k=200 → k=20 → 40, 60, 100.</p>
       `,
       imagem: `
         <svg viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
@@ -166,23 +192,25 @@ export const modulo = {
         <p>A <strong>divisão proporcional</strong> é usada para repartir uma quantidade em partes diretamente ou inversamente proporcionais a certos números.</p>
         <ul>
           <li><strong>Diretamente proporcional:</strong> Se dividimos um valor em partes proporcionais a a, b, c, então cada parte é k·a, k·b, k·c, onde k é uma constante encontrada pela soma: k = total / (a+b+c).</li>
-          <li><strong>Inversamente proporcional:</strong> Se dividimos um valor em partes inversamente proporcionais a a, b, c, então as partes são k·(1/a), k·(1/b), k·(1/c), ou equivalentemente, proporcionais a 1/a, 1/b, 1/c. Para facilitar, multiplicamos os inversos pelo MMC.</li>
-          <li><strong>Divisão composta:</strong> Envolve mais de um critério (ex: direta a um e inversa a outro). Nesse caso, a parte de cada um é proporcional a (valor direto) × (1/valor inverso).</li>
+          <li><strong>Inversamente proporcional:</strong> Se dividimos um valor em partes inversamente proporcionais a a, b, c, então as partes são proporcionais a 1/a, 1/b, 1/c. Para facilitar, multiplicamos os inversos pelo MMC dos números dados.</li>
+          <li><strong>Divisão composta:</strong> Envolve mais de um critério (ex: direta a um e inversa a outro). Nesse caso, a parte de cada um é proporcional ao produto (valor direto) × (1/valor inverso).</li>
         </ul>
         <p>Aplicações: rateio de despesas, distribuição de lucros, divisão de heranças, etc.</p>
       `,
       imagem: `
-        <svg viewBox="0 0 500 180" xmlns="http://www.w3.org/2000/svg">
-          <rect x="0" y="0" width="500" height="180" fill="#f1f5f9" rx="8"/>
+        <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="500" height="200" fill="#f1f5f9" rx="8"/>
           <text x="20" y="30" fill="#0f172a" font-size="16" font-weight="bold">Divisão Proporcional</text>
-          <rect x="30" y="60" width="120" height="30" fill="#6366f1" rx="4"/>
-          <text x="60" y="80" fill="#fff" font-size="14">Parte 1 = 2k</text>
-          <rect x="170" y="60" width="120" height="30" fill="#10b981" rx="4"/>
-          <text x="200" y="80" fill="#fff" font-size="14">Parte 2 = 3k</text>
-          <rect x="310" y="60" width="120" height="30" fill="#f59e0b" rx="4"/>
-          <text x="340" y="80" fill="#fff" font-size="14">Parte 3 = 5k</text>
-          <text x="30" y="130" fill="#475569" font-size="14">Total = 10k → k = Total/10</text>
-          <text x="30" y="150" fill="#475569" font-size="14">Ex: Dividir 100 em partes proporcionais a 2,3,5 → k=10 → 20,30,50</text>
+          <text x="20" y="55" fill="#1e293b" font-size="14">Divisão direta a 2,3,5 (total 100):</text>
+          <rect x="30" y="70" width="60" height="30" fill="#6366f1" rx="4"/>
+          <text x="40" y="90" fill="#fff" font-size="12">2k=20</text>
+          <rect x="110" y="70" width="60" height="30" fill="#10b981" rx="4"/>
+          <text x="120" y="90" fill="#fff" font-size="12">3k=30</text>
+          <rect x="190" y="70" width="60" height="30" fill="#f59e0b" rx="4"/>
+          <text x="200" y="90" fill="#fff" font-size="12">5k=50</text>
+          <text x="20" y="130" fill="#1e293b" font-size="14">Inversa a 2,3,6 (total 180):</text>
+          <text x="20" y="150" fill="#475569" font-size="12">MMC=6, partes prop. a 3,2,1 → 3k+2k+1k=180 → k=30 → 90,60,30</text>
+          <text x="20" y="175" fill="#475569" font-size="12">Composta: parte = k·(direto)×(1/inverso)</text>
         </svg>
       `
     },
@@ -198,7 +226,7 @@ export const modulo = {
           <li>Resolva a equação usando a propriedade fundamental.</li>
         </ul>
         <p><strong>Exemplo direto:</strong> Se 3 kg de arroz custam R$ 12, quanto custam 5 kg? (direta). Montagem: 3/5 = 12/x → 3x = 60 → x = 20.</p>
-        <p><strong>Exemplo inverso:</strong> Se 4 operários fazem um serviço em 6 dias, em quantos dias 6 operários farão o mesmo serviço? (inversa). Montagem: 4/6 = x/6 → (invertendo) 4/6 = 6/x? Cuidado: melhor fazer 4×6 = 6×x → 24 = 6x → x=4 dias.</p>
+        <p><strong>Exemplo inverso:</strong> Se 4 operários fazem um serviço em 6 dias, em quantos dias 6 operários farão o mesmo serviço? (inversa). Produto constante: 4×6 = 6×d → d = 4 dias.</p>
       `,
       imagem: `
         <svg viewBox="0 0 500 180" xmlns="http://www.w3.org/2000/svg">
@@ -207,15 +235,15 @@ export const modulo = {
           <rect x="30" y="60" width="100" height="40" fill="#6366f1" rx="4"/>
           <text x="60" y="85" fill="#fff" font-size="14">3 kg</text>
           <rect x="160" y="60" width="100" height="40" fill="#10b981" rx="4"/>
-          <text x="190" y="85" fill="#fff" font-size="14">12 R$</text>
+          <text x="190" y="85" fill="#fff" font-size="14">R$ 12</text>
           <text x="140" y="85" fill="#0f172a" font-size="20">→</text>
           <rect x="290" y="60" width="100" height="40" fill="#f59e0b" rx="4"/>
           <text x="320" y="85" fill="#fff" font-size="14">5 kg</text>
           <rect x="420" y="60" width="100" height="40" fill="#ef4444" rx="4"/>
-          <text x="450" y="85" fill="#fff" font-size="14">x R$</text>
+          <text x="450" y="85" fill="#fff" font-size="14">R$ x</text>
           <text x="140" y="85" fill="#0f172a" font-size="20">→</text>
-          <text x="30" y="140" fill="#475569" font-size="14">3/5 = 12/x → 3x = 60 → x = 20</text>
-          <text x="30" y="160" fill="#475569" font-size="14">Logo, 5 kg custam R$ 20.</text>
+          <text x="30" y="130" fill="#475569" font-size="14">Montagem: 3/5 = 12/x → 3x = 60 → x = 20</text>
+          <text x="30" y="150" fill="#475569" font-size="14">Logo, 5 kg custam R$ 20.</text>
         </svg>
       `
     },
@@ -231,11 +259,12 @@ export const modulo = {
           <li>Multiplique os fatores de correção: se direta, mantenha; se inversa, inverta a fração correspondente.</li>
           <li>Resolva a equação resultante.</li>
         </ul>
-        <p>Exemplo: 5 máquinas produzem 600 peças em 4 dias. Quantas peças produzem 7 máquinas em 6 dias? (grandezas: máquinas, peças, dias). A relação peças/máquinas é direta; peças/dias é direta. Então montamos: 600/x = (5/7) × (4/6)? Cuidado: fórmula: (peças1/peças2) = (máquinas1/máquinas2) × (dias1/dias2) (se direta). Resolvendo: 600/x = (5×4)/(7×6) = 20/42 → x = 600 × 42/20 = 1260 peças.</p>
+        <p>Exemplo: 5 máquinas produzem 600 peças em 4 dias. Quantas peças produzem 7 máquinas em 6 dias? (grandezas: máquinas, peças, dias). A relação peças/máquinas é direta; peças/dias é direta. Então montamos: 600/x = (5/7) × (4/6) → x = 600 × 42/20 = 1260 peças.</p>
+        <p>Se houver uma grandeza inversa, inverta a fração correspondente.</p>
       `,
       imagem: `
-        <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
-          <rect x="0" y="0" width="500" height="200" fill="#f1f5f9" rx="8"/>
+        <svg viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="500" height="220" fill="#f1f5f9" rx="8"/>
           <text x="20" y="30" fill="#0f172a" font-size="16" font-weight="bold">Regra de Três Composta</text>
           <text x="30" y="60" fill="#1e293b" font-size="14">Tabela:</text>
           <rect x="30" y="70" width="100" height="30" fill="#e2e8f0"/>
@@ -257,6 +286,7 @@ export const modulo = {
           <rect x="230" y="130" width="100" height="30" fill="#fee2e2"/>
           <text x="260" y="150" fill="#0f172a" font-size="12">x</text>
           <text x="30" y="185" fill="#475569" font-size="12">600/x = (5/7)×(4/6) → x = 600×42/20 = 1260</text>
+          <text x="30" y="205" fill="#475569" font-size="12">Se houver inversa, inverte-se a fração da grandeza.</text>
         </svg>
       `
     },
@@ -299,11 +329,7 @@ export const modulo = {
         <p><strong>Desconto percentual:</strong> Para descontar p%, multiplicamos por (1 – p/100). Ex: R$ 200 com desconto de 10% → 200 × 0,90 = 180.</p>
         <p><strong>Acréscimos e descontos sucessivos:</strong> Quando há mais de uma operação, multiplicamos os fatores sucessivamente. Ex: Aumento de 10% seguido de desconto de 10% → fator = 1,10 × 0,90 = 0,99 (equivale a 1% de desconto total).</p>
         <p><strong>Variação percentual:</strong> A variação entre um valor inicial V₀ e final V₁ é dada por (V₁ – V₀)/V₀ × 100. Se positivo, aumento; se negativo, redução.</p>
-        <p><strong>Fórmulas:</strong></p>
-        <ul>
-          <li>Valor final = Valor inicial × (1 ± taxa)</li>
-          <li>Variação = (final – inicial) / inicial × 100%</li>
-        </ul>
+        <p><strong>Lucro sobre custo e sobre venda:</strong> Se um produto é vendido com lucro de 20% sobre o custo, então Venda = Custo × 1,20. Se o lucro é sobre o preço de venda, a fórmula é Lucro = Venda × taxa, e Custo = Venda × (1 – taxa).</p>
       `,
       imagem: `
         <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
@@ -320,11 +346,67 @@ export const modulo = {
           <text x="30" y="130" fill="#475569" font-size="14">+10% → 100×1,10 = 110</text>
           <text x="30" y="150" fill="#475569" font-size="14">–10% → 110×0,90 = 99</text>
           <text x="30" y="170" fill="#475569" font-size="14">Variação total: (99–100)/100 = –1%</text>
+          <text x="30" y="190" fill="#475569" font-size="12">Lucro sobre custo: V = C(1+i); sobre venda: C = V(1–i)</text>
         </svg>
       `
     },
     {
-      titulo: "10. Aplicações em Problemas Financeiros e do Cotidiano",
+      titulo: "10. Juros Simples",
+      conteudo: `
+        <p>Os <strong>juros simples</strong> são uma aplicação direta de proporções e porcentagens. O juro é calculado sempre sobre o capital inicial, proporcionalmente ao tempo e à taxa.</p>
+        <p><strong>Fórmulas:</strong></p>
+        <ul>
+          <li>J = C · i · t</li>
+          <li>Montante M = C + J = C · (1 + i · t)</li>
+        </ul>
+        <p>Onde C é o capital, i é a taxa de juros (em decimal, ex: 5% → 0,05) e t é o tempo (na mesma unidade da taxa).</p>
+        <p><strong>Exemplo:</strong> Um capital de R$ 1000 aplicado a 2% ao mês durante 5 meses renderá J = 1000 × 0,02 × 5 = R$ 100. Montante = R$ 1100.</p>
+        <p>Problemas de juros simples frequentemente pedem o capital, a taxa ou o tempo, utilizando regra de três ou manipulação algébrica.</p>
+      `,
+      imagem: `
+        <svg viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="400" height="150" fill="#f1f5f9" rx="8"/>
+          <text x="20" y="30" fill="#0f172a" font-size="16" font-weight="bold">Juros Simples</text>
+          <line x1="40" y1="60" x2="360" y2="60" stroke="#94a3b8" stroke-width="2"/>
+          <text x="40" y="50" fill="#475569" font-size="12">0</text>
+          <text x="340" y="50" fill="#475569" font-size="12">t (meses)</text>
+          <line x1="40" y1="60" x2="40" y2="120" stroke="#94a3b8" stroke-width="2"/>
+          <text x="20" y="80" fill="#475569" font-size="12">C</text>
+          <rect x="40" y="60" width="50" height="10" fill="#6366f1"/>
+          <rect x="90" y="60" width="50" height="20" fill="#6366f1"/>
+          <rect x="140" y="60" width="50" height="30" fill="#6366f1"/>
+          <rect x="190" y="60" width="50" height="40" fill="#6366f1"/>
+          <rect x="240" y="60" width="50" height="50" fill="#6366f1"/>
+          <text x="280" y="130" fill="#0f172a" font-size="12">J = C·i·t (reta)</text>
+          <text x="40" y="140" fill="#475569" font-size="12">M = C + J</text>
+        </svg>
+      `
+    },
+    {
+      titulo: "11. Misturas e Proporções",
+      conteudo: `
+        <p>Problemas de <strong>misturas</strong> envolvem combinar substâncias com diferentes concentrações ou quantidades. A chave é trabalhar com a proporção dos componentes em relação ao total.</p>
+        <p><strong>Mistura de soluções:</strong> Ex: misturando x litros de solução a 20% com y litros a 50% para obter uma solução a 30%. A quantidade de soluto é 0,20x + 0,50y = 0,30(x+y). Resolve-se com sistema ou proporção.</p>
+        <p><strong>Regra do "cruzar" (para duas misturas):</strong> Para duas soluções de concentrações c1 e c2, a proporção das quantidades é inversa às diferenças em relação à concentração desejada cm: x/y = |c2 – cm| / |c1 – cm|.</p>
+        <p><strong>Ligas metálicas:</strong> Mesmo raciocínio, usando massas ou volumes.</p>
+      `,
+      imagem: `
+        <svg viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="400" height="150" fill="#f1f5f9" rx="8"/>
+          <text x="20" y="30" fill="#0f172a" font-size="16" font-weight="bold">Mistura de Soluções</text>
+          <rect x="30" y="60" width="80" height="40" fill="#a7f3d0" rx="4"/>
+          <text x="40" y="85" fill="#0f172a" font-size="12">20%</text>
+          <rect x="140" y="60" width="80" height="40" fill="#fde68a" rx="4"/>
+          <text x="150" y="85" fill="#0f172a" font-size="12">50%</text>
+          <text x="230" y="85" fill="#0f172a" font-size="20">→</text>
+          <rect x="260" y="60" width="80" height="40" fill="#93c5fd" rx="4"/>
+          <text x="270" y="85" fill="#0f172a" font-size="12">30%</text>
+          <text x="30" y="130" fill="#475569" font-size="12">Proporção: x/y = (50–30)/(30–20) = 20/10 = 2:1</text>
+        </svg>
+      `
+    },
+    {
+      titulo: "12. Aplicações em Problemas Financeiros e do Cotidiano",
       conteudo: `
         <p>Razões, proporções e porcentagens são onipresentes no dia a dia e em questões de concursos. Aqui estão algumas situações comuns:</p>
         <ul>
@@ -334,6 +416,7 @@ export const modulo = {
           <li><strong>Escalas em mapas:</strong> Converter distâncias reais a partir de uma escala.</li>
           <li><strong>Velocidade média:</strong> v = Δs/Δt.</li>
           <li><strong>Densidade demográfica:</strong> habitantes/km².</li>
+          <li><strong>Misturas e receitas:</strong> Manter a proporção ao alterar quantidades.</li>
         </ul>
         <p>Dominar esses conceitos é essencial para resolver as questões da CESGRANRIO, que frequentemente cobram esses tópicos de forma contextualizada.</p>
       `,
@@ -469,7 +552,32 @@ export const modulo = {
       `
     },
     {
-      titulo: "Exemplo 6 – Regra de Três Simples Inversa",
+      titulo: "Exemplo 6 – Divisão Inversamente Proporcional",
+      enunciado: "Um prêmio de R$ 1.800 será dividido entre três funcionários em partes inversamente proporcionais aos seus atrasos no mês: 2, 3 e 6 dias. Quanto receberá cada um?",
+      resolucao: `
+        <p>Partes inversamente proporcionais a 2,3,6: proporcionais a 1/2, 1/3, 1/6. MMC=6, multiplicando: 3, 2, 1.</p>
+        <p>Soma das partes: 3+2+1=6. k = 1800/6 = 300.</p>
+        <p>Partes: 3×300 = 900; 2×300 = 600; 1×300 = 300.</p>
+        <p><strong>Resposta:</strong> R$ 900, R$ 600 e R$ 300.</p>
+      `,
+      observacao: "Na divisão inversa, transforme em uma divisão direta usando os inversos e o MMC.",
+      imagem: `
+        <svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="400" height="140" fill="#f8fafc" rx="8"/>
+          <text x="20" y="30" fill="#0f172a" font-size="14">Atrasos: 2, 3, 6 → inversos: 1/2,1/3,1/6</text>
+          <text x="20" y="55" fill="#0f172a" font-size="14">Proporcionais a 3,2,1 (MMC=6)</text>
+          <rect x="30" y="70" width="80" height="20" fill="#6366f1"/>
+          <text x="40" y="85" fill="#fff" font-size="12">3×300=900</text>
+          <rect x="130" y="70" width="80" height="20" fill="#10b981"/>
+          <text x="140" y="85" fill="#fff" font-size="12">2×300=600</text>
+          <rect x="230" y="70" width="80" height="20" fill="#f59e0b"/>
+          <text x="240" y="85" fill="#fff" font-size="12">1×300=300</text>
+          <text x="20" y="120" fill="#475569" font-size="12">Soma = 6, k = 1800/6 = 300</text>
+        </svg>
+      `
+    },
+    {
+      titulo: "Exemplo 7 – Regra de Três Simples Inversa",
       enunciado: "Um grupo de 5 trabalhadores constrói um muro em 8 dias. Se forem contratados 8 trabalhadores, com a mesma eficiência, em quantos dias o muro ficará pronto?",
       resolucao: `
         <p>Relação inversa: mais trabalhadores, menos dias.</p>
@@ -487,7 +595,7 @@ export const modulo = {
       `
     },
     {
-      titulo: "Exemplo 7 – Regra de Três Composta",
+      titulo: "Exemplo 8 – Regra de Três Composta",
       enunciado: "Em uma fábrica, 6 máquinas produzem 1.200 peças em 5 dias. Quantas peças serão produzidas por 9 máquinas em 8 dias, considerando a mesma produtividade?",
       resolucao: `
         <p>Grandezas: máquinas, peças, dias. Todas diretas com peças.</p>
@@ -507,7 +615,44 @@ export const modulo = {
       `
     },
     {
-      titulo: "Exemplo 8 – Porcentagem com Desconto Sucessivo",
+      titulo: "Exemplo 9 – Regra de Três Composta com Grandeza Inversa",
+      enunciado: "Se 10 operários, trabalhando 6 horas por dia, constroem um muro em 8 dias, quantos dias levarão 15 operários trabalhando 8 horas por dia?",
+      resolucao: `
+        <p>Grandezas: operários (inversa com dias), horas/dia (inversa com dias).</p>
+        <p>Montagem: 8/x = (15/10) × (8/6). Invertem-se as frações porque as grandezas são inversas em relação ao número de dias.</p>
+        <p>8/x = (15/10)×(8/6) = (3/2)×(4/3) = 12/6 = 2 → 8/x = 2 → x = 4 dias.</p>
+        <p><strong>Resposta:</strong> 4 dias.</p>
+      `,
+      observacao: "Ao comparar com a incógnita (dias), se aumentar operários, dias diminuem → inversa, então inverter a fração. Mesmo para horas/dia.",
+      imagem: `
+        <svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="400" height="140" fill="#f8fafc" rx="8"/>
+          <text x="20" y="30" fill="#0f172a" font-size="14">10 op → 6 h/d → 8 dias</text>
+          <text x="20" y="50" fill="#0f172a" font-size="14">15 op → 8 h/d → x dias</text>
+          <text x="20" y="80" fill="#475569" font-size="14">8/x = (15/10)×(8/6) → x=4</text>
+        </svg>
+      `
+    },
+    {
+      titulo: "Exemplo 10 – Juros Simples",
+      enunciado: "Um capital de R$ 2.500 foi aplicado a uma taxa de 4% ao mês, no regime de juros simples, durante 10 meses. Qual o montante obtido?",
+      resolucao: `
+        <p>Juros: J = C·i·t = 2500 × 0,04 × 10 = 2500 × 0,4 = R$ 1.000.</p>
+        <p>Montante: M = C + J = 2500 + 1000 = R$ 3.500.</p>
+        <p><strong>Resposta:</strong> R$ 3.500.</p>
+      `,
+      observacao: "Em juros simples, a taxa e o tempo devem estar na mesma unidade. Aqui taxa mensal e tempo em meses.",
+      imagem: `
+        <svg viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="400" height="120" fill="#f8fafc" rx="8"/>
+          <text x="20" y="30" fill="#0f172a" font-size="14">C = 2500, i = 4% a.m., t = 10 m</text>
+          <text x="20" y="55" fill="#0f172a" font-size="14">J = 2500×0,04×10 = 1000</text>
+          <text x="20" y="80" fill="#475569" font-size="14">M = 2500 + 1000 = 3500</text>
+        </svg>
+      `
+    },
+    {
+      titulo: "Exemplo 11 – Porcentagem com Desconto Sucessivo",
       enunciado: "Uma loja oferece um desconto de 20% sobre o preço de um produto, e em seguida, um desconto adicional de 10%. Qual o desconto total equivalente?",
       resolucao: `
         <p>Desconto de 20%: fator = 0,80.</p>
@@ -524,6 +669,24 @@ export const modulo = {
           <text x="20" y="50" fill="#0f172a" font-size="14">Após 20%: 100×0,80 = 80</text>
           <text x="20" y="70" fill="#0f172a" font-size="14">Após 10%: 80×0,90 = 72</text>
           <text x="20" y="100" fill="#475569" font-size="14">Desconto total: 100 – 72 = 28 → 28%</text>
+        </svg>
+      `
+    },
+    {
+      titulo: "Exemplo 12 – Mistura de Soluções",
+      enunciado: "Temos 5 litros de uma solução salina a 20% e 3 litros a 60%. Qual a concentração da mistura resultante?",
+      resolucao: `
+        <p>Quantidade de sal na primeira: 5 × 0,20 = 1,0 L. Na segunda: 3 × 0,60 = 1,8 L. Total de sal = 2,8 L.</p>
+        <p>Volume total = 5 + 3 = 8 L. Concentração = 2,8 / 8 = 0,35 = 35%.</p>
+        <p><strong>Resposta:</strong> 35%.</p>
+      `,
+      observacao: "A concentração final é a média ponderada das concentrações pelas quantidades.",
+      imagem: `
+        <svg viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="400" height="120" fill="#f8fafc" rx="8"/>
+          <text x="20" y="30" fill="#0f172a" font-size="14">5L a 20%: sal = 1,0L</text>
+          <text x="20" y="50" fill="#0f172a" font-size="14">3L a 60%: sal = 1,8L</text>
+          <text x="20" y="75" fill="#475569" font-size="14">Total: 8L com 2,8L de sal → 2,8/8 = 35%</text>
         </svg>
       `
     }
@@ -561,10 +724,10 @@ export const modulo = {
     `<svg viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
       <rect x="0" y="0" width="400" height="150" fill="#f1f5f9" rx="8"/>
       <text x="20" y="30" fill="#0f172a" font-size="16" font-weight="bold">Fatores de Multiplicação</text>
-      <rect x="30" y="60" width="100" height="30" fill="#10b981" rx="4"/>
-      <text x="55" y="80" fill="#fff" font-size="12">Aumento: (1 + i)</text>
-      <rect x="150" y="60" width="100" height="30" fill="#ef4444" rx="4"/>
-      <text x="175" y="80" fill="#fff" font-size="12">Desconto: (1 – i)</text>
+      <rect x="30" y="60" width="120" height="30" fill="#10b981" rx="4"/>
+      <text x="50" y="80" fill="#fff" font-size="12">Aumento: (1 + i)</text>
+      <rect x="170" y="60" width="120" height="30" fill="#ef4444" rx="4"/>
+      <text x="190" y="80" fill="#fff" font-size="12">Desconto: (1 – i)</text>
       <text x="30" y="120" fill="#475569" font-size="14">Ex: +20% → 1,20 ; –20% → 0,80</text>
     </svg>`,
     // Diagrama extra 4: Regra de três composta esquemática
@@ -585,6 +748,34 @@ export const modulo = {
       <text x="230" y="120" fill="#fff" font-size="12">C2</text>
       <text x="310" y="80" fill="#0f172a" font-size="12">Analisar</text>
       <text x="310" y="100" fill="#0f172a" font-size="12">cada relação</text>
+    </svg>`,
+    // Diagrama extra 5: Juros simples ao longo do tempo
+    `<svg viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="400" height="150" fill="#f1f5f9" rx="8"/>
+      <text x="20" y="30" fill="#0f172a" font-size="16" font-weight="bold">Evolução dos Juros Simples</text>
+      <line x1="40" y1="110" x2="340" y2="110" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="40" y1="110" x2="40" y2="30" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="40" y1="100" x2="340" y2="70" stroke="#6366f1" stroke-width="3"/>
+      <text x="340" y="65" fill="#0f172a" font-size="12">M = C + J</text>
+      <text x="100" y="130" fill="#475569" font-size="12">Tempo</text>
+      <circle cx="90" cy="95" r="3" fill="#ef4444"/>
+      <text x="90" y="85" fill="#0f172a" font-size="10">C</text>
+    </svg>`,
+    // Diagrama extra 6: Mistura de duas soluções
+    `<svg viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="400" height="150" fill="#f1f5f9" rx="8"/>
+      <text x="20" y="30" fill="#0f172a" font-size="16" font-weight="bold">Mistura – Método da Cruz</text>
+      <rect x="40" y="60" width="60" height="30" fill="#a7f3d0" rx="4"/>
+      <text x="55" y="80" fill="#0f172a" font-size="12">20%</text>
+      <rect x="250" y="60" width="60" height="30" fill="#fde68a" rx="4"/>
+      <text x="265" y="80" fill="#0f172a" font-size="12">50%</text>
+      <rect x="145" y="90" width="60" height="30" fill="#93c5fd" rx="4"/>
+      <text x="155" y="110" fill="#0f172a" font-size="12">30%</text>
+      <line x1="100" y1="75" x2="145" y2="105" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="280" y1="75" x2="205" y2="105" stroke="#94a3b8" stroke-width="2"/>
+      <text x="110" y="70" fill="#ef4444" font-size="10">dif 20</text>
+      <text x="200" y="70" fill="#ef4444" font-size="10">dif 10</text>
+      <text x="30" y="135" fill="#475569" font-size="12">Proporção: 20:10 = 2:1 (2 partes da 20% para 1 da 50%)</text>
     </svg>`
   ],
 
@@ -630,6 +821,16 @@ export const modulo = {
       explicacaoErro: "A relação é direta, então monte a proporção na mesma ordem."
     },
     {
+      tipo: "exercicio",
+      titulo: "Exercício 5 – Juros simples",
+      conteudo: "Calcule os juros simples.",
+      pergunta: "Qual o juro produzido por R$ 800,00 a 3% ao mês durante 4 meses?",
+      alternativas: [],
+      correta: null,
+      explicacaoAcerto: "J = 800 × 0,03 × 4 = R$ 96,00.",
+      explicacaoErro: "Juros simples: J = C·i·t. Lembre de transformar a taxa em decimal."
+    },
+    {
       tipo: "questao",
       titulo: "Questão 1 – CESGRANRIO (estilo)",
       conteudo: "Leia atentamente e assinale a alternativa correta.",
@@ -668,11 +869,31 @@ export const modulo = {
       correta: 0,
       explicacaoAcerto: "200 × 0,85 = 170.",
       explicacaoErro: "Desconto de 15% significa pagar 85% do valor."
+    },
+    {
+      tipo: "questao",
+      titulo: "Questão 5 – CESGRANRIO (estilo)",
+      conteudo: "Mistura de soluções.",
+      pergunta: "Misturando-se 4 litros de álcool a 70% com 6 litros de álcool a 40%, qual a concentração da mistura?",
+      alternativas: ["A) 48%", "B) 50%", "C) 52%", "D) 54%", "E) 55%"],
+      correta: 2,
+      explicacaoAcerto: "Álcool puro: 4×0,70 + 6×0,40 = 2,8+2,4=5,2L. Volume total 10L. Concentração = 5,2/10 = 0,52 = 52%.",
+      explicacaoErro: "Calcule a quantidade total do soluto e divida pelo volume total."
+    },
+    {
+      tipo: "questao",
+      titulo: "Questão 6 – CESGRANRIO (estilo)",
+      conteudo: "Divisão inversamente proporcional.",
+      pergunta: "Divida R$ 6.200 em partes inversamente proporcionais a 2, 3 e 5. A menor parte será:",
+      alternativas: ["A) R$ 1.200", "B) R$ 1.500", "C) R$ 1.800", "D) R$ 2.000", "E) R$ 2.400"],
+      correta: 0,
+      explicacaoAcerto: "Inversos: 1/2, 1/3, 1/5 → MMC=30 → 15,10,6. Soma=31, k=6200/31=200. Menor=6×200=1200.",
+      explicacaoErro: "Transforme em direta usando os inversos e o MMC."
     }
   ],
 
   questoes: [
-    // 5 fáceis
+    // 7 fáceis
     {
       dificuldade: "Fácil",
       pergunta: "Qual é a razão entre 3 e 4?",
@@ -713,7 +934,23 @@ export const modulo = {
       explicacaoAcerto: "5 × 100.000 = 500.000 cm = 5 km.",
       explicacaoErro: "Converta corretamente cm para km (1 km = 100.000 cm)."
     },
-    // 5 médias
+    {
+      dificuldade: "Fácil",
+      pergunta: "Qual a representação decimal de 45%?",
+      alternativas: ["A) 0,045", "B) 0,45", "C) 4,5", "D) 0,405", "E) 4,05"],
+      correta: 1,
+      explicacaoAcerto: "45% = 45/100 = 0,45.",
+      explicacaoErro: "Divida por 100."
+    },
+    {
+      dificuldade: "Fácil",
+      pergunta: "A razão entre 10 e 25 é equivalente a:",
+      alternativas: ["A) 2:5", "B) 1:2", "C) 3:5", "D) 4:10", "E) 5:2"],
+      correta: 0,
+      explicacaoAcerto: "10/25 = 2/5 = 2:5.",
+      explicacaoErro: "Simplifique dividindo por 5."
+    },
+    // 7 médias
     {
       dificuldade: "Médio",
       pergunta: "Em uma proporção, a:b = 3:5 e b:c = 10:7. Qual é a razão a:c?",
@@ -754,39 +991,45 @@ export const modulo = {
       explicacaoAcerto: "Homens/Mulheres = 5/3 → H/24 = 5/3 → H = 24×5/3 = 40.",
       explicacaoErro: "Cuidado com a ordem da proporção."
     },
-    // 5 difíceis
+    {
+      dificuldade: "Médio",
+      pergunta: "Uma mercadoria foi vendida por R$ 540,00 com lucro de 20% sobre o custo. Qual era o preço de custo?",
+      alternativas: ["A) R$ 432", "B) R$ 450", "C) R$ 480", "D) R$ 500", "E) R$ 432,50"],
+      correta: 1,
+      explicacaoAcerto: "Venda = Custo × 1,20 → 540 = 1,20C → C = 450.",
+      explicacaoErro: "O lucro é sobre o custo; 540 é 120% do custo."
+    },
+    {
+      dificuldade: "Médio",
+      pergunta: "Uma mistura de 50 kg contém areia e cimento na razão 3:2. Qual a quantidade de cimento?",
+      alternativas: ["A) 10 kg", "B) 20 kg", "C) 25 kg", "D) 30 kg", "E) 35 kg"],
+      correta: 1,
+      explicacaoAcerto: "3+2=5 partes; cada parte 10 kg; cimento = 2×10 = 20 kg.",
+      explicacaoErro: "Divida 50 por 5 e multiplique pela parte do cimento."
+    },
+    // 7 difíceis
     {
       dificuldade: "Difícil",
       pergunta: "Dois números são proporcionais a 2 e 3, e sua soma é 60. Qual é o maior número?",
       alternativas: ["A) 24", "B) 30", "C) 36", "D) 40", "E) 45"],
       correta: 2,
       explicacaoAcerto: "Números: 2k e 3k; soma = 5k = 60 → k=12 → maior = 3×12 = 36.",
-      explicacaoErro: "Não confunda com a média; use a constante de proporcionalidade."
+      explicacaoErro: "Use a constante de proporcionalidade."
     },
-    {
-      dificuldade: "Difícil",
-      pergunta: "Se 5 operários constroem um muro em 8 dias, quantos operários são necessários para construir o mesmo muro em 4 dias, considerando que cada operário trabalha 6 horas por dia, e os primeiros trabalhavam 8 horas por dia?",
-      alternativas: ["A) 10", "B) 12", "C) 14", "D) 16", "E) 20"],
-      correta: 3,
-      explicacaoAcerto: "Grandezas: operários, dias, horas. Relação inversa com dias e horas. Produto: 5×8×6 = x×4×8? Cuidado: mais horas por dia significa menos dias? Vamos montar: 5 operários × 8 dias × 8 h/dia = total de horas = 320 h. Para fazer em 4 dias com 6 h/dia: total de horas = x × 4 × 6 = 24x. Igualando: 24x = 320 → x ≈ 13,33, mas como não há 13,33, a resposta inteira mais próxima é 14? Mas as alternativas não têm 13,33, então provavelmente a relação correta é inversa com dias e direta com horas? Vamos refazer: 5 op, 8 dias, 8 h → 5 op × 8 dias × (8/6) = x × 4? Não. Método padrão: (5/x) = (4/8) × (6/8)? Invertendo horas? Vamos calcular: (5/x) = (4/8) × (6/8) → 5/x = (1/2)×(3/4)=3/8 → x = 5×8/3 ≈ 13,33. Como não há alternativa, talvez a questão seja de regra de três composta com inversão correta: 5×8×8 = x×4×6 → 320 = 24x → x=13,33, arredondando para 14? Mas o gabarito pode ser 14. Contudo, vou corrigir a resposta para 20? Não. Vou colocar a alternativa correta como 14? Mas não há 14, há 16. Vou ajustar a questão para que a resposta seja 16: talvez se os operários trabalham 8h e os novos trabalham 8h também, aí seria 10. Vou mudar a questão: se 5 operários em 8 dias (8h/dia), em 4 dias (8h/dia) seriam 10 operários. Vou reformular a questão difícil para ter resposta única. Em vez disso, vou criar uma questão de regra de três composta clássica. Vou alterar para: '5 operários constroem um muro em 8 dias trabalhando 8 horas por dia. Em quantos dias 10 operários trabalhando 6 horas por dia construirão o mesmo muro?' Aí a resposta seria 5,33 dias. Mas quero que seja difícil com alternativas. Vou manter o espírito e deixar a resposta correta 16.",
-      explicacaoAcerto: "5 op × 8 dias × 8 h = x op × 4 dias × 6 h → 320 = 24x → x=13,33, mas como não há, a mais próxima é 14? Não, vou ajustar para 16: (5/x) = (4/8) × (6/8) ? Não. Vou simplificar: 5×8×8 = x×4×6 → x=13,33. Como a questão não tem 13,33, vou considerar que o raciocínio correto é 16? Isso é ruim. Vou substituir por uma questão que tenha resposta exata. Por exemplo: 'Se 6 máquinas produzem 600 peças em 4 dias, quantas peças produzirão 9 máquinas em 6 dias?' Resposta: 1350. Vou criar uma nova questão difícil. Questão: 'Uma fábrica produz 1200 peças em 5 dias com 8 máquinas. Quantas máquinas são necessárias para produzir 3000 peças em 10 dias?' Resposta: 10. Vou colocar essa.",
-      explicacaoErro: "Cuidado com a análise de proporcionalidade entre as grandezas."
-    },
-    // Substituindo a questão difícil acima por uma mais simples
     {
       dificuldade: "Difícil",
       pergunta: "Uma fábrica produz 1200 peças em 5 dias com 8 máquinas. Quantas máquinas são necessárias para produzir 3000 peças em 10 dias?",
       alternativas: ["A) 8", "B) 10", "C) 12", "D) 15", "E) 20"],
       correta: 1,
-      explicacaoAcerto: "Regra de três composta: máquinas e peças são diretas, máquinas e dias são inversas. Montagem: 8/x = (1200/3000) × (10/5) ? Vamos: (8/x) = (1200/3000) × (10/5) → 8/x = (2/5) × 2 = 4/5 → x = 10.",
-      explicacaoErro: "Não confunda as relações; peças: direta, dias: inversa."
+      explicacaoAcerto: "8/x = (1200/3000) × (10/5) → 8/x = (2/5)×2 = 4/5 → x = 10.",
+      explicacaoErro: "Peças: direta; dias: inversa em relação a máquinas."
     },
     {
       dificuldade: "Difícil",
       pergunta: "Três números são proporcionais a 2, 3 e 5. Se a soma é 200, qual é a diferença entre o maior e o menor?",
       alternativas: ["A) 30", "B) 40", "C) 50", "D) 60", "E) 80"],
       correta: 3,
-      explicacaoAcerto: "Números: 2k, 3k, 5k → soma = 10k = 200 → k=20. Maior = 100, menor = 40 → diferença = 60.",
+      explicacaoAcerto: "Números: 2k, 3k, 5k → soma = 10k = 200 → k=20. Maior=100, menor=40 → dif=60.",
       explicacaoErro: "A soma dos coeficientes é 10, então k=20."
     },
     {
@@ -794,7 +1037,7 @@ export const modulo = {
       pergunta: "Um investimento de R$ 5.000 rende juros simples de 10% ao ano. Após 3 anos, qual o montante?",
       alternativas: ["A) R$ 5.500", "B) R$ 6.000", "C) R$ 6.500", "D) R$ 7.000", "E) R$ 7.500"],
       correta: 2,
-      explicacaoAcerto: "Juros: 5000 × 0,10 × 3 = 1500. Montante = 5000+1500 = 6500.",
+      explicacaoAcerto: "Juros: 5000 × 0,10 × 3 = 1500. Montante = 6500.",
       explicacaoErro: "Juros simples: J = C·i·t."
     },
     {
@@ -804,6 +1047,22 @@ export const modulo = {
       correta: 2,
       explicacaoAcerto: "Venda = Custo × 1,20 → 240 = 1,20C → C = 200.",
       explicacaoErro: "O lucro é sobre o custo, então venda = custo + 20% do custo."
+    },
+    {
+      dificuldade: "Difícil",
+      pergunta: "Uma pessoa aplicou R$ 2.000,00 a juros simples de 3% ao mês e obteve R$ 360,00 de juros. Qual foi o tempo da aplicação?",
+      alternativas: ["A) 4 meses", "B) 5 meses", "C) 6 meses", "D) 7 meses", "E) 8 meses"],
+      correta: 2,
+      explicacaoAcerto: "J = C·i·t → 360 = 2000×0,03×t → 360 = 60t → t=6.",
+      explicacaoErro: "Isole t na fórmula."
+    },
+    {
+      dificuldade: "Difícil",
+      pergunta: "Misturam-se 12 litros de uma solução ácida a 25% com 8 litros de outra solução ácida a 40%. Qual a concentração da mistura?",
+      alternativas: ["A) 30%", "B) 31%", "C) 32%", "D) 33%", "E) 34%"],
+      correta: 1,
+      explicacaoAcerto: "Ácido: 12×0,25 + 8×0,40 = 3+3,2=6,2L. Total 20L. Conc. = 6,2/20 = 0,31 = 31%.",
+      explicacaoErro: "Calcule a massa total do soluto e divida pelo volume total."
     }
   ],
 
