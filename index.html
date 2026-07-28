@@ -6,7 +6,7 @@
     <title>BB Inteligente – Plataforma de Estudos</title>
     <style>
         /* ============================================
-           DESIGN SYSTEM – BB Inteligente (versão modular)
+           DESIGN SYSTEM – BB Inteligente (mantido)
            ============================================ */
         :root {
             --primary: #6366f1;
@@ -28,6 +28,7 @@
             --warning: #f59e0b;
             --info: #3b82f6;
             --font-sans: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --font-mono: 'SF Mono', monospace;
             --space-xs: 0.25rem;
             --space-sm: 0.5rem;
             --space-md: 1rem;
@@ -56,16 +57,36 @@
             color: var(--text-primary);
             line-height: 1.6;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* ===== ANIMAÇÕES ===== */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideInRight { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
-
+        /* Animações (mantidas) */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        @keyframes progressFill {
+            from { width: 0%; }
+        }
         .animate-fade-in { animation: fadeIn var(--transition-slow) forwards; }
         .animate-slide-right { animation: slideInRight var(--transition-slow) forwards; }
+        .animate-slide-left { animation: slideInLeft var(--transition-slow) forwards; }
         .stagger-1 { animation-delay: 0.05s; opacity: 0; }
         .stagger-2 { animation-delay: 0.1s; opacity: 0; }
         .stagger-3 { animation-delay: 0.15s; opacity: 0; }
@@ -84,7 +105,7 @@
         .text-center { text-align: center; }
         .w-full { width: 100%; }
 
-        /* ===== COMPONENTES ===== */
+        /* Botões, cards, badges, progress (mantidos) */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -98,6 +119,8 @@
             font-weight: 600;
             cursor: pointer;
             transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
         }
         .btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .btn--primary {
@@ -105,13 +128,20 @@
             color: white;
             box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.39);
         }
-        .btn--primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 20px 0 rgba(99, 102, 241, 0.5); }
+        .btn--primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px 0 rgba(99, 102, 241, 0.5);
+        }
         .btn--secondary {
             background: var(--surface);
             color: var(--text-primary);
             border: 2px solid var(--border);
         }
-        .btn--secondary:hover:not(:disabled) { background: var(--surface-hover); border-color: var(--primary-light); }
+        .btn--secondary:hover:not(:disabled) {
+            background: var(--surface-hover);
+            border-color: var(--primary-light);
+            color: var(--primary);
+        }
         .btn--success {
             background: linear-gradient(135deg, var(--success), var(--secondary-dark));
             color: white;
@@ -121,8 +151,11 @@
             color: var(--text-secondary);
             padding: var(--space-sm) var(--space-md);
         }
-        .btn--ghost:hover { background: var(--surface-hover); }
-        .btn--small { padding: var(--space-sm) var(--space-lg); font-size: 0.875rem; }
+        .btn--ghost:hover { background: var(--surface-hover); color: var(--text-primary); }
+        .btn--small {
+            padding: var(--space-sm) var(--space-lg);
+            font-size: 0.875rem;
+        }
 
         .card {
             background: var(--surface);
@@ -135,7 +168,11 @@
         .card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
         .card--interactive { cursor: pointer; }
         .card--interactive:hover { border-color: var(--primary-light); }
-        .card--locked { opacity: 0.6; cursor: not-allowed; filter: grayscale(0.5); }
+        .card--locked {
+            opacity: 0.6;
+            cursor: not-allowed;
+            filter: grayscale(0.5);
+        }
         .card--locked:hover { transform: none; box-shadow: var(--shadow-md); }
 
         .badge {
@@ -175,11 +212,18 @@
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
             animation: shimmer 2s infinite;
         }
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        .progress-ring__circle {
+            transition: stroke-dashoffset var(--transition-slow);
+        }
 
-        .progress-ring { transform: rotate(-90deg); }
-        .progress-ring__circle { transition: stroke-dashoffset var(--transition-slow); }
+        .icon { width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; }
+        .icon--lg { width: 32px; height: 32px; }
+        .icon--xl { width: 48px; height: 48px; }
 
-        /* ===== LAYOUT ===== */
+        /* Layout principal (mantido) */
         .app { min-height: 100vh; display: flex; flex-direction: column; }
         .header {
             background: var(--surface);
@@ -197,8 +241,6 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            flex-wrap: wrap;
-            gap: var(--space-md);
         }
         .logo {
             display: flex;
@@ -226,7 +268,6 @@
             display: flex;
             align-items: center;
             gap: var(--space-lg);
-            flex-wrap: wrap;
         }
         .stat-pill {
             display: flex;
@@ -244,13 +285,7 @@
         .stat-pill--streak { color: var(--accent); }
         .stat-pill--level { color: var(--secondary); }
 
-        .main {
-            flex: 1;
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-            padding: var(--space-xl);
-        }
+        .main { flex: 1; max-width: 1200px; width: 100%; margin: 0 auto; padding: var(--space-xl); }
         .footer {
             background: var(--surface);
             border-top: 1px solid var(--border);
@@ -260,10 +295,9 @@
             font-size: 0.875rem;
         }
 
-        /* ===== TELAS ===== */
+        /* Telas */
         .screen { display: none; animation: fadeIn var(--transition-slow); }
         .screen.active { display: block; }
-
         .screen-header { margin-bottom: var(--space-2xl); }
         .screen-header__title {
             font-size: 2rem;
@@ -274,7 +308,6 @@
             -webkit-text-fill-color: transparent;
         }
         .screen-header__subtitle { color: var(--text-secondary); font-size: 1.125rem; }
-
         .back-btn {
             display: inline-flex;
             align-items: center;
@@ -287,7 +320,7 @@
         }
         .back-btn:hover { color: var(--primary); }
 
-        /* ===== DASHBOARD ===== */
+        /* Dashboard (mantido) */
         .dashboard__hero {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             border-radius: var(--radius-xl);
@@ -324,11 +357,10 @@
 
         .dashboard__stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: var(--space-lg);
             margin-bottom: var(--space-2xl);
         }
-
         .stat-card {
             background: var(--surface);
             border-radius: var(--radius-lg);
@@ -360,7 +392,7 @@
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: var(--space-xl);
         }
-
+        .discipline-card { position: relative; overflow: hidden; }
         .discipline-card__header {
             display: flex;
             align-items: flex-start;
@@ -379,7 +411,7 @@
         .discipline-card__icon--math { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; }
         .discipline-card__icon--fin { background: linear-gradient(135deg, #10b981, #059669); color: white; }
         .discipline-card__title { font-size: 1.25rem; font-weight: 700; margin-bottom: var(--space-xs); }
-        .discipline-card__desc { color: var(--text-secondary); font-size: 0.9375rem; margin-bottom: var(--space-lg); }
+        .discipline-card__desc { color: var(--text-secondary); font-size: 0.9375rem; margin-bottom: var(--space-lg); line-height: 1.5; }
         .discipline-card__progress { margin-bottom: var(--space-md); }
         .discipline-card__progress-header {
             display: flex;
@@ -404,11 +436,18 @@
             color: var(--text-secondary);
             border: 1px solid var(--border);
         }
-        .module-chip--completed { background: rgba(34, 197, 94, 0.1); color: var(--success); border-color: rgba(34, 197, 94, 0.2); }
-        .module-chip--current { background: rgba(99, 102, 241, 0.1); color: var(--primary); border-color: rgba(99, 102, 241, 0.2); }
-        .module-chip--locked { opacity: 0.5; }
+        .module-chip--completed {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--success);
+            border-color: rgba(34, 197, 94, 0.2);
+        }
+        .module-chip--current {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            border-color: rgba(99, 102, 241, 0.2);
+        }
 
-        /* ===== MÓDULOS ===== */
+        /* Tela de disciplina (módulos) - mantido */
         .modules-list { display: flex; flex-direction: column; gap: var(--space-lg); }
         .module-card {
             display: grid;
@@ -447,7 +486,7 @@
             color: var(--text-secondary);
         }
 
-        /* ===== TÓPICOS ===== */
+        /* Tela de tópicos (etapas do módulo) */
         .topics-list { display: flex; flex-direction: column; gap: var(--space-md); }
         .topic-item {
             display: flex;
@@ -460,7 +499,11 @@
             cursor: pointer;
             transition: all var(--transition-base);
         }
-        .topic-item:hover:not(.topic-item--locked) { border-color: var(--primary-light); box-shadow: var(--shadow-md); transform: translateX(4px); }
+        .topic-item:hover:not(.topic-item--locked) {
+            border-color: var(--primary-light);
+            box-shadow: var(--shadow-md);
+            transform: translateX(4px);
+        }
         .topic-item__status {
             width: 40px;
             height: 40px;
@@ -481,7 +524,7 @@
         .topic-item__stats { display: flex; align-items: center; gap: var(--space-md); font-size: 0.875rem; color: var(--text-muted); }
         .topic-item--locked { opacity: 0.6; cursor: not-allowed; }
 
-        /* ===== ESTUDO ===== */
+        /* Tela de estudo (fluxo em etapas) */
         .study-container { max-width: 800px; margin: 0 auto; }
         .study-stepper {
             display: flex;
@@ -494,7 +537,7 @@
             border-radius: var(--radius-full);
             border: 1px solid var(--border);
             box-shadow: var(--shadow-sm);
-            overflow-x: auto;
+            flex-wrap: wrap;
         }
         .stepper__step { display: flex; align-items: center; gap: var(--space-sm); }
         .stepper__dot {
@@ -510,11 +553,10 @@
             border: 2px solid var(--border);
             color: var(--text-muted);
             transition: all var(--transition-base);
-            flex-shrink: 0;
         }
         .stepper__dot--active { background: var(--primary); border-color: var(--primary); color: white; box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2); }
         .stepper__dot--completed { background: var(--success); border-color: var(--success); color: white; }
-        .stepper__line { width: 24px; height: 2px; background: var(--border); transition: background var(--transition-base); flex-shrink: 0; }
+        .stepper__line { width: 24px; height: 2px; background: var(--border); transition: background var(--transition-base); }
         .stepper__line--completed { background: var(--success); }
 
         .study-content {
@@ -528,86 +570,60 @@
         .study-content__header { text-align: center; margin-bottom: var(--space-2xl); }
         .study-content__header h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: var(--space-sm); color: var(--text-primary); }
         .study-content__header p { color: var(--text-secondary); }
-
-        .study-actions {
-            display: flex;
-            justify-content: center;
-            gap: var(--space-md);
-            margin-top: var(--space-2xl);
-            flex-wrap: wrap;
-        }
-
-        /* ===== ESTILOS PARA CONTEÚDO ===== */
-        .study-example {
+        .study-content__body { line-height: 1.8; }
+        .study-content__body svg { max-width: 100%; height: auto; margin: var(--space-md) 0; border: 1px solid var(--border); border-radius: var(--radius-sm); }
+        .study-content__body .diagram-container {
             background: var(--bg);
-            padding: var(--space-lg);
-            border-radius: var(--radius-md);
-            margin: var(--space-md) 0;
-            border-left: 4px solid var(--primary-light);
-        }
-        .study-formula {
-            font-family: 'SF Mono', monospace;
-            font-size: 1.25rem;
-            background: var(--surface);
             padding: var(--space-md);
             border-radius: var(--radius-md);
+            margin: var(--space-md) 0;
             text-align: center;
-            border: 1px solid var(--border);
-            margin: var(--space-md) 0;
         }
-        .study-question {
-            background: var(--bg);
-            padding: var(--space-lg);
-            border-radius: var(--radius-md);
-            margin: var(--space-md) 0;
-        }
-        .study-question .alternatives {
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-sm);
-            margin-top: var(--space-md);
-        }
-        .study-question .alt-item {
-            padding: var(--space-sm) var(--space-md);
-            border: 2px solid var(--border);
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            transition: all var(--transition-fast);
-        }
-        .study-question .alt-item:hover { border-color: var(--primary-light); background: var(--surface-hover); }
-        .study-question .alt-item.correct { border-color: var(--success); background: rgba(34, 197, 94, 0.1); }
-        .study-question .alt-item.wrong { border-color: var(--error); background: rgba(239, 68, 68, 0.1); }
-        .study-question .alt-item.disabled { pointer-events: none; opacity: 0.7; }
-        .study-feedback {
-            margin-top: var(--space-md);
-            padding: var(--space-md);
-            border-radius: var(--radius-md);
-            background: var(--surface);
-            border: 1px solid var(--border);
-        }
-        .study-feedback.success { border-left: 4px solid var(--success); }
-        .study-feedback.error { border-left: 4px solid var(--error); }
-        .study-feedback h4 { font-weight: 700; margin-bottom: var(--space-sm); }
-        .study-feedback p { font-size: 0.9375rem; color: var(--text-secondary); }
+        .study-actions { display: flex; justify-content: center; gap: var(--space-md); margin-top: var(--space-2xl); flex-wrap: wrap; }
 
-        .study-input {
-            display: flex;
+        .feedback-box { margin-top: 16px; padding: 16px; border-radius: 12px; }
+        .feedback-box.success { background: #dcfce7; border: 1px solid #86efac; color: #166534; }
+        .feedback-box.error { background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b; }
+        .alternatives .btn { text-align: left; justify-content: flex-start; }
+        .alternatives .btn--success { background: #22c55e; color: white; border-color: #22c55e; }
+        .alternatives .btn--error { background: #ef4444; color: white; border-color: #ef4444; }
+
+        /* Conquistas */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             gap: var(--space-md);
-            margin: var(--space-md) 0;
-            flex-wrap: wrap;
         }
-        .study-input input {
-            flex: 1;
-            padding: var(--space-md);
+        .achievement {
+            text-align: center;
+            padding: var(--space-lg);
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            transition: all var(--transition-base);
+        }
+        .achievement:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+        .achievement__icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto var(--space-md);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            background: var(--bg);
             border: 2px solid var(--border);
-            border-radius: var(--radius-md);
-            font-size: 1rem;
-            font-family: inherit;
-            min-width: 200px;
         }
-        .study-input input:focus { outline: none; border-color: var(--primary); }
+        .achievement--unlocked .achievement__icon {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+        .achievement__title { font-size: 0.875rem; font-weight: 700; margin-bottom: var(--space-xs); }
+        .achievement__desc { font-size: 0.75rem; color: var(--text-muted); }
 
-        /* ===== TOAST ===== */
+        /* Toast */
         .toast-container {
             position: fixed;
             top: 80px;
@@ -638,7 +654,7 @@
         .toast__content h4 { font-weight: 700; margin-bottom: var(--space-xs); }
         .toast__content p { font-size: 0.875rem; color: var(--text-secondary); }
 
-        /* ===== RESPONSIVO ===== */
+        /* Responsividade */
         @media (max-width: 768px) {
             .main { padding: var(--space-md); }
             .header__inner { padding: 0 var(--space-md); }
@@ -649,7 +665,7 @@
             .disciplines-grid { grid-template-columns: 1fr; }
             .module-card { grid-template-columns: 1fr; text-align: center; gap: var(--space-md); }
             .module-card__number { margin: 0 auto; }
-            .study-stepper { padding: var(--space-md); }
+            .study-stepper { overflow-x: auto; padding: var(--space-md); }
             .stepper__line { width: 12px; }
             .toast-container { right: var(--space-md); left: var(--space-md); }
             .toast { min-width: auto; width: 100%; }
@@ -663,929 +679,1156 @@
     </style>
 </head>
 <body>
-    <div class="app" id="app">
-        <!-- HEADER -->
-        <header class="header">
-            <div class="header__inner">
-                <a class="logo" onclick="App.navigate('dashboard')">
-                    <div class="logo__icon">BB</div>
-                    <span>BB Inteligente</span>
-                </a>
-                <div class="header__stats" id="headerStats"></div>
+<div class="app" id="app">
+    <!-- Header -->
+    <header class="header">
+        <div class="header__inner">
+            <a class="logo" onclick="App.navigate('dashboard')">
+                <div class="logo__icon">BB</div>
+                <span>BB Inteligente</span>
+            </a>
+            <div class="header__stats" id="headerStats"></div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Tela: Dashboard -->
+        <section class="screen active" id="screen-dashboard">
+            <div class="dashboard__hero animate-fade-in">
+                <div class="dashboard__hero-content">
+                    <h1>Olá, <span id="userName">Estudante</span>! 👋</h1>
+                    <p>Continue sua preparação para o concurso do Banco do Brasil. Você está no caminho certo para a aprovação!</p>
+                </div>
             </div>
-        </header>
+            <div class="dashboard__stats-grid" id="dashboardStats"></div>
+            <div class="screen-header animate-fade-in stagger-2">
+                <h2 class="screen-header__title">Disciplinas</h2>
+                <p class="screen-header__subtitle">Escolha uma área de estudo para continuar</p>
+            </div>
+            <div class="disciplines-grid" id="disciplinesGrid"></div>
+        </section>
 
-        <!-- MAIN -->
-        <main class="main">
-            <!-- DASHBOARD -->
-            <section class="screen active" id="screen-dashboard">
-                <div class="dashboard__hero animate-fade-in">
-                    <div class="dashboard__hero-content">
-                        <h1>Olá, <span id="userName">Estudante</span>! 👋</h1>
-                        <p>Continue sua preparação para o concurso do Banco do Brasil. Você está no caminho certo para a aprovação!</p>
+        <!-- Tela: Disciplina (Módulos) -->
+        <section class="screen" id="screen-discipline">
+            <div class="back-btn" onclick="App.navigate('dashboard')">← Voltar ao Dashboard</div>
+            <div class="screen-header">
+                <h1 class="screen-header__title" id="disciplineTitle">Matemática</h1>
+                <p class="screen-header__subtitle" id="disciplineSubtitle">Selecione um módulo para estudar</p>
+            </div>
+            <div class="modules-list" id="modulesList"></div>
+        </section>
+
+        <!-- Tela: Módulo (Etapas) -->
+        <section class="screen" id="screen-module">
+            <div class="back-btn" onclick="App.goBack()">← Voltar aos Módulos</div>
+            <div class="screen-header">
+                <h1 class="screen-header__title" id="moduleTitle">Progressões</h1>
+                <p class="screen-header__subtitle" id="moduleSubtitle">Siga as etapas para aprender o conteúdo</p>
+            </div>
+            <div class="topics-list" id="topicsList"></div>
+            <!-- Botão para iniciar avaliação final, se disponível -->
+            <div id="finalExamButton" class="text-center" style="margin-top: var(--space-2xl);"></div>
+        </section>
+
+        <!-- Tela: Estudo (conteúdo dinâmico) -->
+        <section class="screen" id="screen-study">
+            <div class="back-btn" onclick="App.confirmExitStudy()">← Sair da Aula</div>
+            <div class="study-container">
+                <div class="study-stepper" id="studyStepper"></div>
+                <div class="study-content" id="studyContent"></div>
+            </div>
+        </section>
+
+        <!-- Tela: Avaliação Final -->
+        <section class="screen" id="screen-exam">
+            <div class="back-btn" onclick="App.confirmExitExam()">← Sair da Avaliação</div>
+            <div class="study-container">
+                <h2 class="text-center" style="margin-bottom: var(--space-lg);">Avaliação Final</h2>
+                <p class="text-center" style="color: var(--text-secondary); margin-bottom: var(--space-xl);">Responda todas as questões. Para ser aprovado, você precisa acertar pelo menos 80%.</p>
+                <div id="examContent"></div>
+            </div>
+        </section>
+
+        <!-- Tela: Perfil -->
+        <section class="screen" id="screen-profile">
+            <div class="back-btn" onclick="App.navigate('dashboard')">← Voltar ao Dashboard</div>
+            <div class="screen-header">
+                <h1 class="screen-header__title">Seu Perfil</h1>
+                <p class="screen-header__subtitle">Acompanhe sua evolução e conquistas</p>
+            </div>
+            <div id="profileContent"></div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>BB Inteligente – Plataforma de Estudos para o Concurso Banco do Brasil (CESGRANRIO)</p>
+    </footer>
+
+    <div class="toast-container" id="toastContainer"></div>
+</div>
+
+<script>
+    // ======================================================================
+    // 1. ESTADO GLOBAL COM PERSISTÊNCIA
+    // ======================================================================
+    let MODULOS = [];
+    const STATE_KEY = 'bb_inteligente_state';
+
+    // Estado padrão
+    const defaultState = {
+        xp: 0,
+        streak: 0,
+        level: 1,
+        conquistas: [],
+        progresso: {},       // chave: moduloId -> { concluido, acertos, tentativas, xpGanho, topicos: [], questoesFeitas: [], ultimoAcesso }
+        ultimaAtividade: null,
+        currentScreen: 'dashboard',
+        disciplineFilter: null,
+        currentModuleId: null,
+        currentStep: null,   // 'introducao', 'teoria_0', 'exemplo_0', 'exercicio', 'questao', 'avaliacao'
+        previousScreen: null,
+        previousModuleId: null,
+        // Para controle do fluxo de estudo
+        studyIndex: 0,       // índice da etapa atual dentro do array de etapas
+        examQuestions: [],   // questões da avaliação
+        examIndex: 0,
+        examCorrect: 0,
+        examAnswered: false,
+        // Para adaptação
+        lastWrongTopic: null,
+        adaptAttempts: 0,
+    };
+
+    let state = loadState();
+
+    function loadState() {
+        try {
+            const saved = localStorage.getItem(STATE_KEY);
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                // Mescla com default para garantir campos novos
+                return { ...defaultState, ...parsed };
+            }
+        } catch (e) {}
+        return { ...defaultState };
+    }
+
+    function saveState() {
+        try {
+            localStorage.setItem(STATE_KEY, JSON.stringify(state));
+        } catch (e) {}
+    }
+
+    // ======================================================================
+    // 2. FUNÇÕES AUXILIARES
+    // ======================================================================
+    function getModulo(id) { return MODULOS.find(m => m.id === id); }
+
+    function getModulosByDisciplina(disciplina) {
+        return MODULOS.filter(m => m.disciplina === disciplina).sort((a, b) => a.ordem - b.ordem);
+    }
+
+    function getDisciplinas() {
+        const set = new Set(MODULOS.map(m => m.disciplina));
+        return Array.from(set);
+    }
+
+    function isModuloConcluido(id) {
+        const p = state.progresso[id];
+        return p ? p.concluido : false;
+    }
+
+    function isModuloBloqueado(id) {
+        const modulo = getModulo(id);
+        if (!modulo) return true;
+        const mods = getModulosByDisciplina(modulo.disciplina);
+        const idx = mods.findIndex(m => m.id === id);
+        if (idx === 0) return false;
+        const anterior = mods[idx - 1];
+        return !isModuloConcluido(anterior.id);
+    }
+
+    function getEtapaStatus(moduloId, etapaIndex) {
+        const p = state.progresso[moduloId];
+        if (!p) return 'locked';
+        if (p.topicos && p.topicos[etapaIndex]) return 'completed';
+        // Se o índice for 0 ou o anterior estiver concluído, é current
+        if (etapaIndex === 0) return 'current';
+        if (p.topicos && p.topicos[etapaIndex - 1]) return 'current';
+        return 'locked';
+    }
+
+    function calcularProgressoModulo(id) {
+        const p = state.progresso[id];
+        if (!p || !p.topicos) return 0;
+        const total = p.topicos.length;
+        const concluidos = p.topicos.filter(Boolean).length;
+        return total > 0 ? Math.round((concluidos / total) * 100) : 0;
+    }
+
+    function calcularProgressoDisciplina(disciplina) {
+        const mods = getModulosByDisciplina(disciplina);
+        if (mods.length === 0) return 0;
+        let total = 0;
+        mods.forEach(m => {
+            total += calcularProgressoModulo(m.id);
+        });
+        return Math.round(total / mods.length);
+    }
+
+    // ======================================================================
+    // 3. TOAST
+    // ======================================================================
+    function showToast(message, type = 'info', title = '') {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        toast.className = `toast toast--${type}`;
+        const iconMap = { success: '✅', warning: '⚠️', info: 'ℹ️' };
+        toast.innerHTML = `
+            <div class="toast__icon">${iconMap[type] || 'ℹ️'}</div>
+            <div class="toast__content">
+                <h4>${title || (type === 'success' ? 'Parabéns!' : type === 'warning' ? 'Atenção' : 'Informação')}</h4>
+                <p>${message}</p>
+            </div>
+        `;
+        container.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(30px)';
+            setTimeout(() => toast.remove(), 400);
+        }, 4000);
+    }
+
+    // ======================================================================
+    // 4. RENDERIZAÇÃO PRINCIPAL
+    // ======================================================================
+    function renderHeader() {
+        const stats = document.getElementById('headerStats');
+        stats.innerHTML = `
+            <div class="stat-pill stat-pill--xp">
+                <span class="stat-pill__icon">⭐</span>
+                <span>${state.xp} XP</span>
+            </div>
+            <div class="stat-pill stat-pill--streak">
+                <span class="stat-pill__icon">🔥</span>
+                <span>${state.streak}</span>
+            </div>
+            <div class="stat-pill stat-pill--level">
+                <span class="stat-pill__icon">🏅</span>
+                <span>Nível ${state.level}</span>
+            </div>
+            <span style="cursor:pointer; margin-left: var(--space-sm);" title="Perfil" onclick="App.navigate('profile')">👤</span>
+        `;
+    }
+
+    function renderDashboard() {
+        const statsGrid = document.getElementById('dashboardStats');
+        const totalModulos = MODULOS.length;
+        const concluidos = MODULOS.filter(m => isModuloConcluido(m.id)).length;
+        const totalTentativas = MODULOS.reduce((acc, m) => acc + (state.progresso[m.id]?.tentativas || 0), 0);
+        const totalAcertos = MODULOS.reduce((acc, m) => acc + (state.progresso[m.id]?.acertos || 0), 0);
+        const accuracy = totalTentativas > 0 ? Math.round((totalAcertos / totalTentativas) * 100) : 0;
+
+        statsGrid.innerHTML = `
+            <div class="stat-card animate-fade-in stagger-1">
+                <div class="stat-card__icon stat-card__icon--xp">⭐</div>
+                <div class="stat-card__value">${state.xp}</div>
+                <div class="stat-card__label">XP Total</div>
+            </div>
+            <div class="stat-card animate-fade-in stagger-2">
+                <div class="stat-card__icon stat-card__icon--level">🏅</div>
+                <div class="stat-card__value">${state.level}</div>
+                <div class="stat-card__label">Nível</div>
+            </div>
+            <div class="stat-card animate-fade-in stagger-3">
+                <div class="stat-card__icon stat-card__icon--streak">🔥</div>
+                <div class="stat-card__value">${state.streak}</div>
+                <div class="stat-card__label">Sequência (dias)</div>
+            </div>
+            <div class="stat-card animate-fade-in stagger-4">
+                <div class="stat-card__icon stat-card__icon--accuracy">🎯</div>
+                <div class="stat-card__value">${accuracy}%</div>
+                <div class="stat-card__label">Taxa de Acertos</div>
+            </div>
+        `;
+
+        const grid = document.getElementById('disciplinesGrid');
+        grid.innerHTML = '';
+        const disciplinas = getDisciplinas();
+        disciplinas.forEach(disciplina => {
+            const mods = getModulosByDisciplina(disciplina);
+            const progress = calcularProgressoDisciplina(disciplina);
+            const concluidosMods = mods.filter(m => isModuloConcluido(m.id)).length;
+            const totalMods = mods.length;
+            const isMath = disciplina === 'Matemática';
+            const card = document.createElement('div');
+            card.className = 'card discipline-card animate-fade-in stagger-5';
+            card.innerHTML = `
+                <div class="discipline-card__header">
+                    <div>
+                        <div class="discipline-card__icon ${isMath ? 'discipline-card__icon--math' : 'discipline-card__icon--fin'}">
+                            ${isMath ? '📐' : '💰'}
+                        </div>
+                    </div>
+                    <span class="badge badge--primary">${concluidosMods}/${totalMods}</span>
+                </div>
+                <h3 class="discipline-card__title">${disciplina}</h3>
+                <p class="discipline-card__desc">${isMath ? 'Raciocínio lógico, álgebra, sequências e mais.' : 'Juros, amortização, fluxos de caixa.'}</p>
+                <div class="discipline-card__progress">
+                    <div class="discipline-card__progress-header">
+                        <span class="discipline-card__progress-label">Progresso</span>
+                        <span class="discipline-card__progress-value">${progress}%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-bar__fill" style="width:${progress}%;"></div>
                     </div>
                 </div>
-                <div class="dashboard__stats-grid" id="dashboardStats"></div>
-                <div class="screen-header animate-fade-in stagger-2">
-                    <h2 class="screen-header__title">Disciplinas</h2>
-                    <p class="screen-header__subtitle">Escolha uma área de estudo para continuar</p>
+                <div class="discipline-card__modules">
+                    ${mods.map(m => `
+                        <span class="module-chip ${isModuloConcluido(m.id) ? 'module-chip--completed' : (m.id === mods[0]?.id ? 'module-chip--current' : '')}">
+                            ${m.nome}
+                        </span>
+                    `).join('')}
                 </div>
-                <div class="disciplines-grid" id="disciplinesGrid"></div>
-            </section>
+            `;
+            card.addEventListener('click', () => App.navigate('discipline', disciplina));
+            grid.appendChild(card);
+        });
+    }
 
-            <!-- DISCIPLINA -->
-            <section class="screen" id="screen-discipline">
-                <div class="back-btn" onclick="App.navigate('dashboard')">← Voltar ao Dashboard</div>
-                <div class="screen-header">
-                    <h1 class="screen-header__title" id="disciplineTitle">Matemática</h1>
-                    <p class="screen-header__subtitle" id="disciplineSubtitle">Selecione um módulo para estudar</p>
+    function renderDiscipline(disciplina) {
+        document.getElementById('disciplineTitle').textContent = disciplina;
+        document.getElementById('disciplineSubtitle').textContent = `Selecione um módulo para estudar (${disciplina})`;
+
+        const list = document.getElementById('modulesList');
+        list.innerHTML = '';
+        const mods = getModulosByDisciplina(disciplina);
+        mods.forEach((m, idx) => {
+            const concluido = isModuloConcluido(m.id);
+            const bloqueado = isModuloBloqueado(m.id);
+            const progress = calcularProgressoModulo(m.id);
+            const card = document.createElement('div');
+            card.className = `card module-card ${bloqueado ? 'card--locked' : 'card--interactive'}`;
+            card.innerHTML = `
+                <div class="module-card__number ${concluido ? 'module-card__number--completed' : (bloqueado ? 'module-card__number--locked' : '')}">
+                    ${concluido ? '✓' : (bloqueado ? '🔒' : idx + 1)}
                 </div>
-                <div class="modules-list" id="modulesList"></div>
-            </section>
-
-            <!-- MÓDULO -->
-            <section class="screen" id="screen-module">
-                <div class="back-btn" onclick="App.goBack()">← Voltar aos Módulos</div>
-                <div class="screen-header">
-                    <h1 class="screen-header__title" id="moduleTitle">Progressões</h1>
-                    <p class="screen-header__subtitle" id="moduleSubtitle">Complete os tópicos em ordem</p>
+                <div class="module-card__info">
+                    <h3>${m.nome}</h3>
+                    <p>${m.introducao?.descricao?.substring(0, 80) || ''}${m.introducao?.descricao?.length > 80 ? '...' : ''}</p>
                 </div>
-                <div class="topics-list" id="topicsList"></div>
-            </section>
-
-            <!-- ESTUDO -->
-            <section class="screen" id="screen-study">
-                <div class="back-btn" onclick="App.confirmExitStudy()">← Sair da Aula</div>
-                <div class="study-container">
-                    <div class="study-stepper" id="studyStepper"></div>
-                    <div class="study-content" id="studyContent"></div>
+                <div class="module-card__meta">
+                    <div class="module-card__progress-ring">
+                        <svg class="progress-ring" width="56" height="56">
+                            <circle cx="28" cy="28" r="22" fill="none" stroke="#e2e8f0" stroke-width="4"/>
+                            <circle class="progress-ring__circle" cx="28" cy="28" r="22" fill="none" stroke="${concluido ? '#22c55e' : '#6366f1'}" stroke-width="4"
+                                stroke-dasharray="${2 * Math.PI * 22}" stroke-dashoffset="${2 * Math.PI * 22 * (1 - progress/100)}" />
+                        </svg>
+                        <div class="module-card__progress-text">${progress}%</div>
+                    </div>
+                    ${!bloqueado ? `<button class="btn btn--primary btn--small" onclick="App.abrirModulo('${m.id}')">Estudar</button>` : ''}
                 </div>
-            </section>
-
-            <!-- PERFIL -->
-            <section class="screen" id="screen-profile">
-                <div class="back-btn" onclick="App.navigate('dashboard')">← Voltar ao Dashboard</div>
-                <div class="screen-header">
-                    <h1 class="screen-header__title">Seu Perfil</h1>
-                    <p class="screen-header__subtitle">Acompanhe sua evolução e conquistas</p>
-                </div>
-                <div id="profileContent"></div>
-            </section>
-        </main>
-
-        <footer class="footer">
-            <p>BB Inteligente – Plataforma de Estudos para o Concurso Banco do Brasil (CESGRANRIO)</p>
-        </footer>
-
-        <div class="toast-container" id="toastContainer"></div>
-    </div>
-
-    <script>
-        /* ============================================================
-           BB INTELIGENTE – ARQUITETURA MODULAR (Fase 3)
-           ============================================================ */
-
-        // ===== CONFIG =====
-        const CONFIG = {
-            XP_PER_CORRECT: 20,
-            XP_PER_STEP_COMPLETE: 10,
-            XP_PER_MODULE_COMPLETE: 100,
-            LEVEL_THRESHOLD: 500,
-            STEPS: [
-                { id: 'situacao', label: 'Situação', icon: '💡' },
-                { id: 'explicacao', label: 'Conceito', icon: '📚' },
-                { id: 'formula', label: 'Fórmula', icon: '🔢' },
-                { id: 'exemplo', label: 'Exemplo', icon: '✏️' },
-                { id: 'guiado', label: 'Prática', icon: '🎯' },
-                { id: 'questao', label: 'Desafio', icon: '🧩' },
-                { id: 'progresso', label: 'Revisão', icon: '✅' }
-            ],
-            // Mapeamento de tópicos para arquivos de módulo
-            MODULE_FILES: {
-                'pa': 'modulos/modulo-pa.js',
-                'pg': 'modulos/modulo-pg.js',
-                'pa-pg-aplicacao': 'modulos/modulo-pa-pg-aplicacao.js'
-                // outros serão adicionados
+            `;
+            if (!bloqueado) {
+                card.addEventListener('click', () => App.abrirModulo(m.id));
             }
-        };
+            list.appendChild(card);
+        });
+    }
 
-        // ============================================================
-        // STATE MANAGER (com persistência)
-        // ============================================================
-        const StateManager = {
-            STORAGE_KEY: 'bb_inteligente_state_v3',
+    // ======================================================================
+    // 5. RENDERIZAÇÃO DO MÓDULO (ETAPAS)
+    // ======================================================================
+    function renderModuleTopics(moduloId) {
+        const modulo = getModulo(moduloId);
+        if (!modulo) {
+            document.getElementById('moduleTitle').textContent = 'Módulo não encontrado';
+            return;
+        }
+        document.getElementById('moduleTitle').textContent = modulo.nome;
+        document.getElementById('moduleSubtitle').textContent = `Siga as etapas para aprender "${modulo.nome}". Complete todas e faça a avaliação final.`;
 
-            defaultState() {
-                return {
-                    user: { id: 'default', name: 'Estudante', createdAt: new Date().toISOString() },
-                    currentView: 'dashboard',
-                    viewHistory: [],
-                    currentDiscipline: null,
-                    currentModule: null,
-                    currentTopic: null,
-                    currentStep: 0,
-                    lastStudyDate: null,
-                    disciplines: this.initDisciplines(),
-                    globalStats: {
-                        totalXp: 0,
-                        level: 1,
-                        streak: 0,
-                        longestStreak: 0,
-                        totalCorrect: 0,
-                        totalWrong: 0,
-                        totalTime: 0,
-                        achievements: [],
-                        studyDays: []
-                    }
-                };
-            },
+        const list = document.getElementById('topicsList');
+        list.innerHTML = '';
 
-            initDisciplines() {
-                const disciplines = {};
-                for (const [key, discipline] of Object.entries(CONTENT_DATA)) {
-                    const modules = {};
-                    discipline.modules.forEach((mod, modIndex) => {
-                        const topics = mod.topics.map((topic, topIndex) => ({
-                            id: topic.id,
-                            status: modIndex === 0 && topIndex === 0 ? 'available' : 'locked',
-                            attempts: 0,
-                            correct: 0,
-                            wrong: 0,
-                            timeSpent: 0,
-                            lastAttempt: null,
-                            masteryScore: 0
-                        }));
-                        modules[mod.id] = {
-                            completed: false,
-                            unlocked: modIndex === 0,
-                            topics: topics,
-                            currentTopicIndex: 0
-                        };
-                    });
-                    disciplines[key] = { progress: 0, xp: 0, modules: modules };
-                }
-                return disciplines;
-            },
-
-            load() {
-                try {
-                    const saved = localStorage.getItem(this.STORAGE_KEY);
-                    if (saved) {
-                        const parsed = JSON.parse(saved);
-                        return this.mergeDeep(this.defaultState(), parsed);
-                    }
-                } catch (e) { console.warn('Erro ao carregar estado:', e); }
-                return this.defaultState();
-            },
-
-            save(state) {
-                try {
-                    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(state));
-                } catch (e) { console.warn('Erro ao salvar estado:', e); }
-            },
-
-            mergeDeep(target, source) {
-                const output = Object.assign({}, target);
-                if (this.isObject(target) && this.isObject(source)) {
-                    Object.keys(source).forEach(key => {
-                        if (this.isObject(source[key])) {
-                            if (!(key in target)) Object.assign(output, { [key]: source[key] });
-                            else output[key] = this.mergeDeep(target[key], source[key]);
-                        } else {
-                            Object.assign(output, { [key]: source[key] });
-                        }
-                    });
-                }
-                return output;
-            },
-
-            isObject(item) { return item && typeof item === 'object' && !Array.isArray(item); },
-
-            reset() {
-                localStorage.removeItem(this.STORAGE_KEY);
-                return this.defaultState();
+        // Construir lista de etapas a partir do módulo
+        const etapas = [];
+        if (modulo.introducao) etapas.push({ tipo: 'introducao', titulo: 'Introdução', descricao: 'Conheça o tema' });
+        if (modulo.teoria && modulo.teoria.length) {
+            modulo.teoria.forEach((t, i) => {
+                etapas.push({ tipo: `teoria_${i}`, titulo: t.titulo || `Teoria ${i+1}`, descricao: 'Leia e entenda o conceito' });
+            });
+        }
+        if (modulo.exemplos && modulo.exemplos.length) {
+            modulo.exemplos.forEach((e, i) => {
+                etapas.push({ tipo: `exemplo_${i}`, titulo: e.titulo || `Exemplo ${i+1}`, descricao: 'Veja a resolução passo a passo' });
+            });
+        }
+        // Etapas de aprendizagem (exercícios e questões)
+        if (modulo.etapasAprendizagem && modulo.etapasAprendizagem.length) {
+            modulo.etapasAprendizagem.forEach((etapa, i) => {
+                const label = etapa.tipo === 'exercicio' ? 'Exercício Guiado' : 'Questão CESGRANRIO';
+                etapas.push({ tipo: `etapa_${i}`, titulo: etapa.titulo || `${label} ${i+1}`, descricao: etapa.tipo === 'exercicio' ? 'Pratique com auxílio' : 'Responda à questão' });
+            });
+        }
+        // Avaliação final (sempre aparece como última)
+        if (modulo.avaliacaoFinal && modulo.avaliacaoFinal.questoes && modulo.avaliacaoFinal.questoes.length > 0) {
+            etapas.push({ tipo: 'avaliacao', titulo: 'Avaliação Final', descricao: 'Prova com 20 questões (≥80% para aprovação)' });
+        } else {
+            // Se não houver avaliação definida, pode gerar automaticamente a partir de 'questoes'
+            if (modulo.questoes && modulo.questoes.length >= 20) {
+                etapas.push({ tipo: 'avaliacao', titulo: 'Avaliação Final', descricao: 'Prova com 20 questões (≥80% para aprovação)' });
             }
-        };
+        }
 
-        // ============================================================
-        // GAMIFICAÇÃO
-        // ============================================================
-        const Gamification = {
-            calculateLevel(xp) { return Math.floor(xp / CONFIG.LEVEL_THRESHOLD) + 1; },
+        // Renderizar cada etapa
+        etapas.forEach((etapa, idx) => {
+            const status = getEtapaStatus(moduloId, idx);
+            const isCompleted = status === 'completed';
+            const isLocked = status === 'locked';
+            const isCurrent = status === 'current';
+            const item = document.createElement('div');
+            item.className = `topic-item ${isLocked ? 'topic-item--locked' : ''}`;
+            const statusIcon = isCompleted ? '✅' : (isLocked ? '🔒' : '▶️');
+            const statusClass = isCompleted ? 'topic-item__status--completed' : (isLocked ? 'topic-item__status--locked' :
+                'topic-item__status--current');
+            item.innerHTML = `
+                <div class="topic-item__status ${statusClass}">${statusIcon}</div>
+                <div class="topic-item__content">
+                    <div class="topic-item__title">${etapa.titulo}</div>
+                    <div class="topic-item__desc">${etapa.descricao}</div>
+                </div>
+                <div class="topic-item__stats">
+                    ${isCompleted ? '<span class="badge badge--success">Concluído</span>' : (isLocked ? '<span class="badge badge--warning">Bloqueado</span>' : '<span class="badge badge--primary">Próximo</span>')}
+                </div>
+            `;
+            if (!isLocked && !isCompleted) {
+                item.addEventListener('click', () => App.iniciarEtapa(moduloId, idx));
+            }
+            list.appendChild(item);
+        });
 
-            checkStreak(state) {
-                const today = new Date().toDateString();
-                const lastDate = state.lastStudyDate ? new Date(state.lastStudyDate).toDateString() : null;
-                if (!lastDate) return state.globalStats.streak;
-                const diffMs = new Date(today) - new Date(lastDate);
-                const diffDays = diffMs / (1000 * 60 * 60 * 24);
-                if (diffDays >= 2) state.globalStats.streak = 0;
-                return state.globalStats.streak;
-            },
+        // Botão para iniciar avaliação (se disponível e todas as etapas anteriores concluídas)
+        const examBtnContainer = document.getElementById('finalExamButton');
+        examBtnContainer.innerHTML = '';
+        const hasExam = modulo.avaliacaoFinal?.questoes?.length > 0 || (modulo.questoes && modulo.questoes.length >= 20);
+        if (hasExam) {
+            // Verifica se todas as etapas (exceto avaliação) estão concluídas
+            const totalEtapas = etapas.length - 1; // exclui a avaliação
+            const p = state.progresso[moduloId];
+            const allDone = p && p.topicos && p.topicos.slice(0, totalEtapas).every(v => v === true);
+            if (allDone) {
+                const btn = document.createElement('button');
+                btn.className = 'btn btn--primary btn--large';
+                btn.textContent = '📝 Iniciar Avaliação Final';
+                btn.addEventListener('click', () => App.iniciarAvaliacao(moduloId));
+                examBtnContainer.appendChild(btn);
+            } else {
+                examBtnContainer.innerHTML = '<p style="color: var(--text-muted);">Complete todas as etapas para liberar a avaliação final.</p>';
+            }
+        }
+    }
 
-            updateStreak(state) {
-                const today = new Date().toDateString();
-                const lastDate = state.lastStudyDate ? new Date(state.lastStudyDate).toDateString() : null;
-                if (lastDate === today) return;
-                const yesterday = new Date();
-                yesterday.setDate(yesterday.getDate() - 1);
-                if (lastDate === yesterday.toDateString()) state.globalStats.streak++;
-                else state.globalStats.streak = 1;
-                if (state.globalStats.streak > state.globalStats.longestStreak)
-                    state.globalStats.longestStreak = state.globalStats.streak;
-                state.lastStudyDate = new Date().toISOString();
-                if (!state.globalStats.studyDays.includes(today))
-                    state.globalStats.studyDays.push(today);
-            },
+    // ======================================================================
+    // 6. ESTUDO – RENDERIZAÇÃO DE ETAPA
+    // ======================================================================
+    function renderStudy(moduloId, stepIndex) {
+        const modulo = getModulo(moduloId);
+        if (!modulo) return;
 
-            addXp(state, amount) {
-                state.globalStats.totalXp += amount;
-                const newLevel = this.calculateLevel(state.globalStats.totalXp);
-                if (newLevel > state.globalStats.level) {
-                    state.globalStats.level = newLevel;
-                    App.showToast('🎉 Nível Up!', `Você alcançou o nível ${newLevel}!`, 'success');
-                }
-                if (state.currentDiscipline) {
-                    state.disciplines[state.currentDiscipline].xp += amount;
-                }
-            },
+        // Construir array de etapas (mesmo usado em renderModuleTopics)
+        const etapas = [];
+        if (modulo.introducao) etapas.push({ tipo: 'introducao', data: modulo.introducao });
+        if (modulo.teoria) {
+            modulo.teoria.forEach((t, i) => {
+                etapas.push({ tipo: `teoria_${i}`, data: t });
+            });
+        }
+        if (modulo.exemplos) {
+            modulo.exemplos.forEach((e, i) => {
+                etapas.push({ tipo: `exemplo_${i}`, data: e });
+            });
+        }
+        if (modulo.etapasAprendizagem) {
+            modulo.etapasAprendizagem.forEach((etapa, i) => {
+                etapas.push({ tipo: `etapa_${i}`, data: etapa });
+            });
+        }
+        // Avaliação é tratada separadamente, não aqui
 
-            checkAchievements(state) {
-                const achievements = [
-                    { id: 'first_steps', title: 'Primeiros Passos', desc: 'Complete seu primeiro tópico', icon: '🌱',
-                      check: (s) => this.getCompletedTopics(s).length >= 1 },
-                    { id: 'dedicated', title: 'Dedicado', desc: 'Estude por 3 dias seguidos', icon: '🔥',
-                      check: (s) => s.globalStats.streak >= 3 },
-                    { id: 'warrior', title: 'Guerreiro', desc: 'Estude por 7 dias seguidos', icon: '⚔️',
-                      check: (s) => s.globalStats.streak >= 7 },
-                    { id: 'master', title: 'Mestre', desc: 'Alcance o nível 5', icon: '👑',
-                      check: (s) => s.globalStats.level >= 5 }
-                ];
-                achievements.forEach(ach => {
-                    const alreadyUnlocked = state.globalStats.achievements.find(a => a.id === ach.id);
-                    if (!alreadyUnlocked && ach.check(state)) {
-                        state.globalStats.achievements.push({ id: ach.id, unlockedAt: new Date().toISOString() });
-                        App.showToast('🏆 Conquista Desbloqueada!', ach.title, 'success');
-                    }
+        if (stepIndex >= etapas.length) {
+            // Se todas as etapas normais concluídas, volta para a tela do módulo
+            App.navigate('module', moduloId);
+            return;
+        }
+
+        const etapa = etapas[stepIndex];
+        const tipo = etapa.tipo;
+        const data = etapa.data;
+
+        // Atualizar stepper
+        const stepper = document.getElementById('studyStepper');
+        stepper.innerHTML = etapas.map((_, i) => {
+            const isActive = i === stepIndex;
+            const isCompleted = i < stepIndex;
+            const dotClass = isActive ? 'stepper__dot--active' : (isCompleted ? 'stepper__dot--completed' : '');
+            const lineClass = i < stepIndex ? 'stepper__line--completed' : '';
+            return `
+                <div class="stepper__step">
+                    <div class="stepper__dot ${dotClass}">${i + 1}</div>
+                    ${i < etapas.length - 1 ? `<div class="stepper__line ${lineClass}"></div>` : ''}
+                </div>
+            `;
+        }).join('');
+
+        const content = document.getElementById('studyContent');
+        let html = `
+            <div class="study-content__header">
+                <h2>${data.titulo || 'Etapa'}</h2>
+                <p>${tipo.startsWith('teoria') ? '📖 Teoria' : tipo.startsWith('exemplo') ? '📝 Exemplo' : tipo === 'introducao' ? '🌟 Introdução' : tipo.startsWith('etapa') ? (data.tipo === 'exercicio' ? '✏️ Exercício' : '🎯 Questão') : ''}</p>
+            </div>
+            <div class="study-content__body">
+        `;
+
+        // Conteúdo conforme o tipo
+        if (tipo === 'introducao') {
+            html += `<p>${data.descricao || ''}</p>`;
+            if (data.imagem) {
+                html += `<div class="diagram-container">${data.imagem}</div>`;
+            }
+            html += `<div class="study-actions"><button class="btn btn--primary" onclick="App.avancarEtapa('${moduloId}')">Próximo →</button></div>`;
+        } else if (tipo.startsWith('teoria')) {
+            html += `<div>${data.conteudo || ''}</div>`;
+            if (data.imagem) {
+                html += `<div class="diagram-container">${data.imagem}</div>`;
+            }
+            html += `<div class="study-actions"><button class="btn btn--primary" onclick="App.avancarEtapa('${moduloId}')">Próximo →</button></div>`;
+        } else if (tipo.startsWith('exemplo')) {
+            html += `<div><strong>Enunciado:</strong> ${data.enunciado || ''}</div>`;
+            if (data.imagem) {
+                html += `<div class="diagram-container">${data.imagem}</div>`;
+            }
+            html += `<div style="margin-top:16px;"><strong>Resolução:</strong> ${data.resolucao || ''}</div>`;
+            if (data.observacao) {
+                html += `<div style="margin-top:8px; color: var(--text-secondary); font-style: italic;">${data.observacao}</div>`;
+            }
+            html += `<div class="study-actions"><button class="btn btn--primary" onclick="App.avancarEtapa('${moduloId}')">Próximo →</button></div>`;
+        } else if (tipo.startsWith('etapa')) {
+            // Exercício ou Questão
+            const isExercise = data.tipo === 'exercicio';
+            html += `<div>${data.conteudo || ''}</div>`;
+            if (data.pergunta) {
+                html += `<p style="font-weight:600;margin-top:16px;">${data.pergunta}</p>`;
+            }
+            if (data.alternativas && data.alternativas.length > 0) {
+                html += `<div class="alternatives" id="altContainer">`;
+                data.alternativas.forEach((alt, idx) => {
+                    html += `<button class="btn btn--secondary" data-idx="${idx}" onclick="App.responderAlternativa('${moduloId}', ${stepIndex}, ${idx})" style="width:100%;margin:4px 0;justify-content:flex-start;">
+                        ${String.fromCharCode(65 + idx)}. ${alt}
+                    </button>`;
                 });
-            },
-
-            getCompletedTopics(state) {
-                const completed = [];
-                for (const disc of Object.values(state.disciplines)) {
-                    for (const mod of Object.values(disc.modules)) {
-                        mod.topics.forEach(t => {
-                            if (t.status === 'dominado') completed.push(t);
-                        });
-                    }
-                }
-                return completed;
-            },
-
-            calculateAccuracy(state) {
-                const total = state.globalStats.totalCorrect + state.globalStats.totalWrong;
-                if (total === 0) return 0;
-                return Math.round((state.globalStats.totalCorrect / total) * 100);
+                html += `</div>`;
+                html += `<div id="feedbackEtapa" class="feedback-box hidden"></div>`;
+            } else {
+                html += `<p style="color: var(--text-muted);">Alternativas não definidas.</p>`;
+                html += `<div class="study-actions"><button class="btn btn--primary" onclick="App.avancarEtapa('${moduloId}')">Próximo →</button></div>`;
             }
-        };
+        }
 
-        // ============================================================
-        // DADOS ESTÁTICOS – METADADOS DOS MÓDULOS
-        // ============================================================
-        const CONTENT_DATA = {
-            matematica: {
-                id: 'matematica',
-                title: 'Matemática',
-                description: 'Raciocínio lógico, progressões, funções e mais. Base estratégica para a prova CESGRANRIO.',
-                icon: '📐',
-                color: 'math',
-                modules: [
-                    { id: 'pa-pg', title: 'Progressões Aritméticas e Geométricas', description: 'PA, PG e aplicações em SAC e Price.',
-                      topics: [
-                          { id: 'pa', title: 'Progressão Aritmética (PA)', description: 'Termo geral, soma e propriedades' },
-                          { id: 'pg', title: 'Progressão Geométrica (PG)', description: 'Termo geral, soma e limites' },
-                          { id: 'pa-pg-aplicacao', title: 'Aplicação: SAC e Price', description: 'Como PA e PG aparecem nos sistemas de amortização' }
-                      ] },
-                    { id: 'razoes-proporcoes', title: 'Razões, Proporções e Porcentagens', description: 'Grandezas diretamente e inversamente proporcionais, regra de três e porcentagem.',
-                      topics: [
-                          { id: 'razoes', title: 'Razão e Proporção', description: 'Conceitos fundamentais' },
-                          { id: 'regra-tres', title: 'Regra de Três', description: 'Simples e composta' },
-                          { id: 'porcentagem', title: 'Porcentagem', description: 'Aumentos, descontos e sucessivos' }
-                      ] },
-                    { id: 'logica', title: 'Lógica Proposicional', description: 'Proposições, conectivos, tabelas-verdade e equivalências.',
-                      topics: [
-                          { id: 'proposicoes', title: 'Proposições Simples e Compostas', description: 'Conceitos iniciais' },
-                          { id: 'conectivos', title: 'Conectivos Lógicos', description: 'E, OU, SE...ENTÃO, SE E SOMENTE SE' },
-                          { id: 'tabelas-verdade', title: 'Tabelas-Verdade', description: 'Construção e análise' }
-                      ] },
-                    { id: 'funcoes', title: 'Funções', description: '1º grau, 2º grau, exponencial e logarítmica.',
-                      topics: [
-                          { id: 'funcao-1grau', title: 'Função do 1º Grau', description: 'Afim e linear' },
-                          { id: 'funcao-2grau', title: 'Função do 2º Grau', description: 'Quadrática e propriedades' },
-                          { id: 'funcao-exp', title: 'Função Exponencial', description: 'Crescimento e decaimento' },
-                          { id: 'funcao-log', title: 'Função Logarítmica', description: 'Inversa da exponencial' }
-                      ] },
-                    { id: 'sequencias', title: 'Sequências Lógicas', description: 'Numéricas, de letras, datas, posicionais e figuras.',
-                      topics: [
-                          { id: 'seq-numericas', title: 'Sequências Numéricas', description: 'Padrões aritméticos' },
-                          { id: 'seq-letras', title: 'Sequências de Letras', description: 'Alfabéticas e posicionais' },
-                          { id: 'seq-figuras', title: 'Sequências de Figuras', description: 'Padrões visuais' }
-                      ] },
-                    { id: 'sistemas-lineares', title: 'Sistemas Lineares', description: 'Resolução e interpretação de sistemas de equações.',
-                      topics: [
-                          { id: 'sistemas-2x2', title: 'Sistemas 2x2', description: 'Substituição e adição' },
-                          { id: 'sistemas-3x3', title: 'Sistemas 3x3', description: 'Regra de Cramer e escalonamento' }
-                      ] },
-                    { id: 'conjuntos', title: 'Noções de Conjuntos', description: 'Operações, diagramas de Venn e problemas de contagem.',
-                      topics: [
-                          { id: 'conjuntos-ops', title: 'Operações com Conjuntos', description: 'União, interseção e diferença' },
-                          { id: 'venn', title: 'Diagramas de Venn', description: 'Representação e problemas' }
-                      ] },
-                    { id: 'numeros', title: 'Números Inteiros, Racionais e Reais', description: 'Operações, potenciação, radiciação, MMC e MDC.',
-                      topics: [
-                          { id: 'operacoes', title: 'Operações Fundamentais', description: 'Adição, subtração, multiplicação e divisão' },
-                          { id: 'pot-rad', title: 'Potenciação e Radiciação', description: 'Propriedades e simplificação' },
-                          { id: 'mmc-mdc', title: 'MMC e MDC', description: 'Máximo divisor comum e mínimo múltiplo comum' }
-                      ] },
-                    { id: 'medidas', title: 'Sistema Legal de Medidas', description: 'Geometria plana e conversão de unidades.',
-                      topics: [
-                          { id: 'geometria-plana', title: 'Geometria Plana', description: 'Áreas e perímetros' },
-                          { id: 'conversao', title: 'Conversão de Unidades', description: 'Comprimento, massa, tempo e volume' }
-                      ] },
-                    { id: 'matrizes', title: 'Matrizes e Determinantes', description: 'Operações, inversas e sistemas.',
-                      topics: [
-                          { id: 'matrizes-ops', title: 'Operações com Matrizes', description: 'Adição, multiplicação e transposta' },
-                          { id: 'determinantes', title: 'Determinantes', description: 'Cálculo e propriedades' }
-                      ] }
-                ]
-            },
-            matematicaFinanceira: {
-                id: 'matematicaFinanceira',
-                title: 'Matemática Financeira',
-                description: 'Juros simples, compostos, amortização e análise de investimentos. Essencial para a prova.',
-                icon: '💰',
-                color: 'fin',
-                modules: [
-                    { id: 'conceitos-gerais', title: 'Conceitos Gerais', description: 'Valor do dinheiro no tempo, capital, juros, taxas e fluxos de caixa.',
-                      topics: [
-                          { id: 'valor-tempo', title: 'Valor do Dinheiro no Tempo', description: 'Princípio fundamental' },
-                          { id: 'capital-juros', title: 'Capital e Juros', description: 'Conceitos e diferenças' },
-                          { id: 'taxas', title: 'Taxas de Juros', description: 'Nominal, efetiva, proporcional e equivalente' },
-                          { id: 'fluxo-caixa', title: 'Fluxo de Caixa', description: 'Diagramas e equivalência financeira' }
-                      ] },
-                    { id: 'juros-simples', title: 'Juros Simples', description: 'Cálculo de montante, juros, taxa, principal e prazo.',
-                      topics: [
-                          { id: 'js-formula', title: 'Fórmula dos Juros Simples', description: 'J = C × i × t' },
-                          { id: 'js-montante', title: 'Montante em Juros Simples', description: 'M = C + J' },
-                          { id: 'js-taxas', title: 'Taxas no Regime Simples', description: 'Proporcionalidade' }
-                      ] },
-                    { id: 'juros-compostos', title: 'Juros Compostos', description: 'Capitalização composta, montante e equivalência de taxas.',
-                      topics: [
-                          { id: 'jc-formula', title: 'Fórmula dos Juros Compostos', description: 'M = C(1+i)^t' },
-                          { id: 'jc-taxas', title: 'Taxas Equivalentes', description: 'Conversão entre períodos' },
-                          { id: 'jc-desconto', title: 'Desconto Composto', description: 'Racional e comercial' }
-                      ] },
-                    { id: 'amortizacao', title: 'Sistemas de Amortização', description: 'Price, SAC e comparações.',
-                      topics: [
-                          { id: 'sac', title: 'SAC – Sistema de Amortização Constante', description: 'Prestações decrescentes' },
-                          { id: 'price', title: 'Price – Tabela Price', description: 'Prestações constantes' },
-                          { id: 'comparacao', title: 'Comparação SAC vs Price', description: 'Vantagens e desvantagens' }
-                      ] }
-                ]
+        html += `</div>`;
+        content.innerHTML = html;
+
+        // Se for introdução/teoria/exemplo, marcar como concluído automaticamente (se ainda não estiver)
+        if (tipo === 'introducao' || tipo.startsWith('teoria') || tipo.startsWith('exemplo')) {
+            const p = state.progresso[moduloId];
+            if (!p.topicos[stepIndex]) {
+                p.topicos[stepIndex] = true;
+                // Ganha XP pela etapa concluída
+                const xpGain = 10;
+                p.xpGanho += xpGain;
+                state.xp += xpGain;
+                // Atualiza nível
+                updateLevel();
+                saveState();
+                renderHeader();
+                renderDashboard();
+                showToast(`+${xpGain} XP`, 'info', 'Progresso');
             }
-        };
+        }
+    }
 
-        // ============================================================
-        // APLICAÇÃO PRINCIPAL
-        // ============================================================
-        const App = {
-            state: null,
-            moduleCache: {}, // cache de módulos carregados
-            currentModuleAPI: null, // API específica do módulo carregado
+    // ======================================================================
+    // 7. AVALIAÇÃO FINAL
+    // ======================================================================
+    function renderExam(moduloId) {
+        const modulo = getModulo(moduloId);
+        if (!modulo) return;
 
-            init() {
-                this.state = StateManager.load();
-                this.updateStreakIfNeeded();
-                this.renderHeader();
-                this.renderDashboard();
-                this.navigate('dashboard', false);
-                setInterval(() => StateManager.save(this.state), 5000);
-                console.log('BB Inteligente – Arquitetura Modular carregada.');
-            },
+        // Coletar questões da avaliação ou gerar a partir de 'questoes'
+        let questions = [];
+        if (modulo.avaliacaoFinal && modulo.avaliacaoFinal.questoes && modulo.avaliacaoFinal.questoes.length > 0) {
+            questions = modulo.avaliacaoFinal.questoes;
+        } else if (modulo.questoes && modulo.questoes.length >= 20) {
+            // Seleciona 20 aleatoriamente
+            const shuffled = [...modulo.questoes].sort(() => Math.random() - 0.5);
+            questions = shuffled.slice(0, 20);
+        } else {
+            // Fallback: usar as questões das etapas
+            const etapasQuestoes = modulo.etapasAprendizagem.filter(e => e.tipo === 'questao' && e.alternativas && e.correta !== undefined);
+            if (etapasQuestoes.length >= 20) {
+                questions = etapasQuestoes.map(e => ({
+                    pergunta: e.pergunta,
+                    alternativas: e.alternativas,
+                    correta: e.correta,
+                    explicacaoAcerto: e.explicacaoAcerto,
+                    explicacaoErro: e.explicacaoErro
+                }));
+            } else {
+                showToast('Não há questões suficientes para a avaliação.', 'warning', 'Atenção');
+                App.navigate('module', moduloId);
+                return;
+            }
+        }
 
-            updateStreakIfNeeded() {
-                Gamification.checkStreak(this.state);
-            },
+        // Embaralhar e pegar no máximo 20
+        const shuffled = [...questions].sort(() => Math.random() - 0.5);
+        const examQuestions = shuffled.slice(0, Math.min(20, shuffled.length));
 
-            persist() {
-                StateManager.save(this.state);
-            },
+        state.examQuestions = examQuestions;
+        state.examIndex = 0;
+        state.examCorrect = 0;
+        state.examAnswered = false;
+        saveState();
 
-            // ===== NAVEGAÇÃO =====
-            navigate(view, saveHistory = true) {
-                if (saveHistory && this.state.currentView) {
-                    this.state.viewHistory.push(this.state.currentView);
-                }
-                this.state.currentView = view;
-                document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-                const target = document.getElementById(`screen-${view}`);
-                if (target) target.classList.add('active');
-                window.scrollTo(0, 0);
-                this.persist();
-            },
+        renderExamQuestion(moduloId);
+    }
 
-            goBack() {
-                const prev = this.state.viewHistory.pop();
-                if (prev) {
-                    this.state.currentView = prev;
-                    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-                    const target = document.getElementById(`screen-${prev}`);
-                    if (target) target.classList.add('active');
-                    this.persist();
-                } else {
-                    this.navigate('dashboard');
-                }
-            },
+    function renderExamQuestion(moduloId) {
+        const questions = state.examQuestions;
+        if (state.examIndex >= questions.length) {
+            // Fim da prova
+            const total = questions.length;
+            const correct = state.examCorrect;
+            const percent = Math.round((correct / total) * 100);
+            const aprovado = percent >= 80;
 
-            confirmExitStudy() {
-                if (confirm('Deseja realmente sair da aula? Seu progresso será salvo.')) {
-                    this.goBack();
-                }
-            },
-
-            // ===== RENDERIZAÇÃO =====
-            renderHeader() {
-                const stats = this.state.globalStats;
-                const streak = Gamification.checkStreak(this.state);
-                document.getElementById('headerStats').innerHTML = `
-                    <div class="stat-pill stat-pill--xp"><span class="stat-pill__icon">⚡</span><span>${stats.totalXp} XP</span></div>
-                    <div class="stat-pill stat-pill--level"><span class="stat-pill__icon">⭐</span><span>Nível ${stats.level}</span></div>
-                    <div class="stat-pill stat-pill--streak"><span class="stat-pill__icon">🔥</span><span>${streak} dias</span></div>
-                `;
-            },
-
-            renderDashboard() {
-                const stats = this.state.globalStats;
-                const accuracy = Gamification.calculateAccuracy(this.state);
-                const completedTopics = Gamification.getCompletedTopics(this.state).length;
-
-                document.getElementById('dashboardStats').innerHTML = `
-                    <div class="stat-card animate-fade-in stagger-1">
-                        <div class="stat-card__icon stat-card__icon--xp">⚡</div>
-                        <div class="stat-card__value">${stats.totalXp}</div>
-                        <div class="stat-card__label">XP Total</div>
-                    </div>
-                    <div class="stat-card animate-fade-in stagger-2">
-                        <div class="stat-card__icon stat-card__icon--level">⭐</div>
-                        <div class="stat-card__value">${stats.level}</div>
-                        <div class="stat-card__label">Nível Atual</div>
-                    </div>
-                    <div class="stat-card animate-fade-in stagger-3">
-                        <div class="stat-card__icon stat-card__icon--streak">🔥</div>
-                        <div class="stat-card__value">${stats.streak}</div>
-                        <div class="stat-card__label">Dias Seguidos</div>
-                    </div>
-                    <div class="stat-card animate-fade-in stagger-4">
-                        <div class="stat-card__icon stat-card__icon--accuracy">🎯</div>
-                        <div class="stat-card__value">${accuracy}%</div>
-                        <div class="stat-card__label">Precisão</div>
-                    </div>
-                `;
-
-                const grid = document.getElementById('disciplinesGrid');
-                grid.innerHTML = Object.values(CONTENT_DATA).map((disc, i) => {
-                    const stateDisc = this.state.disciplines[disc.id];
-                    const progress = this.calculateDisciplineProgress(disc.id);
-                    const completedModules = Object.values(stateDisc.modules).filter(m => m.completed).length;
-                    const totalModules = disc.modules.length;
-                    return `
-                        <div class="card card--interactive discipline-card animate-fade-in stagger-${i+1}" onclick="App.openDiscipline('${disc.id}')">
-                            <div class="discipline-card__header">
-                                <div class="discipline-card__icon discipline-card__icon--${disc.color}">${disc.icon}</div>
-                                <span class="badge badge--primary">${completedModules}/${totalModules} módulos</span>
-                            </div>
-                            <h3 class="discipline-card__title">${disc.title}</h3>
-                            <p class="discipline-card__desc">${disc.description}</p>
-                            <div class="discipline-card__progress">
-                                <div class="discipline-card__progress-header">
-                                    <span class="discipline-card__progress-label">Progresso</span>
-                                    <span class="discipline-card__progress-value">${progress}%</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-bar__fill" style="width: ${progress}%"></div>
-                                </div>
-                            </div>
-                            <div class="discipline-card__modules">
-                                ${disc.modules.slice(0, 3).map(m => {
-                                    const modState = stateDisc.modules[m.id];
-                                    let cls = 'module-chip';
-                                    if (modState.completed) cls += ' module-chip--completed';
-                                    else if (modState.unlocked) cls += ' module-chip--current';
-                                    else cls += ' module-chip--locked';
-                                    return `<span class="${cls}">${m.title.split(' ')[0]}</span>`;
-                                }).join('')}
-                                ${disc.modules.length > 3 ? `<span class="module-chip">+${disc.modules.length - 3}</span>` : ''}
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            },
-
-            renderDiscipline() {
-                const discId = this.state.currentDiscipline;
-                const disc = CONTENT_DATA[discId];
-                const stateDisc = this.state.disciplines[discId];
-                document.getElementById('disciplineTitle').textContent = disc.title;
-                document.getElementById('disciplineSubtitle').textContent = disc.description + ' Selecione um módulo.';
-
-                const list = document.getElementById('modulesList');
-                list.innerHTML = disc.modules.map((mod, index) => {
-                    const modState = stateDisc.modules[mod.id];
-                    const isLocked = !modState.unlocked;
-                    const isCompleted = modState.completed;
-                    const progress = this.calculateModuleProgress(discId, mod.id);
-                    const circumference = 2 * Math.PI * 22;
-                    const offset = circumference - (progress / 100) * circumference;
-                    return `
-                        <div class="card ${isLocked ? 'card--locked' : 'card--interactive'} module-card animate-fade-in" style="animation-delay: ${index * 0.1}s" ${!isLocked ? `onclick="App.openModule('${mod.id}')"` : ''}>
-                            <div class="module-card__number ${isCompleted ? 'module-card__number--completed' : ''} ${isLocked ? 'module-card__number--locked' : ''}">
-                                ${isCompleted ? '✓' : isLocked ? '🔒' : index + 1}
-                            </div>
-                            <div class="module-card__info">
-                                <h3>${mod.title}</h3>
-                                <p>${mod.description}</p>
-                            </div>
-                            <div class="module-card__meta">
-                                <div class="module-card__progress-ring">
-                                    <svg width="56" height="56" viewBox="0 0 56 56">
-                                        <circle cx="28" cy="28" r="22" fill="none" stroke="var(--border)" stroke-width="4"/>
-                                        <circle class="progress-ring__circle" cx="28" cy="28" r="22" fill="none" stroke="${isCompleted ? 'var(--success)' : 'var(--primary)'}" stroke-width="4"
-                                                stroke-dasharray="${circumference}" stroke-dashoffset="${offset}" stroke-linecap="round"/>
-                                    </svg>
-                                    <div class="module-card__progress-text">${progress}%</div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            },
-
-            renderModule() {
-                const discId = this.state.currentDiscipline;
-                const modId = this.state.currentModule;
-                const disc = CONTENT_DATA[discId];
-                const mod = disc.modules.find(m => m.id === modId);
-                const stateMod = this.state.disciplines[discId].modules[modId];
-
-                document.getElementById('moduleTitle').textContent = mod.title;
-                document.getElementById('moduleSubtitle').textContent = `Complete os ${mod.topics.length} tópicos.`;
-
-                const list = document.getElementById('topicsList');
-                list.innerHTML = mod.topics.map((topic, index) => {
-                    const topicState = stateMod.topics[index];
-                    let statusClass = '', statusIcon = '';
-                    switch (topicState.status) {
-                        case 'dominado': statusClass = 'topic-item__status--completed'; statusIcon = '✓'; break;
-                        case 'available': statusClass = 'topic-item__status--current'; statusIcon = '▶'; break;
-                        case 'locked': statusClass = 'topic-item__status--locked'; statusIcon = '🔒'; break;
-                        default: statusClass = 'topic-item__status--pending'; statusIcon = '○';
-                    }
-                    const isClickable = topicState.status !== 'locked';
-                    return `
-                        <div class="topic-item ${!isClickable ? 'topic-item--locked' : ''} animate-slide-right" style="animation-delay: ${index * 0.08}s" ${isClickable ? `onclick="App.openTopic('${topic.id}')"` : ''}>
-                            <div class="topic-item__status ${statusClass}">${statusIcon}</div>
-                            <div class="topic-item__content">
-                                <div class="topic-item__title">${topic.title}</div>
-                                <div class="topic-item__desc">${topic.description}</div>
-                            </div>
-                            <div class="topic-item__stats">
-                                ${topicState.attempts > 0 ? `<span>🎯 ${topicState.correct}/${topicState.attempts}</span>` : ''}
-                                ${topicState.timeSpent > 0 ? `<span>⏱️ ${Math.ceil(topicState.timeSpent / 60)}min</span>` : ''}
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            },
-
-            // ===== CARREGAMENTO DINÂMICO DE MÓDULO =====
-            async openTopic(topicId) {
-                this.state.currentTopic = topicId;
-                this.state.currentStep = 0;
-
-                // Verifica se o conteúdo já está em cache
-                let moduleContent = this.moduleCache[topicId];
-                let moduleAPI = null;
-
-                if (!moduleContent) {
-                    // Tenta carregar do arquivo correspondente
-                    const file = CONFIG.MODULE_FILES[topicId];
-                    if (file) {
-                        try {
-                            const response = await fetch(file);
-                            if (response.ok) {
-                                const scriptText = await response.text();
-                                // Executa o script para definir window.__moduleContent e as funções
-                                // Usamos eval para que o script possa definir variáveis globais
-                                eval(scriptText);
-                                // Após eval, o módulo deve ter definido window.__moduleContent[topicId]
-                                if (window.__moduleContent && window.__moduleContent[topicId]) {
-                                    moduleContent = window.__moduleContent[topicId];
-                                    // Extrai a API do módulo (funções específicas)
-                                    moduleAPI = {
-                                        iniciarQuestao: window.iniciarQuestao || null,
-                                        proximaQuestao: window.proximaQuestao || null,
-                                        verificarGuiado: window.verificarGuiado || null,
-                                        processarResposta: window.processarResposta || null
-                                    };
-                                    // Armazena a API para uso posterior
-                                    this.currentModuleAPI = moduleAPI;
-                                }
-                            } else {
-                                console.warn(`Arquivo do módulo ${file} não encontrado.`);
-                            }
-                        } catch (e) {
-                            console.warn('Erro ao carregar módulo:', e);
-                        }
-                    }
-                } else {
-                    // Se já estava em cache, usa a API que foi salva
-                    moduleAPI = this.currentModuleAPI;
-                }
-
-                // Se ainda não tiver conteúdo, usa um fallback genérico (mensagem de desenvolvimento)
-                if (!moduleContent) {
-                    moduleContent = {
-                        situacao: { title: '💡 Situação', html: '<p>Conteúdo em desenvolvimento para este tópico.</p>' },
-                        explicacao: { title: '📚 Conceito', html: '<p>Em breve.</p>' },
-                        formula: { title: '🔢 Fórmula', html: '<p>Em breve.</p>' },
-                        exemplo: { title: '✏️ Exemplo', html: '<p>Em breve.</p>' },
-                        guiado: { title: '🎯 Prática', html: '<p>Em breve.</p>' },
-                        questao: { title: '🧩 Desafio', html: '<p>Em breve.</p>' },
-                        progresso: { title: '✅ Revisão', html: '<p>Concluído.</p>' }
-                    };
-                    this.currentModuleAPI = null;
-                }
-
-                this.moduleCache[topicId] = moduleContent;
-                this.renderStudy(moduleContent);
-                this.navigate('study');
-            },
-
-            // ===== RENDERIZAÇÃO DO ESTUDO =====
-            renderStudy(moduleContent) {
-                const steps = CONFIG.STEPS;
-                const currentStepIndex = this.state.currentStep;
-                const stepKeys = ['situacao', 'explicacao', 'formula', 'exemplo', 'guiado', 'questao', 'progresso'];
-                const currentKey = stepKeys[currentStepIndex] || 'situacao';
-                const stepData = moduleContent ? moduleContent[currentKey] : { title: 'Em desenvolvimento', html: '<p>Conteúdo não disponível.</p>' };
-
-                // Stepper
-                const stepper = document.getElementById('studyStepper');
-                stepper.innerHTML = steps.map((step, i) => {
-                    let dotClass = '';
-                    let lineClass = '';
-                    if (i < currentStepIndex) { dotClass = 'stepper__dot--completed'; lineClass = 'stepper__line--completed'; }
-                    else if (i === currentStepIndex) { dotClass = 'stepper__dot--active'; }
-                    const isLast = i === steps.length - 1;
-                    return `
-                        <div class="stepper__step">
-                            <div class="stepper__dot ${dotClass}" title="${step.label}">${i < currentStepIndex ? '✓' : step.icon}</div>
-                            ${!isLast ? `<div class="stepper__line ${lineClass}"></div>` : ''}
-                        </div>
-                    `;
-                }).join('');
-
-                // Content
-                const container = document.getElementById('studyContent');
-                container.innerHTML = `
-                    <div class="study-content__header">
-                        <h2>${stepData.title || 'Estudo'}</h2>
-                        <p>${currentStepIndex + 1} de ${steps.length}</p>
-                    </div>
-                    <div>${stepData.html || '<p>Conteúdo não disponível.</p>'}</div>
+            const content = document.getElementById('examContent');
+            content.innerHTML = `
+                <div class="card text-center" style="padding: var(--space-2xl);">
+                    <h3>📊 Resultado da Avaliação</h3>
+                    <p style="font-size: 2rem; font-weight: 800; margin: var(--space-lg) 0;">${correct}/${total}</p>
+                    <p style="font-size: 1.25rem;">${percent}% de acertos</p>
+                    <p style="margin: var(--space-lg) 0; font-weight: 700; color: ${aprovado ? 'var(--success)' : 'var(--error)'};">
+                        ${aprovado ? '✅ Aprovado! Parabéns!' : '❌ Reprovado. Estude mais e tente novamente.'}
+                    </p>
+                    ${!aprovado ? '<p style="color: var(--text-secondary);">Sugerimos revisar os tópicos com mais dificuldade e refazer a avaliação.</p>' : ''}
                     <div class="study-actions">
-                        ${currentStepIndex > 0 ? `<button class="btn btn--secondary" onclick="App.prevStep()">← Anterior</button>` : ''}
-                        ${currentStepIndex < steps.length - 1 ? `<button class="btn btn--primary" onclick="App.nextStep()">Próximo →</button>` : ''}
-                        ${currentStepIndex === steps.length - 1 ? `<button class="btn btn--success" onclick="App.completeTopic()">Concluir Tópico ✓</button>` : ''}
+                        <button class="btn btn--primary" onclick="App.finalizarAvaliacao('${moduloId}', ${aprovado})">
+                            ${aprovado ? 'Concluir Módulo' : 'Revisar e Tentar Novamente'}
+                        </button>
                     </div>
-                `;
+                </div>
+            `;
+            return;
+        }
 
-                // Se a etapa for 'guiado' e o módulo tiver uma função específica, usamos ela
-                if (currentKey === 'guiado') {
-                    if (this.currentModuleAPI && typeof this.currentModuleAPI.verificarGuiado === 'function') {
-                        // A função já será chamada via onclick no HTML, mas substituímos a referência
-                        // Para evitar conflito, sobrescrevemos a função global App.verificarGuiado
-                        App.verificarGuiado = this.currentModuleAPI.verificarGuiado;
-                    } else {
-                        // Fallback: usa a implementação padrão (se houver)
-                        App.verificarGuiado = App.verificarGuiadoPadrao;
-                    }
-                }
+        const q = questions[state.examIndex];
+        const content = document.getElementById('examContent');
+        let html = `
+            <div class="card" style="margin-bottom: var(--space-lg);">
+                <p style="font-weight: 600; margin-bottom: var(--space-md);">Questão ${state.examIndex + 1} de ${questions.length}</p>
+                <p>${q.pergunta || 'Pergunta não disponível'}</p>
+                <div class="alternatives" id="examAltContainer" style="margin-top: var(--space-lg);">
+        `;
+        if (q.alternativas && q.alternativas.length > 0) {
+            q.alternativas.forEach((alt, idx) => {
+                html += `<button class="btn btn--secondary" data-idx="${idx}" onclick="App.responderExame('${moduloId}', ${idx})" style="width:100%;margin:4px 0;justify-content:flex-start;">
+                    ${String.fromCharCode(65 + idx)}. ${alt}
+                </button>`;
+            });
+        } else {
+            html += `<p style="color: var(--text-muted);">Alternativas não definidas.</p>`;
+        }
+        html += `</div><div id="examFeedback" class="feedback-box hidden"></div></div>`;
+        content.innerHTML = html;
+    }
 
-                // Se a etapa for 'questao' e o módulo tiver uma API de questões, ativamos
-                if (currentKey === 'questao') {
-                    if (this.currentModuleAPI && typeof this.currentModuleAPI.iniciarQuestao === 'function') {
-                        // Chama a função para iniciar a questão
-                        setTimeout(() => {
-                            this.currentModuleAPI.iniciarQuestao();
-                        }, 100);
-                        // Sobrescreve o método de próxima questão
-                        if (typeof this.currentModuleAPI.proximaQuestao === 'function') {
-                            App.proximaQuestao = this.currentModuleAPI.proximaQuestao;
-                        }
-                    } else {
-                        // Fallback: usa a implementação padrão
-                        this.setupQuestaoListenerPadrao();
-                    }
-                }
-            },
+    // ======================================================================
+    // 8. LÓGICA DE NÍVEL
+    // ======================================================================
+    function updateLevel() {
+        const newLevel = Math.floor(state.xp / 100) + 1;
+        if (newLevel > state.level) {
+            state.level = newLevel;
+            showToast(`🎉 Subiu para o nível ${state.level}!`, 'success', 'Parabéns!');
+        }
+        state.level = newLevel;
+    }
 
-            // ===== NAVEGAÇÃO ENTRE ETAPAS =====
-            nextStep() {
-                if (this.state.currentStep < CONFIG.STEPS.length - 1) {
-                    this.state.currentStep++;
-                    this.persist();
-                    const topicId = this.state.currentTopic;
-                    const content = this.moduleCache[topicId] || null;
-                    this.renderStudy(content);
-                }
-            },
+    // ======================================================================
+    // 9. APP - NAVEGAÇÃO E AÇÕES
+    // ======================================================================
+    const App = {
+        navigate(screen, data) {
+            document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
 
-            prevStep() {
-                if (this.state.currentStep > 0) {
-                    this.state.currentStep--;
-                    this.persist();
-                    const topicId = this.state.currentTopic;
-                    const content = this.moduleCache[topicId] || null;
-                    this.renderStudy(content);
-                }
-            },
-
-            // ===== EXERCÍCIO GUIADO PADRÃO (fallback) =====
-            verificarGuiadoPadrao() {
-                const input = document.getElementById('guiadoInput');
-                if (!input) return;
-                const val = parseFloat(input.value);
-                const feedback = document.getElementById('guiadoFeedback');
-                if (isNaN(val)) {
-                    feedback.innerHTML = `<div class="study-feedback error"><h4>❌ Digite um número válido.</h4></div>`;
-                    return;
-                }
-                const correct = 40;
-                if (val === correct) {
-                    feedback.innerHTML = `<div class="study-feedback success"><h4>✅ Correto! a₈ = ${correct}.</h4></div>`;
-                    this.state.globalStats.totalCorrect++;
-                    Gamification.addXp(this.state, CONFIG.XP_PER_CORRECT);
-                    this.persist();
-                    this.renderHeader();
-                    const btn = document.querySelector('#guiadoPA .btn');
-                    if (btn) btn.disabled = true;
-                } else {
-                    feedback.innerHTML = `<div class="study-feedback error"><h4>❌ Não foi dessa vez. O valor correto é ${correct}.</h4><p>Lembre-se: a₈ = 12 + 7·4 = 40.</p></div>`;
-                    this.state.globalStats.totalWrong++;
-                    this.persist();
-                }
-            },
-
-            // ===== QUESTÃO PADRÃO (fallback) =====
-            setupQuestaoListenerPadrao() {
-                const container = document.getElementById('questaoPA');
-                if (!container) return;
-                const items = container.querySelectorAll('.alt-item');
-                let answered = false;
-                const correctAnswer = 'B';
-
-                items.forEach(el => {
-                    el.addEventListener('click', function() {
-                        if (answered) return;
-                        answered = true;
-                        const selected = this.dataset.value;
-                        const feedback = document.getElementById('questaoFeedback');
-                        items.forEach(i => i.classList.add('disabled'));
-
-                        if (selected === correctAnswer) {
-                            this.classList.add('correct');
-                            feedback.innerHTML = `<div class="study-feedback success"><h4>✅ Correto! Resposta B) 60.</h4><p>Razão = (42-18)/(7-3) = 6, a1 = 18-2·6 = 6, a10 = 6+9·6 = 60.</p></div>`;
-                            App.state.globalStats.totalCorrect++;
-                            Gamification.addXp(App.state, CONFIG.XP_PER_CORRECT);
-                            App.persist();
-                            App.renderHeader();
-                        } else {
-                            this.classList.add('wrong');
-                            items.forEach(i => { if (i.dataset.value === correctAnswer) i.classList.add('correct'); });
-                            feedback.innerHTML = `<div class="study-feedback error"><h4>❌ Errado. A correta é B) 60.</h4><p>Explicação: a3=18, a7=42 => r=6, a1=6, a10=60.</p></div>`;
-                            App.state.globalStats.totalWrong++;
-                            App.persist();
-                        }
-                    });
-                });
-            },
-
-            // ===== COMPLETAR TÓPICO =====
-            completeTopic() {
-                const discId = this.state.currentDiscipline;
-                const modId = this.state.currentModule;
-                const topicId = this.state.currentTopic;
-
-                const stateMod = this.state.disciplines[discId].modules[modId];
-                const topicIndex = stateMod.topics.findIndex(t => t.id === topicId);
-                if (topicIndex === -1) return;
-
-                const topicState = stateMod.topics[topicIndex];
-                if (topicState.status === 'dominado') {
-                    this.showToast('ℹ️', 'Este tópico já foi concluído.', 'info');
-                    return;
-                }
-
-                topicState.status = 'dominado';
-                topicState.attempts++;
-                topicState.correct++;
-                stateMod.currentTopicIndex = topicIndex + 1;
-
-                // Verifica se módulo completo
-                const allDominado = stateMod.topics.every(t => t.status === 'dominado');
-                if (allDominado) {
-                    stateMod.completed = true;
-                    Gamification.addXp(this.state, CONFIG.XP_PER_MODULE_COMPLETE);
-                    this.showToast('🎉', 'Módulo concluído! Você ganhou XP extra!', 'success');
-                }
-
-                Gamification.updateStreak(this.state);
-                Gamification.checkAchievements(this.state);
-                this.updateDisciplineProgress(discId);
-
-                this.persist();
-                this.renderHeader();
-                this.renderDashboard();
-                this.showToast('✅', 'Tópico concluído com sucesso!', 'success');
-                this.goBack();
-            },
-
-            // ===== UTILITÁRIOS DE PROGRESSO =====
-            calculateDisciplineProgress(discId) {
-                const disc = this.state.disciplines[discId];
-                if (!disc) return 0;
-                const modules = Object.values(disc.modules);
-                if (modules.length === 0) return 0;
-                const completed = modules.filter(m => m.completed).length;
-                return Math.round((completed / modules.length) * 100);
-            },
-
-            calculateModuleProgress(discId, modId) {
-                const mod = this.state.disciplines[discId]?.modules[modId];
-                if (!mod) return 0;
-                const topics = mod.topics;
-                if (topics.length === 0) return 0;
-                const dominados = topics.filter(t => t.status === 'dominado').length;
-                return Math.round((dominados / topics.length) * 100);
-            },
-
-            updateDisciplineProgress(discId) {
-                const disc = this.state.disciplines[discId];
-                if (!disc) return;
-                const modules = Object.values(disc.modules);
-                const completed = modules.filter(m => m.completed).length;
-                disc.progress = Math.round((completed / modules.length) * 100);
-            },
-
-            // ===== TOAST =====
-            showToast(title, message, type = 'info') {
-                const container = document.getElementById('toastContainer');
-                const toast = document.createElement('div');
-                toast.className = `toast toast--${type}`;
-                toast.innerHTML = `
-                    <div class="toast__icon">${type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️'}</div>
-                    <div class="toast__content">
-                        <h4>${title}</h4>
-                        <p>${message}</p>
-                    </div>
-                `;
-                container.appendChild(toast);
-                setTimeout(() => {
-                    toast.style.opacity = '0';
-                    toast.style.transform = 'translateX(30px)';
-                    setTimeout(() => toast.remove(), 300);
-                }, 4000);
-            },
-
-            // ===== ABRIR TELAS =====
-            openDiscipline(disciplineId) {
-                this.state.currentDiscipline = disciplineId;
-                this.renderDiscipline();
-                this.navigate('discipline');
-            },
-
-            openModule(moduleId) {
-                this.state.currentModule = moduleId;
-                this.renderModule();
-                this.navigate('module');
+            if (screen === 'dashboard') {
+                document.getElementById('screen-dashboard').classList.add('active');
+                state.currentScreen = 'dashboard';
+                renderDashboard();
+                renderHeader();
+            } else if (screen === 'discipline') {
+                document.getElementById('screen-discipline').classList.add('active');
+                state.currentScreen = 'discipline';
+                state.disciplineFilter = data;
+                renderDiscipline(data);
+                renderHeader();
+            } else if (screen === 'module') {
+                document.getElementById('screen-module').classList.add('active');
+                state.currentScreen = 'module';
+                state.currentModuleId = data;
+                renderModuleTopics(data);
+                renderHeader();
+            } else if (screen === 'study') {
+                document.getElementById('screen-study').classList.add('active');
+                state.currentScreen = 'study';
+                state.currentModuleId = data.moduleId;
+                state.studyIndex = data.stepIndex || 0;
+                renderStudy(data.moduleId, data.stepIndex || 0);
+                renderHeader();
+            } else if (screen === 'exam') {
+                document.getElementById('screen-exam').classList.add('active');
+                state.currentScreen = 'exam';
+                state.currentModuleId = data;
+                renderExam(data);
+                renderHeader();
+            } else if (screen === 'profile') {
+                document.getElementById('screen-profile').classList.add('active');
+                state.currentScreen = 'profile';
+                renderProfile();
+                renderHeader();
             }
-        };
+            saveState();
+        },
 
-        // ============================================================
-        // INICIALIZAÇÃO
-        // ============================================================
-        document.addEventListener('DOMContentLoaded', () => App.init());
-    </script>
+        goBack() {
+            if (state.currentScreen === 'module') {
+                App.navigate('discipline', state.disciplineFilter || 'Matemática');
+            } else if (state.currentScreen === 'study') {
+                App.navigate('module', state.currentModuleId);
+            } else if (state.currentScreen === 'exam') {
+                App.navigate('module', state.currentModuleId);
+            } else {
+                App.navigate('dashboard');
+            }
+        },
+
+        abrirModulo(id) {
+            if (isModuloBloqueado(id)) {
+                showToast('Complete o módulo anterior primeiro.', 'warning', 'Bloqueado');
+                return;
+            }
+            // Inicializar progresso se não existir
+            if (!state.progresso[id]) {
+                const modulo = getModulo(id);
+                const totalEtapas = modulo ? (modulo.introducao ? 1 : 0) + (modulo.teoria?.length || 0) + (modulo.exemplos?.length || 0) + (modulo.etapasAprendizagem?.length || 0) : 0;
+                state.progresso[id] = {
+                    concluido: false,
+                    acertos: 0,
+                    tentativas: 0,
+                    xpGanho: 0,
+                    topicos: new Array(totalEtapas).fill(false),
+                    questoesFeitas: []
+                };
+                saveState();
+            }
+            App.navigate('module', id);
+        },
+
+        iniciarEtapa(moduloId, stepIndex) {
+            const status = getEtapaStatus(moduloId, stepIndex);
+            if (status === 'locked') {
+                showToast('Esta etapa está bloqueada.', 'warning', 'Atenção');
+                return;
+            }
+            // Se já concluída, não faz nada
+            if (status === 'completed') {
+                showToast('Esta etapa já foi concluída.', 'info', 'OK');
+                return;
+            }
+            App.navigate('study', { moduleId: moduloId, stepIndex });
+        },
+
+        avancarEtapa(moduloId) {
+            const modulo = getModulo(moduloId);
+            if (!modulo) return;
+            // Calcular total de etapas normais (sem avaliação)
+            const totalEtapas = (modulo.introducao ? 1 : 0) + (modulo.teoria?.length || 0) + (modulo.exemplos?.length || 0) + (modulo.etapasAprendizagem?.length || 0);
+            const nextIndex = state.studyIndex + 1;
+            if (nextIndex < totalEtapas) {
+                // Ir para a próxima etapa
+                App.iniciarEtapa(moduloId, nextIndex);
+            } else {
+                // Todas as etapas concluídas – volta para o módulo
+                showToast('Todas as etapas concluídas!', 'success', 'Parabéns!');
+                App.navigate('module', moduloId);
+            }
+        },
+
+        responderAlternativa(moduloId, stepIndex, idx) {
+            const modulo = getModulo(moduloId);
+            if (!modulo) return;
+            // Encontrar a etapa correspondente no array de etapas
+            const etapas = [];
+            if (modulo.introducao) etapas.push({ tipo: 'introducao', data: modulo.introducao });
+            if (modulo.teoria) modulo.teoria.forEach((t, i) => etapas.push({ tipo: `teoria_${i}`, data: t }));
+            if (modulo.exemplos) modulo.exemplos.forEach((e, i) => etapas.push({ tipo: `exemplo_${i}`, data: e }));
+            if (modulo.etapasAprendizagem) modulo.etapasAprendizagem.forEach((e, i) => etapas.push({ tipo: `etapa_${i}`, data: e }));
+
+            const etapa = etapas[stepIndex];
+            if (!etapa || !etapa.data || (etapa.data.tipo !== 'exercicio' && etapa.data.tipo !== 'questao')) return;
+
+            const data = etapa.data;
+            const correta = data.correta;
+            const buttons = document.querySelectorAll('#altContainer .btn');
+            buttons.forEach((btn, i) => {
+                btn.disabled = true;
+                if (i === correta) btn.classList.add('btn--success');
+                if (i === idx && idx !== correta) btn.classList.add('btn--error');
+            });
+
+            const feedback = document.getElementById('feedbackEtapa');
+            feedback.classList.remove('hidden');
+            const p = state.progresso[moduloId];
+            if (idx === correta) {
+                feedback.className = 'feedback-box success';
+                feedback.innerHTML = `<strong>✅ Correto!</strong> ${data.explicacaoAcerto || 'Muito bem!'}`;
+                p.acertos = (p.acertos || 0) + 1;
+                p.tentativas = (p.tentativas || 0) + 1;
+                p.xpGanho += 15;
+                state.xp += 15;
+                if (!p.topicos[stepIndex]) {
+                    p.topicos[stepIndex] = true;
+                }
+                updateLevel();
+                saveState();
+                renderHeader();
+                renderDashboard();
+                showToast('+15 XP', 'success', 'Resposta correta!');
+                // Botão para continuar
+                const nextBtn = document.createElement('button');
+                nextBtn.className = 'btn btn--primary';
+                nextBtn.textContent = 'Continuar →';
+                nextBtn.style.marginTop = '12px';
+                nextBtn.onclick = () => {
+                    App.avancarEtapa(moduloId);
+                };
+                feedback.appendChild(nextBtn);
+            } else {
+                feedback.className = 'feedback-box error';
+                feedback.innerHTML = `<strong>❌ Errado.</strong> ${data.explicacaoErro || 'Tente novamente!'}`;
+                p.tentativas = (p.tentativas || 0) + 1;
+                saveState();
+                showToast('Tente novamente!', 'warning', 'Não foi dessa vez');
+
+                // Sistema adaptativo: oferecer outra questão do mesmo módulo (se houver)
+                const questoesModulo = modulo.questoes || [];
+                const questoesRestantes = questoesModulo.filter(q => q.pergunta !== data.pergunta);
+                if (questoesRestantes.length > 0) {
+                    const novaQuestao = questoesRestantes[Math.floor(Math.random() * questoesRestantes.length)];
+                    // Substitui a etapa atual pela nova questão
+                    const newData = {
+                        ...novaQuestao,
+                        tipo: 'questao',
+                        titulo: 'Questão Adaptativa',
+                        conteudo: 'Tente resolver esta nova questão sobre o mesmo tópico.',
+                    };
+                    // Atualiza a etapa no array
+                    etapas[stepIndex].data = newData;
+                    // Re-renderiza a etapa
+                    renderStudy(moduloId, stepIndex);
+                } else {
+                    // Botão para tentar novamente
+                    const retryBtn = document.createElement('button');
+                    retryBtn.className = 'btn btn--secondary';
+                    retryBtn.textContent = 'Tentar Novamente';
+                    retryBtn.style.marginTop = '12px';
+                    retryBtn.onclick = () => {
+                        // Limpa o feedback e reabilita os botões
+                        const altContainer = document.getElementById('altContainer');
+                        if (altContainer) {
+                            altContainer.querySelectorAll('.btn').forEach(btn => {
+                                btn.disabled = false;
+                                btn.classList.remove('btn--success', 'btn--error');
+                            });
+                        }
+                        feedback.className = 'feedback-box hidden';
+                        feedback.innerHTML = '';
+                    };
+                    feedback.appendChild(retryBtn);
+                }
+            }
+        },
+
+        responderExame(moduloId, idx) {
+            if (state.examAnswered) return;
+            const questions = state.examQuestions;
+            const q = questions[state.examIndex];
+            const correta = q.correta;
+            const buttons = document.querySelectorAll('#examAltContainer .btn');
+            buttons.forEach((btn, i) => {
+                btn.disabled = true;
+                if (i === correta) btn.classList.add('btn--success');
+                if (i === idx && idx !== correta) btn.classList.add('btn--error');
+            });
+
+            const feedback = document.getElementById('examFeedback');
+            feedback.classList.remove('hidden');
+            if (idx === correta) {
+                feedback.className = 'feedback-box success';
+                feedback.innerHTML = `<strong>✅ Correto!</strong> ${q.explicacaoAcerto || 'Boa!'}`;
+                state.examCorrect++;
+            } else {
+                feedback.className = 'feedback-box error';
+                feedback.innerHTML = `<strong>❌ Errado.</strong> ${q.explicacaoErro || 'Estude mais!'}`;
+            }
+            state.examAnswered = true;
+            saveState();
+
+            // Botão próximo
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'btn btn--primary';
+            nextBtn.textContent = state.examIndex < questions.length - 1 ? 'Próxima Questão →' : 'Ver Resultado';
+            nextBtn.style.marginTop = '12px';
+            nextBtn.onclick = () => {
+                state.examIndex++;
+                state.examAnswered = false;
+                saveState();
+                renderExamQuestion(moduloId);
+            };
+            feedback.appendChild(nextBtn);
+        },
+
+        iniciarAvaliacao(moduloId) {
+            // Verifica se já tem avaliação definida
+            const modulo = getModulo(moduloId);
+            if (!modulo) return;
+            if (modulo.avaliacaoFinal && modulo.avaliacaoFinal.questoes && modulo.avaliacaoFinal.questoes.length > 0) {
+                App.navigate('exam', moduloId);
+            } else if (modulo.questoes && modulo.questoes.length >= 20) {
+                App.navigate('exam', moduloId);
+            } else {
+                showToast('Este módulo não possui questões suficientes para avaliação.', 'warning', 'Atenção');
+            }
+        },
+
+        finalizarAvaliacao(moduloId, aprovado) {
+            if (aprovado) {
+                const p = state.progresso[moduloId];
+                if (!p.concluido) {
+                    p.concluido = true;
+                    p.xpGanho += 100;
+                    state.xp += 100;
+                    state.ultimaAtividade = getModulo(moduloId)?.nome;
+                    if (!state.conquistas.find(c => c.nome === 'Primeiro Módulo Aprovado')) {
+                        state.conquistas.push({ nome: 'Primeiro Módulo Aprovado', icone: '🏆' });
+                    }
+                    updateLevel();
+                    saveState();
+                    renderHeader();
+                    renderDashboard();
+                    showToast(`Módulo "${getModulo(moduloId)?.nome}" aprovado! +100 XP`, 'success', '🎉 Parabéns!');
+                }
+                App.navigate('discipline', getModulo(moduloId)?.disciplina || 'Matemática');
+            } else {
+                // Reprovado: sugerir revisão e reiniciar avaliação
+                showToast('Revise os tópicos com dificuldade e tente novamente.', 'warning', 'Estude mais');
+                // Reiniciar avaliação com novas questões (se possível)
+                App.iniciarAvaliacao(moduloId);
+            }
+        },
+
+        confirmExitStudy() {
+            if (confirm('Tem certeza que deseja sair da aula? Seu progresso será salvo.')) {
+                App.goBack();
+            }
+        },
+
+        confirmExitExam() {
+            if (confirm('Tem certeza que deseja sair da avaliação? Seu progresso será perdido.')) {
+                App.goBack();
+            }
+        }
+    };
+
+    // ======================================================================
+    // 10. PERFIL
+    // ======================================================================
+    function renderProfile() {
+        const container = document.getElementById('profileContent');
+        // Estatísticas por disciplina
+        let disciplinasHtml = '';
+        const disciplinas = getDisciplinas();
+        disciplinas.forEach(disc => {
+            const mods = getModulosByDisciplina(disc);
+            const concluidos = mods.filter(m => isModuloConcluido(m.id)).length;
+            const progress = calcularProgressoDisciplina(disc);
+            disciplinasHtml += `
+                <div style="display: flex; justify-content: space-between; padding: var(--space-sm) 0; border-bottom: 1px solid var(--border);">
+                    <span>${disc}</span>
+                    <span>${concluidos}/${mods.length} módulos (${progress}%)</span>
+                </div>
+            `;
+        });
+
+        let html = `
+            <div class="card" style="margin-bottom:var(--space-xl);">
+                <h3>📊 Estatísticas Gerais</h3>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-md);margin-top:var(--space-lg);">
+                    <div><strong>Módulos concluídos:</strong> ${MODULOS.filter(m => isModuloConcluido(m.id)).length}/${MODULOS.length}</div>
+                    <div><strong>XP total:</strong> ${state.xp}</div>
+                    <div><strong>Nível:</strong> ${state.level}</div>
+                    <div><strong>Sequência:</strong> ${state.streak} dias</div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:var(--space-xl);">
+                <h3>📚 Progresso por Disciplina</h3>
+                <div style="margin-top: var(--space-lg);">${disciplinasHtml}</div>
+            </div>
+            <div class="card">
+                <h3>🏅 Conquistas</h3>
+                <div class="achievements-grid" style="margin-top:var(--space-lg);">
+                    ${state.conquistas.length === 0 ? '<p>Nenhuma conquista ainda. Continue estudando!</p>' : 
+                        state.conquistas.map(c => `
+                            <div class="achievement achievement--unlocked">
+                                <div class="achievement__icon">${c.icone || '🏆'}</div>
+                                <div class="achievement__title">${c.nome}</div>
+                            </div>
+                        `).join('')
+                    }
+                </div>
+            </div>
+        `;
+        container.innerHTML = html;
+    }
+
+    // ======================================================================
+    // 11. CARREGAMENTO DOS MÓDULOS
+    // ======================================================================
+    async function carregarTodosModulos() {
+        const moduloIds = [
+            'progressoes',
+            'razoes-proporcoes',
+            'analise-combinatoria',
+            'logica-proposicional',
+            'funcoes',
+            'sequencias',
+            'sistemas-lineares',
+            'conjuntos',
+            'numeros',
+            'medidas',
+            'matrizes',
+            'mf-1', 'mf-2', 'mf-3', 'mf-4', 'mf-5',
+            'mf-6', 'mf-7', 'mf-8', 'mf-9', 'mf-10',
+            'mf-11', 'mf-12', 'mf-13', 'mf-14', 'mf-15',
+            'mf-16', 'mf-17'
+        ];
+
+        const carregados = [];
+        for (const id of moduloIds) {
+            try {
+                const { modulo } = await import(`./modulos/${id}.js`);
+                // Validar estrutura mínima
+                if (validateModulo(modulo)) {
+                    carregados.push(modulo);
+                    console.log(`✅ Módulo "${modulo.nome}" carregado.`);
+                } else {
+                    console.warn(`⚠️ Módulo "${id}" não passou na validação.`);
+                }
+            } catch (e) {
+                console.warn(`⚠️ Módulo "${id}" não encontrado.`, e);
+            }
+        }
+
+        // Ordenar
+        carregados.sort((a, b) => {
+            if (a.disciplina === b.disciplina) return a.ordem - b.ordem;
+            return a.disciplina.localeCompare(b.disciplina);
+        });
+
+        MODULOS = carregados;
+
+        // Inicializar progresso para cada módulo
+        MODULOS.forEach(m => {
+            if (!state.progresso[m.id]) {
+                const totalEtapas = (m.introducao ? 1 : 0) + (m.teoria?.length || 0) + (m.exemplos?.length || 0) + (m.etapasAprendizagem?.length || 0);
+                state.progresso[m.id] = {
+                    concluido: false,
+                    acertos: 0,
+                    tentativas: 0,
+                    xpGanho: 0,
+                    topicos: new Array(totalEtapas).fill(false),
+                    questoesFeitas: []
+                };
+            }
+        });
+        saveState();
+
+        // Iniciar interface
+        init();
+    }
+
+    function validateModulo(mod) {
+        // Verifica campos obrigatórios
+        const required = ['id', 'nome', 'disciplina', 'ordem'];
+        for (const field of required) {
+            if (!mod[field]) {
+                console.error(`Módulo ${mod.id || 'desconhecido'} falta campo ${field}`);
+                return false;
+            }
+        }
+        // Pode adicionar mais validações
+        return true;
+    }
+
+    // ======================================================================
+    // 12. INICIALIZAÇÃO
+    // ======================================================================
+    function init() {
+        // Evento do logo
+        document.querySelector('.logo').addEventListener('click', () => App.navigate('dashboard'));
+
+        // Atualizar streak (simplificado)
+        const hoje = new Date().toDateString();
+        if (state.ultimaAtividade) {
+            const ultima = new Date(state.ultimaAtividade).toDateString();
+            if (ultima === hoje) {
+                // já contou hoje
+            } else {
+                // verifica se foi ontem
+                const ontem = new Date();
+                ontem.setDate(ontem.getDate() - 1);
+                if (ultima === ontem.toDateString()) {
+                    state.streak += 1;
+                } else {
+                    state.streak = 1;
+                }
+            }
+        } else {
+            state.streak = 1;
+        }
+        state.ultimaAtividade = new Date().toISOString();
+        saveState();
+
+        // Renderizar dashboard
+        renderDashboard();
+        renderHeader();
+        document.getElementById('userName').textContent = 'Estudante'; // Pode personalizar
+    }
+
+    // Iniciar carregamento
+    document.addEventListener('DOMContentLoaded', carregarTodosModulos);
+</script>
 </body>
 </html>
